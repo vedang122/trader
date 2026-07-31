@@ -1,0 +1,16 @@
+# Risk constitution — enforced deterministically by engine/risk.py on every
+# order; the LLM layer cannot waive these. Agents change this file ONLY through
+# engine/amend.py (tighten: instant; loosen: evidence-gated + 24h cooling),
+# and only inside the human-owned envelope in state/risk_bounds.yaml.
+# Direct edits by agents remain forbidden.
+# Re-scoped 2026-07-24 for REAL capital: ₹10,000 on Groww (user decision).
+
+capital_base: 10000            # INR — real money scale (not amendable by agents)
+risk_per_trade_pct: 1.0        # ₹100 max loss to stop per trade (Module 9)
+max_daily_loss_pct: 3.0        # ₹300 realized; trips the circuit breaker
+max_open_positions: 3          # small book — concentration beats confetti
+max_position_notional_pct: 35  # ₹3,500 — small capital needs workable lot sizes
+max_gross_exposure_pct: 100    # scaled down by the regime multiplier
+min_risk_reward: 2.0           # raised from 1.5: at this size, costs demand wider targets
+stop_required: true            # a trade without an invalidation level is not a trade (not amendable)
+slippage_bps: 5                # paper-fill haircut (not amendable)

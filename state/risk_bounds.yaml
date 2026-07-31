@@ -1,0 +1,27 @@
+# OUTER RISK ENVELOPE — the constitution's constitution. HUMAN-OWNED, the one
+# file the desk can never amend. Inside these bounds the desk retunes its own
+# risk_limits.yaml via engine/amend.py: tightening is instant and unilateral,
+# loosening is evidence-gated, rate-limited, and cooled — asymmetry by design.
+
+bounds:                                  # hard floor/ceiling per amendable limit
+  risk_per_trade_pct:        {min: 0.25, max: 2.0}
+  max_daily_loss_pct:        {min: 1.0,  max: 5.0}
+  max_open_positions:        {min: 2,    max: 8}
+  max_position_notional_pct: {min: 5,    max: 40}   # widened for ₹10k capital: one share of a ₹3.5k stock is 35%
+  max_gross_exposure_pct:    {min: 20,   max: 120}
+  min_risk_reward:           {min: 1.2,  max: 3.0}
+# capital_base, stop_required, slippage_bps are NOT amendable, ever.
+
+amendment_rules:
+  min_closed_trades_for_loosening: 20    # no loosening on a thin sample
+  min_expectancy_R_for_loosening: 0.10   # desk must be provably positive-edge
+  max_step_relative: 0.25                # one amendment moves a limit ≤25%
+  cooling_hours: 24                      # loosenings sit pending; human may reject
+  min_days_between_loosenings: 14
+
+auto_tighten:                            # guardian rules — instant, no approval
+  drawdown_pct_5:                        # equity 5% off its peak
+    risk_per_trade_pct_factor: 0.5       # halve per-trade risk (not below bound min)
+  drawdown_pct_10:                       # equity 10% off its peak
+    risk_per_trade_pct_to_min: true      # per-trade risk to the bound floor
+    force_regime: risk_off               # and gross cap to 0.4x

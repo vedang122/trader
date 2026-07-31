@@ -1,0 +1,3229 @@
+ZERODHA  
+ 
+ 
+Risk Management  
+& Trading Psychology  
+ 
+ 
+ZERODHA.COM/VARSITY  
+ 
+ 
+
+Table of Contents 
+1 Orientation note 1 
+2 Risk (Part 1) 4 
+3 Risk (Part 2) – Variance & Covariance 10 
+4 Risk (Part 3) – Variance & Covariance Matrix 18 
+5 Risk (Part 4) – Correlation Matrix & Portfolio Variance 27 
+6 Equity Curve 36 
+7 Expected Returns 43 
+8 Portfolio Optimization (Part 1) 50 
+9 Portfolio Optimization (Part 2) 61 
+10 Value at Risk 72 
+11 Position Sizing for active trader 84 
+12 Position Sizing for active traders (Part 2) 92 
+13 Position Sizing for active traders (Part 3) 98 
+14 Kelly’s Criterion 105 
+15 Trading Biases 114 
+16 Trading Biases (Part 2) 121 
+ 
+ 
+1                                                               zerodha.com/varsity 
+ 
+CHAPTER 1  
+ 
+Orientation Note  
+ 
+1.1 – A unique opportunity 
+I’m excited about this brand new module on Varsity, wherein we will be discussing two 
+important and closely related market topics – ‘Risk Management and Trading Psychology’. 
+While risk management ma y seem straightforward, ‘psychology’ may sound boring. Trust me; 
+both these topics can potentially open up new realms of trading. Risk management, for 
+instance, is not what you are thinking – it goes beyond the usual topics of position sizing, 
+stop loss an d leverage. While trading psychology is a reflection of your actions in the markets 
+– helps you introspect and find answers to why and how you made a profit or a loss in a 
+particular trade or investment.  
+Given the exhaustive nature of these topics, I tried  looking for ideas on how best I can 
+structure this module, and what chapters to include, and to my surprise, there are no 
+contents related to these topics. Of course, you can find tonnes of content online, but they 
+are all fragmented and lack continuity. This gives us both the opportunity and the 
+responsibility to develop some dependable content around these topics, centered on the 
+
+ 
+2                                                               zerodha.com/varsity 
+ 
+Indian context. We will have to work as a team here – we will take up the responsibility to 
+post the content and you will have  to take up the responsibility to enrich it by posting queries 
+and comments.  
+1.2 – What to expect?  
+At this stage, I can give you a brief orientation on what to expect, however as we proceed, if 
+necessary I’ll take the liberty to alter the learning methodol ogy, although not too drastically.  
+So there are 2 main topics we are dealing with here – 
+1. Risk Management  
+2. Trading psychology  
+Risk management techniques vary based on how you are positioned in the market. For 
+example, if you have a single position in the mar ket, then your approach to risk management 
+is very different compared to the risk management techniques of multiple positions, which is 
+again completely different compared to the risk management techniques of a portfolio.  
+Given this, we will look at risk m anagement from multiple angles – 
+1. Risk Management from a single trading position  
+2. Risk management from multiple trading positions  
+3. Risk management for a portfolio  
+In my attempt to explain the above, I will cover the following topics – 
+1. Risk and its many forms  
+2. Position sizing – guess this one is mandatory to cover  
+3. Single position risk  
+4. Multiple position risk and hedging  
+5. Hedging with options  
+6. Portfolio attributes and risk estimation  
+7. Value at Risk  
+8. Asset allocation and its impact on risk (and returns)  
+9. Insights from t he portfolio equity curve  
+I’m guessing these topics will give you a completely different perspective on risk and how 
+one can manage risk.  
+Further, we would be discussing trading psychology both from a trader and an investor’s 
+perspective. The discussion wo uld largely involve cognitive biases, mental models, common 
+ 
+3                                                               zerodha.com/varsity 
+ 
+pitfalls, and the thought process which leads you these pitfalls. Here are some of the topics 
+we would be discussing in this section – 
+1. Anchoring bias  
+2. Regency bias  
+3. Confirmation bias  
+4. Bandwagon effec t 
+5. Loss aversion  
+6. Illusion of control  
+7. Hindsight bias  
+Of course, we will build upon this as we proceed. This is going to be an exciting discussing 
+these topics.  
+Stay tuned.  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+4                                                               zerodha.com/varsity 
+ 
+CHAPTER 2  
+ 
+Risk (Part 1)   
+2.1. Warming up to risk  
+For every rupee of profit made by a trader, there must be a trader losing that rupee. As an 
+extension of this, if there is a group of traders consistently making money, then there must 
+be another group of traders consistently losing money. Usually, this group making money  
+consistently is small, as opposed to the group of traders who lose money consistently.  
+The difference between these two groups is their understanding of Risk and their techniques 
+of money management. Mark Douglas, in his book ‘The Disciplined Trader’, say s successful 
+trading is 80% money management and 20% st rategy. I could not agree more.  
+Money management and associated topics largely involve assessment of risk. So in this sense, 
+understanding risk and its many forms become essential at this point. For th is reason, let us 
+break down risk to its elementary form to get a better understanding of risk.  
+The usual layman definition of risk in the context of the stock market is the ‘probability of 
+losing money’. When you transact in the markets, you are exposed t o risk, which means you 
+can (possibly) lose money. For example, when you buy the stock of a company, whether you 
+like it or not, you are exposed to risk. Further, at a very high level, risk can be broken down 
+into two types – Systematic Risk and Unsystemat ic Risk. You are automatically exposed to 
+both these categories  of risks when you own a stock.  
+Think about it, why do you stand to lose money? Or in other words, what can drag the stock 
+price down? Many reasons as you can imagin e, but let me list down a fe w – 
+1. Deteriorating business prospects  
+2. Declining business margins  
+3. Management misconduct  
+4. Competition eating margins  
+All these represent a form of risk. In fact, there could be many other similar reasons and this 
+list can go on. However, if you notice, there i s one thing common to all these risks – they are 
+all risks specific to the company. For example, imagine you have an investable capital of 
+Rs.1,00,000/ -. You decide to invest this money in HCL Technologies Limited. A few months 
+ 
+5                                                               zerodha.com/varsity 
+ 
+later HCL declares that thei r revenues have declined. Quite obviously HCL stock price will also 
+decline. Which means you will lose money on your investment. However, this news will not 
+impact HCL’s competitor’s stock price (Mindtree or Wipro). Likewise, if HCL’s management is 
+guilty of any misconduct, then HCL’s stock price will go down and not its competitors. Clearly, 
+these risks are specific to this one c ompany alone and not its peers.  
+Let me elaborate on this – I’m not sure how many of you were trading the markets when the 
+‘Satya m scam’ broke out on the morning of 7th January 2009. I certainly was, and I remember 
+the day very well. Satyam Computers Limited had been cooking its books, inflating numbers, 
+mishandling funds, and misleading its investors for many years. The numbers sho wn were 
+way above the actual, myriads of internal party transactions; all these resulting in inflated 
+stock prices.  The bubble finally burst, when the then Chairman, Mr.Ramalinga Raju made a 
+bold confession of this heinous financial crime via a letter add ressed to the investors, 
+stakeholders, clients, employees, and exchanges. You have to give him credit for taking such 
+a huge step; I guess it takes a massive amount of courage to own up to such a crime, especially 
+when you are fully awa re of the ensuing co nsequences.  
+Anyway, I remember watching this in utter disbelief –  Udayan Mukherjee read out this super 
+explosive letter, live on TV, as the stock price dropped like a stone would drop off a cliff. This, 
+for me, was one of the most spine -chilling moments i n the market, watch the video here  
+I want you to notice few things in the above video – 
+1. The rate at which the stock price drops (btw, the stock price continued to drop to as 
+low a s 8 or 7)  
+2. If you manage to spot the scrolling ticker, notice how the other stocks are NOT reacting 
+to Satyam’s big revelation  
+3. Notice the drop in the indices (Sensex and Nifty), they do not drop as much as that of 
+Satyam.  
+The point here is simple – the drop  in stock price can be attributed completely to the events 
+unfolding in the company. Other external factors do not have any influence on the price drop. 
+Rather, a better way of placing this would be – at that given point, the drop in stock price can 
+only b e attributable to company specific factors or internal factors. The risk of losing money 
+owing to company specific reasons (or internal reasons) is often termed as “Unsystematic 
+Risk”.  
+ 
+6                                                               zerodha.com/varsity 
+ 
+ 
+Unsystematic risk can be diversified, meaning instead of investing al l the money in one 
+company, you can choose to invest in 2 -3 different companies (preferably from different 
+sectors). This is called ‘diversification’. When you diversify your investments, unsystematic 
+risk drastically reduces. Going back to the above examp le, imagine instead of buying HCL for 
+the entire capital, you decide to buy HCL for Rs.50,000/ - and maybe Karnataka Bank Limited 
+for the other Rs.50,000/ -, in such circumstances, even if HCL stock price declines (owing to 
+the unsystematic risk) the damage is only on half of the investment as the other half is 
+invested in a different company. In fact, instead of just two stocks, you can have a 5 or 10 or 
+maybe 20 stock portfolio. The higher the number of stocks in your portfolio, higher the 
+diversification, and therefor e lesser the unsystematic risk.  
+This leads us to a very important question – how many stocks should a good portfolio have 
+so that the unsystematic risk is completely diversified. Research has it that up to 21 stocks in 
+the portfolio will have t he required necessary diversification effect and anything beyond 21 
+stocks may not help much in diversification. I personally own about 15 stocks in my equity 
+portfolio.  
+The graph below should give you a fair sense  of how diversification works – 
+
+ 
+7                                                               zerodha.com/varsity 
+ 
+ 
+As you c an notice from the graph above, the unsystematic risk drastically reduces when you 
+diversify and add more stocks. However , after about 20 stocks, the unsystematic risk is not 
+really diversifiable, this is evident as the graph starts to flatten out after 20  stocks.  In fact, 
+the risk that remains even after diversification i s called the “Systematic Risk”.  
+Systematic risk is the risk that is common to all stocks in the markets. Systematic risk arises 
+out of common market factors such as the macroeconomic land scape, political situation, 
+geographical stability, monetary framework etc. A few specific systematic risks which can 
+drag the stock prices down are: – 
+1. De-growth in GDP  
+2. Interest rate tightening  
+3. Inflation  
+4. Fiscal deficit  
+5. Geopolitical risk  
+The list, as usual,  can go on but I suppose you get a fair idea of what constitutes a systematic 
+risk. Systematic risk affects all stocks. Assuming, you have a well diversified 20 stocks 
+portfolio, a de -growth in GDP will indiscriminately affect all the 20 stocks and hence t he stock 
+price of stocks across the board will decline. Systematic risk is inherent in the system and it 
+cannot really be diversified. Remember, ‘unsystematic risk’ can be diversified, but systematic 
+risk cannot be. However, systematic risk can be ‘hedged’ . Hedging is a craft, a technique one 
+would use to get rid of the systematic risk. Think of hedging as carrying an umbrella with you 
+on a dark cloudy day. The moment, it starts pouring, you snap your umbrella out and you 
+instantly have a cover on your head . 
+ 
+So when we are talking about hedging, do bear in mind that it is not the same as 
+diversification. Many market participants confuse diversification with hedging. They are two 
+different things. Remember, we diversify to minimise unsystematic risk and we h edge to 
+
+ 
+8                                                               zerodha.com/varsity 
+ 
+minimise systematic risk and notice I use the word ‘minimise’ – this is to emphasise the fact 
+that no investment/trade in the market should be ever considered safe in the markets.  
+Not mine, not yours.  
+2.2 – Expected Return  
+We will briefly talk abou t the concept of ‘Expected Return’ before we go back to the topic of 
+Risk. It is natural for everyone to expect a return on the investments they make. The expected 
+return on an investment is quite straight forward – the return you would expect from it. If you 
+invest your money in Infosys and expect to generate 20% return in one year, then the 
+expected return is just that – 20%. 
+Why is this important especially when it sounds like a no -brainer? Well, the ‘expected return’ 
+plays a crucial role in finance. Thi s is the number we plug in for various calculations – be it 
+portfolio optimisation or a simple estimation of equity curve. So in a sense, expecting a 
+realistic return plays a pivotal role in investment management. Anyway, more on this topic 
+as we proceed. For now, let us stick to basics.  
+So continuing with the above example – if you invest Rs.50,000/ - in Infy (for a year) and you 
+expect 20% return, then the expected return on your investment is 20%. What if instead, you 
+invest Rs.25,000/ - in Infy for an exp ected return of 20% and Rs.25,000/ - in Reliance Industries 
+for an expected return of 15%? – What is the overall expected return here? Is i t 20% or 15% or 
+something else?  
+As you may have guessed, the expected return is neither 20% nor 15%. Since we made 
+investments in 2 stocks, we are dealing with a portfolio, hence, in this case, the expected 
+return is that of a portfolio and not the individual asset. The expected return of a portfolio 
+can be calculat ed with the following formula – 
+E(RP) = W1R 1 + W2R2 + W3R 3 + ———– + WnRn  
+Where,  
+E(RP) = E xpected return of the portfolio  
+W = Weight of investment  
+R = Expected  return of the individual asset  
+In the above example, the invested is Rs.25,000/ - in each, hence the weight is 50% each. 
+Expected return is 20% and 15% acr oss both the investment. Hence – 
+ 
+9                                                               zerodha.com/varsity 
+ 
+E(RP) = 50% * 20% + 50% * 15%  
+= 10% + 7.5%  
+= 17.5%  
+While we have used this across two stocks, you can literally apply this concept across any 
+number of assets and asset classes. This is a fairly simple concept and I hope yo u’ve had no 
+problem understanding this. Most importantly, you need to understand that the expected 
+return is not ‘guaranteed’ return; rather it is just a probabilistic expectatio n of a return on an 
+investment.  
+Now that we understand expected returns, we ca n build on some quantitative concepts like 
+variance and covariance. We will discuss th ese topics in the next chapter.  
+ 
+Key takeaways from this chapter  
+1. When you buy a stock you are exposed to unsystematic and systematic risk  
+2. Unsystematic risk with respect t o a stock is the risk that exists within the company  
+3. Unsystematic risk affects only the stock and not its peers  
+4. Unsystematic risk can be mitigated by simple diversification  
+5. Systematic risk is the risk prevalent in the system  
+6. Systematic risk is common acros s all stock  
+7. One can hedge to mitigate systematic risk  
+8. No hedge is perfect – which means there is always an element of risk present while 
+transacting in markets  
+9. Expected return is the probabilistic expectation of a return  
+10. Expected return is not a guarantee of return  
+11. The portfolio’s expected return can be calculated as – E(RP) = W1R1 + W2R2 + W3R3 + 
+———– + WnRn  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+10                                                               zerodha.com/varsity 
+ 
+CHAPTER 3  
+ 
+Risk (Part 2) – Variance & Covariance 
+ 
+3.1. Variance  
+In the previous chapter, we touched upon the topic of expected return , continuing on it, we 
+will understand the concept of ‘Portfolio variance’. Portfolio Variance helps us understand 
+the risk at a portfolio level. I’m hoping you are familiar with ‘Standard Deviation’ as a measure 
+of risk. We have discussed standard deviati on multiple times in the previous modules (refer 
+to Module 5, chapter 15 onwards ). I’d suggest you get familiar with it if you are not already. 
+While we can eas ily measure the risk of a single stock by calculating its standard deviation, 
+calculating the risk of a portfolio is a whole different ball game. When you put a few individual 
+stocks together and create a portfolio, it becomes a different animal altogether . The agenda 
+for this chapter is to help you understand how to estimate risk at a portfolio level.  
+However, before we proceed, we need to understand the concept of Variance and Covariance. 
+Both Variance and Covariance are statistical measures. Let’s deal w ith the Variance first.  
+The variance of stock returns is a measure of how much a stock’s return varies with respect 
+to its average daily returns. The formula to calculate variance is quite straight forward – 
+
+ 
+11                                                               zerodha.com/varsity 
+ 
+ 
+Where,  
+σ2 = Variance  
+X = Daily return  
+µ = Average of daily return  
+N = Total number of observation  
+Note, the variance is measured as sigma squared; I will not get into the reasons for this as the 
+explanation is quite complex and we could digress. For now, I’d requ est you to be aware of 
+the fact that variance is sigma squared. Anyway, calculating variance is quite simple, I’ll take 
+a simple example to help us understand this better.  
+Assume the daily return for a stock for 5 consecutive days is as below – 
+Day 1 – + 0.75% 
+Day 2 – + 1.25%  
+Day 3 – -0.55%  
+Day 4 – -0.75%  
+Day 5 – +0.8%.  
+In this case, the average return is +0.3%. We now need to calculate the dispersion of daily 
+return over its average return, and also square the dispersion.  
+Daily Return  Dispersion from avera ge Dispersion squared  
++ 0.75%  0.75% – 0.3% = + 0.45%  0.45%^2 = 0.002025%  
++ 1.25%  +1.25% – 0.3% = + 0.95%  0.95%^2 = 0.009025%  
+-0.55%  -0.55% – 0.3% = -0.85%  -0.85%^2 = 0.007225%  
+-0.75%  -0.75% – 0.3% = -1.05%  -1.05%^2 = 0.011025%  
+
+ 
+12                                                               zerodha.com/varsity 
+ 
+Daily Return  Dispersion from avera ge Dispersion squared  
++0.80%  +0.8% – 0.3% = +0 .5% 0.50%^2 = 0.002500%  
+We now sum up the dispersion squared to get 0.0318000%. We divide this over 5 (N) to get 
+the variance i.e. 
+0.0318000% / 5  
+σ2 = 0.0063600%.  
+So what does this number tell us? It gives us a sense of how the daily returns are spread out 
+from the average expected returns. So you as an investor should look into the variance to 
+determine the riskiness of the investment. A large vari ance indicates that the stock could be 
+quite risky while a small variance can indicate lesser risk. In the above example, I would 
+consider the variance high, since we are looking at just 5 days’ worth  of data.  
+Now, here is something you may be interested i n knowing. Variance and standard deviation 
+are related to each other by the following simple mathematical relationship – 
+Square Root of Variance = Standard Deviation  
+We can apply this to the example above and calculate the 5 -day standard deviation of the 
+stock, 
+% 
+~ 0.8%  
+which is the standard deviation a.k.a. the volatility of the stock (over the last 5 days). Anyway, 
+at this point, I want you to be aware of Variance and what it really means. We will eventually 
+plug variance along with covariance into the po rtfolio variance equation.  
+3.2 – Covariance  
+Covariance indicates how two (or more) variables move together. It tells us whether the two 
+variables move together (in which case they share a positive covariance) or they move in the 
+opposite direction (negativ ely covariance).  Covariance in the context of stock market 
+measures how the stock prices of two stocks (or more) move together.  The two stocks prices 
+are likely to move in the same direction if they have a positive covariance; likewise, a negative 
+covari ance indicates that they two stocks move in opposite direction.  
+ 
+13                                                               zerodha.com/varsity 
+ 
+I understand covariance may sound similar to ‘correlation’, however, the two are different. 
+We will discuss more on this further in the chapter.  
+I guess calculating the covariance for two stoc ks will help us get a grip on understanding 
+covariance better. The formula to calculate covariance of two stocks is as follows – 
+ 
+Where,  
+Rt S1  = Daily stock return of stock 1  
+Avg Rt S1  = Average return of stock 1 over n period  
+Rt S2  = Daily stock return o f stock 2  
+Avg Rt S2  = Average return of stock 2 over n period  
+n – The total number of days  
+In other words, you can calculate the covariance between two stocks by taking the sum 
+product of the difference between the daily returns of the stock and its averag e return across 
+both the stocks.  
+Sounds confusing? I guess so.   
+Let us take up an example and see how we can calculate the covariance between two stocks.  
+For the sake of this illustration, I’ve selected two stocks – Cipla Limited and Idea Cellular 
+Limited . To calculate the covariance between these two stocks, we need to work around with 
+the above formula. We will resort to good old excel to help us implement the formula.  
+Before we proceed, if you were to guess the covariance between Cipla and Idea, what do  you 
+think it would be? Think about it – two large corporate, similar size, but in two completely 
+unrelated sectors. What do you think would be the covariance? Give it a thought.  
+Anyway, here are the steps involved in calculating covariance in excel (note,  although there 
+is a direct function in excel to calculate covariance, I’ll take the slightly longer approach, just 
+to ensure clarity) – 
+Step 1 – Download the daily stock prices. For the purpose of this illustration, I’ve downloaded 
+6 months’  data for both  the stocks.  
+
+ 
+14                                                               zerodha.com/varsity 
+ 
+ 
+Step 2  – Calculate the daily returns for both the stocks. Daily returns can be calculated by 
+dividing today’s stock price over yesterday’s stock price and subtracting 1 from the result of 
+this division  
+ 
+Step 3  – Calculate the average of the  daily returns  
+ 
+Step 4  – Once the average is calculated, subtract the daily return by its average  
+ 
+Step 5  – Multiply the two series calculated in the previous step  
+
+ 
+15                                                               zerodha.com/varsity 
+ 
+ 
+Step 6  – Sum up the calculation made in the previous step. Take a count of the number of  
+data points. You can do this by using the count function in excel and giving any of the fields 
+as the input array. I’ve used the count on the dates here.  
+ 
+Step 7 – This is the final step in calculating the covariance. To do so, one needs to divide the 
+sum by count minus 1 i.e.  (n-1). The count, in this case, is 127, so count -1 would be 126. Sum 
+calculated in the previous step was 0.006642. Hence, covariance would be  
+= 0.006642/126  
+= 0.00005230  
+ 
+You can  download  the excel sheet.  
+As you can see, the covariance number is quite small. However, that’s not the point here. We 
+only look at whether the two stocks share a positive or negative covariance. Clearly, since t he 
+two stocks share a positive covariance, it means that the returns of the two stocks move in 
+similar directions. It means that for a given situation in the market, both the stocks are likely 
+
+ 
+16                                                               zerodha.com/varsity 
+ 
+to move in the same direction. Note – covariance does not tell us the degree to which the two 
+stocks move. The degree or magnitude is captured by correlation. The correlation between 
+Idea and Cipla is 0.106, which indicates that the two stocks are not tightly correlated.  
+By the way, here is something very interesting fact. The mathematical equation for 
+correlation between two stocks is as follows – 
+ 
+Where,  
+Cov (x,y) is the covariance between the two stocks  
+σx = Standard deviation of stock x  
+σy = Standard deviation of stock y  
+Note, the standard deviation of a stock is simply the square root of the variance of the stock. 
+Here is a task for you – we have calculated the correlation between Idea and Cipla using t he 
+direct excel function. Can you confirm the accuracy by implementing the formula?  
+Anyway, in the case of building a stock portfolio, do you think a positive covariance is good 
+or bad? Or rather do portfolio managers desire stocks (in their portfolio) whi ch share a 
+positive covariance or they don’t? Well, portfolio managers strive to select stocks which share 
+a negative covariance. The reason is quite simple – they want stocks in the portfolio which 
+can hold up. Meaning if one stock goes down, they want, a t least the other to hold up. This 
+kind of counter balances the portfolio and reduces the overall risk.  
+Now, think about a regular portfolio – it will certainly contain more than 2 stocks. In fact, a 
+good portfolio will contain at least 12 -15 stocks. How w ould one measure covariance in this 
+case? This is where things start getting complicated. One will have to measure covariance of 
+each stock with all the other stocks in the portfolio. Let me illustrate this with a 4 stocks 
+portfolio. Assume the portfolio i s like this – 
+1. ABB 
+2. Cipla  
+3. Idea 
+4. Wipro  
+
+ 
+17                                                               zerodha.com/varsity 
+ 
+In this case, we need to calculate the covariance across – 
+1. ABB, Cipla  
+2. ABB, Idea  
+3. ABB, Wipro  
+4. Cipla, Idea  
+5. Cipla, Wipro  
+6. Idea, Wipro  
+Note, the covariance between stock 1 and stock 2 is the same as the covariance between 
+stock 2 and stock 1. So as you can see, 4 stocks require us to compute 6 covariances. You can 
+imagine the complexity when we have 15 or 20 stocks. In fact, when we have more than 2 
+stocks in the portfolio, the covariance between them is calculated and tabulated using a 
+‘Variance – Covariance Matrix’. I would love to talk about this now, but I guess, I’ll will keep it 
+for the next chapter.  
+Stay tuned for more!  
+ 
+Key takeaways from this chapter  
+1. Variance measures the dispersion of returns over the expected average r eturns  
+2. Higher variance indicates higher risk, lower variance indicates lower risk  
+3. Square root of variance is standard deviation  
+4. Covariance between the returns of two stock measures how the returns of the two 
+stocks vary  
+5. A positive covariance indicates that  the returns move positively and a negative 
+covariance indicates that while one stock returns moves up, the other comes down  
+6. Correlation measures the strength of the movement  
+7. Covariance between two stocks divided over their individual standard deviations 
+results in a correlation between two stocks.  
+8. When we have more than 2 stocks in a portfolio, we compute the variance -covariance 
+using a matrix  
+ 
+ 
+ 
+ 
+18                                                               zerodha.com/varsity 
+ 
+CHAPTER 4  
+ 
+Risk (Part 3) – Variance & Covariance Matrix  
+4.1 – A quick recap  
+Let us begin this chapter with a quick recap of our discu ssion so far.  
+We started this module with a discussion on the two kinds of risk a market participant is 
+exposed to, when he or she purchases a stock – namely the systematic risk and the 
+unsystematic risk. Having understood the basic difference between thes e two types of risk, 
+we proceeded towards understanding  risk from a portfolio perspective . In our discussion 
+leading to portfolio risk or portfolio variance, we discussed two crucial concepts – variance 
+and co variance.  Variance  is the deviation of a stock ’s return with its own average returns.  Co 
+variance  on the other hand is the variance of a stock’s return with respect to another stock’s  
+return. The discussion on variance and co variance was mainly with respect to a two stock 
+portfolio; however , we concl uded that a typical equity portfolio contains multiple stocks. In 
+order to estimate the variance co variance and the correlation of a multi stock portfolio, we 
+need the help of  matrix algebra . 
+So that’s where we are as of now.  
+In this chapter we will exten t this discussion to estimate the ‘variance co variance’ of multiple 
+stocks; this will introduce us to matrix multiplication and other concepts. However, the 
+‘variance covariance’ matrix alone does not convey much information. To make sense of this, 
+we nee d to develop the correlation matrix. Once we are through with this part, we use the 
+results of the correlation matrix to calculate the  portfolio variance . Remember, our end goal 
+is to estimate the portfolio variance. Portfolio variance tells us the amount of risk one is 
+exposed to when he or she holds a set of stocks in the portfolio.  
+At this stage you should realize that we are focusing on risk from the entire portfolio 
+perspective. While we are at it we will also discuss ‘asset allocation’ and how it impa cts 
+portfolio returns and risk. This will also include a quick take on the concept of ‘value at risk’.  
+Of course, we will also take a detailed look at risk from a trader’s perspective. How one can 
+identify trading risk and ways to mitigate the same.  
+ 
+19                                                               zerodha.com/varsity 
+ 
+ 
+4.2 – Variance Covariance matrix  
+Before we proceed any further, I’ve been talking about ‘Variance Covariance matrix’. Just to 
+clear up any confusion – is it ‘variance covariance matrix’ or is it a variance matrix and a 
+covariance matrix?  Or is it just one mat rix i.e. the ‘Variance Covariance matrix’.  
+Well, is it just one matrix i.e. the ‘Variance Covariance matrix’. Think about it, if there are 5 
+stocks, then this matrix should convey information on the variance of a stock and it should 
+also convey the covaria nce of between stock 1 and the other 4 stock. Soon we will take up an 
+example and I guess you will have a lot more clarity on this.  
+Please do note – it is advisable for you to know some basis on matrix operations. If not, here 
+is a great video from Khan Ac ademy which introduces matrix multiplication – 
+Anyway, continuing from the previous chapter, let us now try and calculate the Variance 
+Covariance matrix followed by the correlation matrix for a portfolio with multiple stocks. A 
+well-diversified  (high convi ction) portfolio typically consists of about 10 -15 stocks. I’d have 
+loved to take up a portfolio of this size to demonstrate the calculation of the variance 
+covariance matrix, but then, it would be a very cumbersome affair on excel and there is a 
+good a ne wbie could get intimidated with the sheer size of the matrix, hence for this reason, 
+I just decided to have a 5 stock portfolio.  
+The following 5 stocks constitutes my portfolio – 
+
+ 
+20                                                               zerodha.com/varsity 
+ 
+1. Cipla  
+2. Idea 
+3. Wonderla  
+4. PVR 
+5. Alkem  
+The size of the variance covariance matrix for a 5 stock portfolio will be 5 x 5. In general, if 
+there are ‘k’ stocks in the portfolio, then the size of the variance covariance matrix will be  k 
+x k (read this as k by k).  
+The formula to create a variance covariance matrix is as follows – 
+ 
+Where,  
+k = nu mber of stocks in the portfolio  
+n = number of observations  
+X = this is the n x k excess return matrix. We will understand this better shortly  
+XT  = transpose matrix of X  
+Here is a quick explanation of what is going on in that formula. You may understand th is 
+better when we deal with its implementation.  
+In simple terms, we first calculate the  n x k excess return matrix ; multiply this matrix by its 
+own transpose matrix. This is a matrix multiplication and the resulting matrix will be a  k x 
+k matrix. We then d ivide each element of this k x k matrix by n, where n denotes the number 
+of observations. The resulting matrix after this division is a  k x k variance covariance matrix . 
+Generating the k x k variance covariance matrix is one step away from our final object ive i.e. 
+getting the correlation matrix.  
+So, let us apply this formula and generate the variance covariance matrix for the 5 stocks 
+listed above. I’m using MS excel for this. I have downloaded the daily closing prices for the 5 
+stocks for the last 6 months . 
+
+ 
+21                                                               zerodha.com/varsity 
+ 
+Step 1  – Calculated the daily returns. I guess you are quite familiar with this by now. I’m not 
+going to explain how to calculate the daily returns. Here is the excel snapshot.  
+ 
+As you can see, I’ve lined up the stock’s closing price and next to it I ha ve calculated the daily 
+returns. I have indicated the formula to calculate the daily return.  
+Step 2  – Calculate the average daily returns for each stock. You can do this by using the 
+‘average’ function in excel.  
+ 
+Step 3  – Set up the excess return matrix.  
+Excess return matrix is defined as the difference between stock’s daily return over its average 
+return. If you recall, we did this in the previous chapter while discussing covariance between 
+two stocks.  
+I’ve set up the excess return matrix in the following  way – 
+ 
+
+ 
+22                                                               zerodha.com/varsity 
+ 
+Do note, the resulting matrix is of  n x k  size, where  n represents the number of observations 
+(127 in this case) and  k denotes the number of stocks (5 stocks). So in our example the matrix 
+size is 127 x 5. We have denoted this matrix as X.  
+Step 4  – Generate the  XT X matrix operation to create a k x k matrix  
+This may sound fancy, but it is not.  
+XT is a new matrix, formed by interchanging the rows and columns of the original matrix X. 
+When you interchange the rows and columns of a matrix to form a ne w one, then it is referred 
+to as a transpose matrix of X and denoted as X T. Our objective now is to multiply the original 
+matrix with its transpose. This is denoted as X T X. 
+Note, the resulting matrix from this operation will result in a k x k matrix, wher e k denotes 
+the number of stocks in the portfolio. In our case this will be 5 x 5.  
+We can do this in one shot in excel. I will use the following function steps to create the k x k 
+matrix – 
+List down the stocks in rows and columns – 
+ 
+Apply the function = ‘ MMULT ((transpose X), X). Remember X is the excess return matrix.  
+ 
+
+ 
+23                                                               zerodha.com/varsity 
+ 
+Do note, while applying this formula, you need to ensure that you highlight the k x k matrix. 
+Once you finish typing the formula, do note – you cannot hit ‘enter’ directly. You will 
+hit ctrl+shift+enter . In fact, for all array functions in excel, use ctrl+shift+enter.  
+So once you hit ctrl+shift+enter, excel will present you with a beautiful k x k matrix, which in 
+this case looks like this – 
+ 
+Step 5 – This is the last step in creating the v ariance covariance matrix. We now have to divide 
+each element of the X T X matrix by the total number of observations i.e. n. For your clarity, let 
+me post the formula for the variance covariance matrix again – 
+ 
+Again, we start by creating the layout for k  x k matrix – 
+ 
+Once the layout is set, without deselecting the cells, select the entire X T X matrix and divide 
+it by n i.e. 127. Do note, this is still an array function; hence you need to 
+hit ctrl+shift+enter  and not just enter.  
+
+ 
+24                                                               zerodha.com/varsity 
+ 
+ 
+Once you hit control sh ift enter, you will get the ‘Variance – Covariance’ matrix. Do note, the 
+numbers in the matrix will be very small, do not worry about this. Here is the variance co 
+variance matrix – 
+ 
+  
+
+ 
+25                                                               zerodha.com/varsity 
+ 
+Let us spend some time to understand the ‘Variance – Covariance’ matri x better. Suppose I 
+want to know the covariance between any two stocks, let’s  say Wonderla and PVR, then I 
+simply have to look for Wonderla on the left hand side and in the same row, look for the value 
+which coincides with PVR. This would be the covariance  between the two stocks. I’ve 
+highlighted the same in yellow – 
+ 
+So the matrix suggests that the covariance between Wonderla and PVR is 0.000034. Do note, 
+this is the same as the covariance between PVR and Wonderla.  
+Further, notice the number highlighted i n blue. This value corresponds to Cipla and Cipla. 
+What do you this represents? This represents the covariance between Cipla and Cipla, and if 
+you realize, covariance of a stock with itself, is nothing but variance!  
+This is exactly why this matrix is calle d ‘ Variance – Covariance Matrix ’, because  it gives us 
+both the values.  
+Now, here is the bitter pill – the variance and covariance matrix on its own is quite useless. 
+These are extremely small numbers and it is hard to derive any meaning out of it. What we 
+really need is the ‘Correlation Matrix’.  
+In the next chapter, let us deal with generating the correlation matrix, and also work towards 
+estimating the portfolio variance, which is our end objective. However, before we close this 
+chapter, here are few tasks  for you – 
+1. Download the last 1-year data for 5 or more stocks.  
+2. Calculate the Variance – Covariance matrix for the same  
+3. For a given stock, identify the variance value. Apply the = ‘Var()’ function on excel on 
+the returns of the same stock and evaluate if bo th are matching.  
+You can  download  the excel sheet used in this chapter.  
+ 
+
+ 
+26                                                               zerodha.com/varsity 
+ 
+Key Takeaways from this chapter  
+1. X is defined as an excess return mat rix 
+2. Excess return matrix is simply the time series difference daily return versus the 
+average daily return  
+3. XT is defined as the transpose of X  
+4. Variable  n is defined as the number of observations in the data set. For example,  if you 
+have 6 months’  data, n i s 127, for 1-year data n would be 252  
+5. Excess return matrix is of the size n x k, where k is the number of stocks  
+6. When you divide the matrix product of X T X by n, we get the variance covariance matrix  
+7. The variance covariance matrix is of the size k x k  
+8. The covariance of stock 1 with itself is the variance of stock 1  
+9. The variance covariance matrix will lead us to the correlation matrix.  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+27                                                               zerodha.com/varsity 
+ 
+CHAPTER 5  
+ 
+Risk (Part 4) – Correlation Matrix & Portfolio 
+Variance  
+ 
+5.1 – Correlation Matrix 
+In the previous chapter, we successfully calculated the variance co variance matrix. As we 
+discussed, these numbers are too small for us to make any sense. Hence, as a practice, it 
+always makes sense to calculate the correlation matrix when we calculate the variance 
+covariance matrix.  
+So let us go ahead and do this.  
+How is the correlation between two stocks calculated? Well, hopefully from the previous 
+chapter, you will recall the formula for correlation – 
+ 
+Where,  
+Cov (x,y) is the covariance between the two stocks  
+
+ 
+28                                                               zerodha.com/varsity 
+ 
+σx = Standard deviation of stock x  
+σy = Standard deviation of stock y  
+This works fine if we have 2 stocks in the portfolio, but since we have 5 stocks in the portfolio, 
+we need to resort to matrix operation to find correlations. So, when we have  multiple stocks 
+in the portfolio, the correlations between stocks are all stacked up in a  n x n  (read it as n by 
+n) matrix. For example, if it is a 5 stock portfolio (5 being the n here), then we need to create 
+a 5 x 5 matrix.  
+The formula for calculating the correlation remains the same. Recall, from the previous 
+chapter, we have the variance -covariance matrix. For the sake of convenience, I’ll paste the 
+image again here – 
+ 
+This takes care of the numerator part of the formu la. We need to now calculat e the 
+denominat or, which is simply th e product of the standard devia tion of stock A with the 
+standard deviation of stock B. If the portfolio has 5 stock, then we need the product of the 
+standard deviation of all possible combi nation between the stocks in the po rtfolio.  
+Let’s go ahead and set this up.  
+We first need to calculate the standard deviations of each of the stocks in the portfolio. I’m 
+assuming you are familiar how to do this. You just need to use the ‘=Stdev()’ function on the 
+daily returns array to get  the standard deviations.  
+I’ve calculated the same on excel used in the previous chapter. Here is the image – 
+ 
+
+ 
+29                                                               zerodha.com/varsity 
+ 
+Given that we have the stock specific standard deviations; we now need to get the product of 
+the standard deviation of all possible portfolio co mbination. We resort to matrix 
+multiplication for this. This can be easily achieved by multiply  the standard deviation array 
+with the transpose of itself.  
+We first create the matrix skeleton and keep all the cells highlighted – 
+ 
+Now, without deselecting t he cells, we apply the matrix multiplication function. Note, we are 
+multiplying the standard deviation array with the transpose of itself. The image below should 
+give you an idea, do look at the formula used – 
+ 
+As I mentioned in the previous chapter , when ever you use matrix or array function in excel, 
+always hold the ‘ctrl+shit+enter’ combo. The resulting matrix looks like this – 
+
+ 
+30                                                               zerodha.com/varsity 
+ 
+ 
+At this point let me paste the formula for the correlation again – 
+ 
+The numerator is the variance covariance matrix as seen b elow, and the denominator is the 
+product of the standard deviations which we have just calculated above – 
+ 
+Dividing the variance co -varia nce matrix by the product of the standard deviations should 
+result in the correlation matrix. Do note, this is an elem ent by element division, which is still 
+and array function, so the use of ‘ctrl+shit+enter’ is necessary.  
+
+ 
+31                                                               zerodha.com/varsity 
+ 
+ 
+The resulting correlation matrix looks like this – 
+ 
+The correlation matrix gives us the correlation between any two stocks. For example, if I have 
+to know the correlation between Cipla and Alkem, I simply have to look under the intersecting 
+cell between Cipla and Alkem. There are two ways you can do this – 
+1. Look at the row belonging to Cipla and scroll till the Alkem column  
+2. Look at the row belonging t o Alkem and scroll till the Cipla column  
+Both these should reflect the same result i.e. 0.2285. This is quite obvious since correlation 
+between stock A with Stock B is similar to the correlation of Stock B with Stock A. For this 
+reason, the matrix displays  symmetrically  similar values above and below the diagonal . 
+Check this image below, I have highlighted the correlation between Cipla and Alkem and 
+Alkem and Cipla – 
+
+ 
+32                                                               zerodha.com/varsity 
+ 
+ 
+The correlations along the diagonal represents the correlation of certain stock with itse lf. Do 
+note, the correlation numbers above the diagonal is symmetrically  similar to the correlation  
+numbers below the diagonal.  
+Needless to say, correlation of Stock A with Stock A is always 1, which is what we have got in 
+the diagonal  and the same is highlighted  in yellow boxes.  
+5.2 – Portfolio Variance  
+We are just few steps away from calculating the Portfolio Variance. As I have discussed earlier, 
+we need the portfolio variance to identify the extent of risk my portfolio is exposed to. With 
+this informati on, I’m no longer driving blind. In fact, one can develop many other insights 
+based on this. Of course, we will talk about this going forward.  
+The first step in calculating portfolio variance is to assign weights to the stocks. Weights are 
+simply the amoun t of cash we decide to invest in each stock. For example,  if I have Rs.100, 
+and I decide to invest all of that money in Stock A, then the weight in stock A is 100%. 
+Likewise, if I decide to invest Rs.50 in A, Rs.20 in B, and Rs.30 in C, the weights in A, B, and C 
+would be 50%, 20 %, and 30% respectively.  
+I have arbitrarily assigned weights to the 5 stocks in the portfolio – 
+o Cipla @ 7%  
+o Idea @ 16%  
+o Wonderla @ 25%  
+o PVR @ 30%  
+o Alkem @ 22%  
+Clearly, there is no science to assigning weights at this stage. However, at a later point in the 
+module I will discuss more about this part.  
+
+ 
+33                                                               zerodha.com/varsity 
+ 
+The next step is to calculate the weighted standard deviation. The Weighted standard 
+deviation is simply the weight of a stock multiplied by its respective standard deviation. For 
+example, Ci pla’s standard deviation is 1.49%, hence its weighted standard deviation would 
+be 7% * 1.49% =  0.10%  
+Here are the weights and the weighted standard deviation of 5 stocks in the portfolio – 
+ 
+Do note, the total weight should add up to 100% i.e. the sum of t he individual weights in 
+stocks should add up to 100%.  
+At this stage, we have all the individual components needed to calculate the ‘Portfolio 
+Variance’. The formula to calculate the Portfolio Variance is as shown below – 
+Portfolio Variance = Sqrt (Transpo se (Wt.SD) * Correlation Matrix * Wt. SD)  
+Where,  
+Wt.SD is the weights standard deviation array.  
+We will implement the above formula in 3 steps – 
+1. Calculate the product of Transpose of Wt.SD with correlation matrix. This will result in a row 
+matrix with 5 el ements  
+2. Multiply the result obtained above (row matrix) with the weighted standard deviation array. 
+This will result in a single number  
+3. Take the square root of the result obtained above to get the portfolio variance  
+So, let’s jump straight ahead and solve f or portfolio variance in the same order – 
+I will create row matrix called ‘M1’ with 5 elements. This will contain the product of the 
+Transpose of Wt.SD with correlation matrix.  
+
+ 
+34                                                               zerodha.com/varsity 
+ 
+ 
+Do note, you will have to select the empty array space and hold down the ctrl +shift+enter 
+keys simultaneously.  
+We now create another value called ‘M2’, which contains the product of M1 and weighted 
+standard deviation – 
+ 
+
+ 
+35                                                               zerodha.com/varsity 
+ 
+We obtain the value of M2 as 0.000123542, the square root of this value is the portfolio 
+variance.  
+ 
+ 
+The resul t for the above operation yields a value of  1.11%,  which is the portfolio variance of 
+the 5 stocks portfolio.  
+Phew!!  
+I need a break at this. Let’s figure out the next steps in the next chapter J  
+Download  the excel sheet used in this chapter.  
+ 
+Key takeaways from this chapter – 
+1. Correlation matrix gives out the correlation between any two stocks in a portfolio  
+2. Correlation between stock A with stock B is the  same as the correlation between stock 
+B with stock A  
+3. Correlation of a stock with itself is always 1  
+4. The diagonals of a correlation matrix should represent the correlation of stock A with 
+itself  
+5. The correlation matrix contains symmetrical values above and below the diagonals  
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+36                                                               zerodha.com/varsity 
+ 
+CHAPTER 6  
+ 
+Equity Curve  
+6.1 – Overview  
+This is off topic – but a little digression hurts no one, I guess. Of all the chapters I have written 
+in Varsity, I guess this one will be a very special one for me. Not because of the topic  that I 
+will be discussing. It is because of the place where I’m sitting right now and writing this for 
+you all. Its 6:15 AM – surrounding me 360 degrees are misty mountains; the landscape I guess 
+cannot get any better. There is only one shack here with a little music player, playing Bob 
+Marley’s Redemption Song.  Can it get any better? At least not for me I guess   
+ 
+Anyway, back to school   
+We discussed Portfolio Variance in the previous chapter. It would be pointless to crunch all 
+the numbers to extract the variance of the portfolio, unless we put that to good use. This is 
+exactly what we will achieve over the next 2 chapters.  
+Over the next 2 chapters, we will try and do the following – 
+
+ 
+37                                                               zerodha.com/varsity 
+ 
+1. Discuss Equity curve and an alternate method to calculate portfolio v ariance  
+2. Estimate the portfolio’s expected returns over 1 year  
+3. Optimize the portfolio for maximum returns and minimum variance  
+Note, this chapter is a continuation of the discussion panned out in the previous chapters. 
+You need to know the context here. If you are reading this chapter without knowing what 
+happened over the last few chapters, then I’d suggest you go back and read those chapters 
+first.  
+6.2 – Equity Curve  
+ We will use this opportunity to develop an equity curve for the 5 stock portfolio that we  have. 
+In a very lose sense, a typical equity curve helps you visualize the performance of the portfolio 
+on a normalized scale of 100. In other words, it will help you understand how Rs.100/ - 
+invested in this portfolio would have performed over the given p eriod. You can further use 
+this to benchmark the portfolio’s performance against its benchmark – say Nifty 50 or BSE 
+Sensex.  
+There are certain attributes which can be extracted out of the equity curve to develop deeper 
+insights on the portfolio. More on th at later.  
+Let us proceed to build an equity curve for the 5 stock portfolio. Remember, we had the 
+following stocks and we also assigned random weights to these stock to form our portfolio. 
+Here are the stock names along with the weightages – 
+ 
+So what does  ‘Investment weight’ means? – It represents the percentage of your corpus 
+invested in the stock. For example, out of Rs.100,000/ -, Rs.7,000/ - has been invested in Cipla 
+and Rs.22,000/ - has been invested in Alkem Lab. So on and so forth.  
+
+ 
+38                                                               zerodha.com/varsity 
+ 
+While developing an  equity curve, the usual practice is to normalize the portfolio for Rs.100. 
+This helps us understand how an investment of Rs.100/ - in this portfolio behaved during the 
+period of investment. I have incorporated this in the excel sheet (please note, the exce l used 
+here is a continuation of the excel used in the previous chapter)  
+Have a look at the image below – 
+ 
+I have introduced a new column next to the daily return column and included the weight of 
+the respective stock. At the end, you will find two new co lumn being introduced – starting 
+value pegged at 100 and total weight at 100%.  
+Starting value – this is basically the amount of money we are starting with. I have set this to 
+Rs.100/ -. This means, out of the 100 Rupees in total corpus, Rupees 7 is being in vested in 
+Cipla, Rupees 16 in Idea, Rupee 25 in Wonderla so on and so forth.  
+Now, if I add up the individual weights, then they should all add up to 100%, indicating that 
+100% of Rs.100 is being invested.  
+We now have to see how the investment in each stock  has performed. To help you understand 
+this better, let’s  take up the case of Cipla for now. The weight assigned to Cipla is 7%, which 
+means out of Rs.100, Rs.7 is invested in Cipla. Based on the daily price movement of Cipla, 
+our money i.e. Rs.7/ - either increases or decreases. It is important to note that, if on day 1, if 
+Rs.7 becomes, Rs.7.5/ - then the following day, our starting price is Rs.7.5 and not Rs.7/ -. I’ve 
+done this on excel for Cipla, and this is how the calculation looks.  
+ 
+On 1st Sept, Cipla  was trading at 579.15, this is the day we decided to invest Rs.7 in the stock. 
+I understand that this is technically not possible, but for the sake of this example, let us just 
+assume this is possible and proceed. So on day one i.e. 1st Sept, 7 is investe d, on 2nd Sept 
+
+ 
+39                                                               zerodha.com/varsity 
+ 
+Cipla closed at 577.95, down -0.21% from the previous day. This also means we lose -0.21% 
+on our investment of Rs.7/ - making it Rs.6.985. On 6th Sept Cipla shot up by 0.11% to 578.6, 
+hence we gain 0.11% on 6.985 to make it 6.993. So on and s o forth the rest of the data points.  
+I’ve done this math for all the stocks in portfolio and here is how the table looks – 
+ 
+I’ve calculated the daily fluctuation in the invested price across all stocks and I’ve highlighted 
+the same in blue.  
+Now, think abo ut what is happening here – I’ve basically split Rs.100/ - across 5 stocks and 
+invested in different proportions. If I sum up the daily variation in each stock, I should be able 
+to get the overall daily fluctuation of Rs.100, right? Doing this gives me the overall perspective 
+on how my portfolio is moving. Let me add these up and see how Rs.100 invested across 5 
+stocks moves on a daily basis – 
+ 
+Adding up the values on a daily basis gives me the time series of the daily fluctuation of the 
+portfolio.  
+ 
+An ‘Equity Curve’ (EQ curve) can be developed if you plot the chart of this – i.e. the time series 
+data of the daily normalized portfolio value. I say normalized because I’ve scaled down the 
+investment to Rs.100/ -. 
+
+ 
+40                                                               zerodha.com/varsity 
+ 
+So, here is the EQ curve for the portfolio that  we have – 
+ 
+As easy as that. Eq curve is a very popular way of visualizing the portfolio performance. It 
+gives a quick estimate of the returns generated by the portfolio. In this case, we started with 
+and investment of Rs.100/ - and at the end of 6 months the portfolio was valued at 113.84. 
+Have a look at the image below – 
+ 
+So without much thinking, I know the portfolio has done close to 13.8% during the given 
+period.  
+6.3 – Portfolio as a whole  
+Now, here is something I’d like you to think about. In the pre vious chapter, we calculated the 
+portfolio variance. While doing so, one of the key things we had to calculate was the standard 
+deviation of each stock. Standard deviation as you may know, represents the volatility of the 
+stock which is nothing but the ris k associated with the stock.  
+To calculate the standard deviation, we used the inbuilt excel function ‘=STDEV()’ applied on 
+the daily return of the stock. Now, think about this – we anyway have the daily value of the 
+portfolio (although normalized to Rs.100 ). 
+Now imagine the portfolio itself in its entirety, as a whole, as a single stock, and calculate its 
+daily returns. Just like how we calculated the daily returns of the stocks in the previous 
+
+ 
+41                                                               zerodha.com/varsity 
+ 
+chapter. Further, what if I apply the ‘=STDEV()’ function on th e portfolio’s daily return? The 
+resulting value should be the standard deviation of the portfolio which in other words should 
+represents risk also called as Variance of the portfolio.  
+Are you able to sense where we are heading? Yes, we are talking about ca lculating portfolio 
+variance using a different approach all together   
+To help you comprehend this better, let me paste the portfolio variance value we calculated 
+in the previous ch apter – 
+ 
+We calculated the above value using the matrix multiplication and the correlation matrix 
+technique.  
+We will now look at the portfolio as a whole and calculate the daily returns of the normalized 
+portfolio value. The standard deviation of the portfolio’s daily returns should yield us a value 
+equal to or somewhere near the  portfolio variance calculated previously.  
+I’ve included a new column next to the daily normalized portfolio value and calculated the 
+Portfolio’s daily returns – 
+ 
+Once I have the returns in place, I will apply the standard deviation function on the time s eries 
+data, this should yield a value close to the portfolio variance value we previously calculated.  
+
+ 
+42                                                               zerodha.com/varsity 
+ 
+ 
+So there you go, the STDEV function gives us the exact same value!  
+You can  download  the excel sheet used in this chapter. In the next chapter, we will use the 
+portfolio variance to estimate the expected returns along with optimization.  
+Quick Task – I’d like to leave you with a quick task here. We have assigned ra ndom weights 
+to the stocks. Go ahead and change the weights of the stocks and see the impact on the 
+overall returns. Do share your observation in the comment box below.  
+ 
+Key takeaways from this chapter  
+1. An equity curve is a standard way to visualize the pe rformance of a portfolio  
+2. A standard industry wide practice is to normalize the portfolio to a starting investment 
+value of Rs.100/ - 
+3. We assign weights and the respective investment to each stock  
+4. We need to calculate the daily change in investment value in e ach stock  
+5. The sum total of all the variation in each stock adds up to the variation of the entire 
+portfolio  
+6. The graph of the change in daily prices of the portfolio yields the equity curve  
+7. We can look at the portfolio as a whole, as a single stock and calc ulate its SD  
+8. The SD of portfolio also yields the portfolio variance  
+
+ 
+43                                                               zerodha.com/varsity 
+ 
+CHAPTER 7  
+ 
+Expected Returns  
+7.1 – Expected returns  
+ 
+The next two chapter will be very insightful, especially for people who have never been 
+familiar with portfolio techniques. We will v enture into the realms of expected return 
+framework and portfolio optimization. Portfolio optimization in particular (which we will 
+discuss in the next chapter) is like a magic wand, it helps you decide how much to invest in a 
+particular stock (within a po rtfolio) so that you achieve the best possible results in terms of 
+risk and return. These are topics which the high priests of finance prefer to keep for 
+themselves, but today we will discuss them here and truly work towards democratizing 
+quality financial  knowledge.  
+But please note, to best understand the discussion here, you need to have a sense of all the 
+things we have discussed over the previous couple of chapters. If you have not read them yet, 
+please, I’d urge you to read them first. This is good qua lity information and you would be a 
+better market participant if you simply spent few hours reading them. The excel sheet used 
+here is a continuation of the one used in the previous chapters.  
+So assuming you are all set, let us get started.  
+
+ 
+44                                                               zerodha.com/varsity 
+ 
+It is time we p ut the portfolio variance to good use. To begin with let us take a good look at 
+the portfolio variance number calculated in the previous chapters – 
+ 
+What does this number tell you?  
+The number gives you a sense of the degree of the risk associated with the  portfolio. 
+Remember, we worked on the daily data, hence the Portfolio Variance of 1.11% represents 
+risk on a daily basis.  
+Risk or variance or volatility  is like a coin with two faces. Any price movement below our 
+entry price is called risk while at the sa me time, the same price movement above our entry 
+price is called return. We will soon use the variance data to establish the expected range 
+within which the portfolio is likely to move over the year. If you’ve read the Options module 
+you will probably know  where we are headed.  
+However, before doing that, we need to figure out the expected return of the portfolio. The 
+expected return of the portfolio is simply, the grand sum of the average return of each stock, 
+multiplied by its weight and further multiplied  by 252 (number of trading days). In simple 
+terms, we are scaling the daily returns to its annual return, and then scaling it according to 
+the investment we have made.  
+Let us calculate the expected return for the portfolio that we have, I’m sure you will 
+understand this better. To begin with, I’ve lined up the data as follows – 
+ 
+The first 3 columns are fairly easy to understand I suppose. The last column is simply the 
+multiplication of the daily average return by 252 – this is a step to annualize the retur n of the 
+stock.  
+
+ 
+45                                                               zerodha.com/varsity 
+ 
+For example,  (Cipla) – 0.06% * 252 = 15.49%.  
+What does this mean? For a moment assume, I have invested all the money in just Cipla and 
+no other stocks, then the weight of Cipla would be 100% and I can expect a return of 15.49%. 
+However, sin ce I’ve invested only 7% of my capital in Cipla, the expected return from Cipla 
+would be – 
+Weight * Expected Return  
+= 7% * 15.49%  
+=1.08%  
+We can generalize this at the portfolio level to get the expected return of the portfolio – 
+ 
+Where,  
+Wt = Weight of eac h stock  
+Rt = Expected annual return of the stock  
+I’ve applied the same formula for the 5 stock portfolio that we’ve got, and here is what we 
+have – 
+
+ 
+46                                                               zerodha.com/varsity 
+ 
+ 
+At this stage, we have arrived at two extremely important portfolio parameters. They are the 
+expected port folio return which is  55.14%  and the portfolio variance which is 1.11%.  
+In fact, we can scale the portfolio variance to represent the annual variance, to do this we 
+simply have to multiply the daily variance by Square root of 252.  
+Annual variance =  
+= 1.11%  * Sqrt (252)  
+= 17.64%.  
+We will keep both these important numbers aside.  
+It is now time to recall our discussion on normal distribution from the  options module.  
+I’d suggest you quickly read through the ‘Dalton board experiment’ and understand normal 
+distribution and how one can use this to develop an opinion on future outcome. 
+Understanding normal distribution and its characteristics is quite crucial at this point . I’d 
+encourage you to read through it before proceeding.  
+Portfolio returns are normally distributed, I’ll skip plotting the distribution here, but maybe 
+you can do this as an exercise. Anyway, if you do plot the distribution of a portfolio, you are 
+likely  to get a normally distributed portfolio. If the portfolio is normally distributed, then  we 
+can estimate the likely return of this portfolio over the next 1 year with certain degree 
+of confidence.  
+
+ 
+47                                                               zerodha.com/varsity 
+ 
+To estimate the return with certain degree of confidence we  simply have to add and subtract 
+the portfolio variance from the expected annualized return. By doing so we will know how 
+much the portfolio will generate or lose for the given year.  
+In other words, based on normal distribution, we can predict (although I hate using the word 
+predict in markets) the range within which the portfolio is likely to fluctuate. The accuracy of 
+this predication varies across three levels.  
+ Level 1 – one standard deviation away, 68% confidence  
+ Level 2 – Two standard deviation away, 9 5% confidence  
+ Level 3 – Three standard deviation away,99% confidence  
+Remember, variance is measured in terms of standard deviation. So it is important to note 
+that the annualized portfolio variance of 17.64% is also the 1 standard deviation.  
+So, 17.64% rep resents 1 standard deviation. Therefore, two standard deviations  are 17.64% 
+* 2 = 35.28% and 3 standard deviation would be 17.64% * 3 = 52.92%.  
+If you are reading this for the first time, then yes, I’d agree it would not be making any sense. 
+Hence it is im portant to understand normal distribution and its characteristics. I’ve explained 
+the same in the options chapter (link provided earlier).  
+7.2 – Estimating the portfolio range  
+Given the annualized variance (17.64%) and expected annual return (55.14%), we c an now go 
+ahead and estimate the likely range within which the portfolio returns are likely to vary over 
+the next year. Remember when we are talking about a range, we are taking about a lower and 
+upper bound number.  
+To calculate the upper bound number, we simply had to add the annualized portfolio 
+variance to the expected annual return i.e. 17.64% + 55.15% = 72.79%. To calculate the lower 
+bound range we simply have to deduct the annualized portfolio variance from the expected 
+annual return i.e. 55.15% – 17.64% = 37.51%.  
+So, if you were to ask me – how are the returns likely to be if I decide to hold the 5 stock 
+portfolio over the next year, then my answer would be that the returns are likely to fluctuate 
+between  +37.51% and +72.79% . 
+Three quick question may crop up at this stage – 
+ 
+48                                                               zerodha.com/varsity 
+ 
+1. The range suggests that the portfolio does not lose money at all, how is this even 
+possible? In fact, the worst case scenario is still a whopping +37.51%, which in reality 
+is fantastic.  
+1. True, I agree it sounds weird. But the fact is , the range calculation is statistics 
+based. Remember we are in a bull market (April – May 2017, as I write this), and 
+the stocks that we have selected have trended well. So quite obviously, the 
+numbers we have got here is positively biased. To get a true sense of the range, 
+we should have taken at least last 1 year or more data points. However, this is 
+beside the point here – remember our end objective is to learn the craft and not 
+debate over stock selection.  
+2. Alright, I may have convinced you on the range  calculation, but what is the guarantee 
+that the portfolio returns would vary between 37.15% and 72.79%?  
+1. As I mentioned earlier, since we are dealing with level 1 (1 standard deviation), 
+the confidence is just about 68%.  
+3. What if I want a higher degree of c onfidence?  
+1. Well, in this case you will have to shift gears to higher standard deviations.  
+Let us do that now.  
+To calculate the range with 95% confidence, we have to shift gears and move to the 
+2nd standard deviation. Which means we have to multiply the 1 s tandard deviation number 
+by 2. We have done this math before, so we know the 2 nd SD is 35.28%.  
+Given this, the range of the portfolio’s return over the next 1 year, with 95% confidence would 
+be – 
+Lower bound = 55.15% – 35.28% =  19.87%  
+Upper bound = 55.15% + 35.28% =  90.43%  
+We can further increase the confidence level to 99% and check the return’s range for 3 
+standard deviation, recall at 3 SD, the variance is 52.92% – 
+Lower bound = 55.15% – 52.92%% =  2.23%  
+Upper bound = 55.15% + 52.92% =  108.07%  
+As you may notice, the higher the confidence level, the larger the range. I’ll end this chapter 
+here with a set of tasks for you – 
+ 
+49                                                               zerodha.com/varsity 
+ 
+1. Plot the frequency distribution for this 5 stock portfolio – observe the distribution, 
+check if you see a bell curve  
+2. We are dealing with  the range for a year, what if you were to estimate the range for 3 
+months, or maybe 3 weeks? How would you do it?  
+It will be great if you can attempt these tasks, please do leave your thoughts in the comment 
+box below.  
+You can  download  the excel sheet used in this chapter.  
+ 
+Key takeaways from this chapter  
+1. The returns of the portfolio are dependent on the weights of the individual stocks in 
+the portfolio  
+2. The calculate the effect of an individual stock on the overall portfolio’s return, one has 
+to multiply the average return of the stock by its weight  
+3. The overall expected return of the portfolio is grand sum of the individual stock’s 
+returns (which is scaled by its weight)  
+4. The daily variance can be converted to annualized variance by multiplying it by square 
+root of 252  
+5. The variance of the portfolio which we calculate is by default the 1 st standard 
+deviation value  
+6. To get the 2 nd and 3 rd SD, we simply have to m ultiply it by 2 and 3  
+7. The expected return of the portfolio can be calculated as a range  
+8. To get the range, we simply have to add and subtract the variance from the portfolio’s 
+expected return  
+9. Each standard deviation comes with a certain confidence level. Fo r higher confidence 
+level, one has to look at moving higher standard deviation  
+ 
+ 
+ 
+ 
+ 
+50                                                               zerodha.com/varsity 
+ 
+CHAPTER 8  
+ 
+Portfolio Optimization (P art 1) 
+ 
+8.1 – A tale of 2 stocks  
+We have spent a great deal of time and efforts towards understanding risk associated with a 
+portfolio.  Our discussion has brought us to a very important stage – it’s time we discuss 
+portfolio optimization. Perhaps, a good start to this discussion would be to understand what 
+portfolio optimization is all about and why it makes sense to optimize a given port folio.  
+Before we proceed, let me ask you a question – what do you think is the overall portfolio 
+return, considering a portfolio consists investment in Infosys and Biocon (equally weighted). 
+Assume the expected return of Infosys is 22% and Biocon is 15%.  
+I know it sounds like a typical MBA class question, but this is an important question and you 
+should know how to answer this question at this stage J  
+Since the portfolio is equally weighted across two stocks, it implies we invest 50% in Infosys 
+and 50% in B iocon. Given this, the expected portfolio return would be – 
+= Weight of investment in Infosys  * Expected return of Infosys  + Weight of investment in 
+Biocon  * Expected return of Biocon  
+
+ 
+51                                                               zerodha.com/varsity 
+ 
+Do recall, in the previous chapter we did discuss “Expected Return of a stock” in detail. 
+Anyway, let us work out the answer – 
+50% * 22% + 50% * 15%  
+=11% + 7.5%  
+= 18.5% 
+So, the portfolio is expected to yield a return of 18.5% annually.  
+Great, now what if we change the weights? What if invest 30% in Infosys and 70% in Biocon? 
+Or let us say 70% in Infosys and 30% in Biocon?  
+Let’s figure this out, Case 1 – 
+30% * 22% + 70% * 15%  
+= 6.6% + 10.5%  
+17.1%  
+Case 2 – 
+70% * 22% + 30% * 15%  
+=15.4% + 4.5%  
+=19.9% 
+Needless to say, we can do this for multiple combinations of weights. In fact, her e is the table 
+with few of the other combinations possible – 
+ 
+
+ 
+52                                                               zerodha.com/varsity 
+ 
+As you can notice, as the investment weight varies, the returns also vary. For example,  if I had 
+decided to invest just 40% in Infy and 60% in Biocon, I’d have enjoyed a return of 17.8%. 
+Howeve r, if I had reversed it by investing 60% in Infy and 40% in Biocon, I’d have enjoyed a 
+return of 19.2%, which is an additional 2% return.  
+This leads us to a super important conclusion – as the investment weights vary, the returns 
+vary. In fact, each return  has an associated risk profile, so it is prudent to state – as the 
+weights vary, both the risk and return characteristics vary.  
+Now imagine this – for a given portfolio with ‘n’ number of stocks, wouldn’t it be awesome if 
+you were to look at the past data  and intelligently identify how much to invest in each stock, 
+so that the portfolio yields the best possible returns?  
+This is exactly what happens when you optimize your portfolio. Generally speaking, you can 
+adjust the weights (or optimize your portfolio)  such that, for the given set of stocks – 
+o You identify the investment weights to achieve the best possible return or  
+o You identify the investment weights to achieve the least possible risk  
+Sounds confusing? Fear not, just read ahead!  
+8.2 – Caution! Jargons ahead 
+Hopefully by now, you fully appreciate the reason why one should optimize the portfolio. So, 
+I won’t spend more time convincing you   
+Let us go ahead and optimize the portfolio we have been working with. However, there are 
+few important terms I want you to be familiar with at this stage – 
+Minimum variance portfolio  – Assume you have a portfolio of 10 stocks. It must be quite 
+obvious by now that you can play around with the weights of each stock to achieve different 
+results. When I say results, I’m tal king about the risk and return characteristics.   Each unique 
+set of weights represents a unique portfolio. For example,  an equally weighted portfolio (10 
+stocks, 10% weight in each) is a unique portfolio. A portfolio where you invest 30% in stock 1 
+and 7.8 % each across the remaining 9 stocks is another unique portfolio. The number of 
+combination possible are many and each combination of weights results in a unique risk and 
+return characteristics.  
+ 
+53                                                               zerodha.com/varsity 
+ 
+Given this, there should be that one set of combination of st ock weights possible, such that 
+the risk for the portfolio is the least possible. More technically, there should be combination 
+of weights possible such that the variance of the portfolio is minimum. This particular 
+portfolio is also referred to as the “Mi nimum Variance Portfolio”. The minimum variance 
+portfolio represents the least amount of risk you can take. So if you are a highly risk averse 
+investor, you should aim to create a minimum variance portfolio.  
+Maximum Return portfolio  – This is somewhat the opposite of a minimum variance 
+portfolio. Just like a minimum variance portfolio, there should be a combination of weights 
+such that we can achieve a portfolio with maximum return possible. This also means that for 
+a maximum return portfolio, the risk too will be on the higher side.  
+Fixed variance, multiple portfolios – This is not really a jargon, but a concept that you need 
+to be aware of at this stage. It may come across as a little confusing at this point, but I’m 
+certain, later on in this chapter (or m aybe next) you will understand this much better, 
+especially when we perform portfolio optimization.  
+For a given level of risk or variance of a portfolio, you can create  at least two  unique 
+portfolios. One of such portfolio will yield the highest possible r eturn and the other portfolio 
+will yield the lowest return for the same given level of risk.  
+Here is an example on a completely arbitrary basis – let us say the risk or variance of a 
+portfolio is 15%, given this, there will be a portfolio which can yield 3 0% return (highest 
+possible return) and another portfolio which can yield 12% return (lowest possible 
+return).  Do note, for both these portfolios, the risk is fixed to 15% but the returns vary.  
+Between these two portfolios there could be multiple other (u nique) portfolios with varying 
+return profile.    In super simple terms – for a fixed amount of risk, there could be multiple 
+portfolio combinations, and within these possible combinations, there will be a portfolio 
+with maximum return and another with mini mum return.  
+ 
+54                                                               zerodha.com/varsity 
+ 
+ 
+We will revisit this concept a little later in the chapter, but for now, just keep this thought at 
+the back of your mind.  
+8.3 – Portfolio optimization (steps)  
+Let us recall the portfolio that we have – the stock names and the associated weigh ts are as 
+follows. Do note, this is a continuation of the portfolio we have been working with over the 
+previous few chapters.  
+ 
+Do remember, the weights assigned are all random, there was no thought process to it. For 
+this portfolio with these combination of weights, the annual portfolio variance was estimated 
+at 17.64%  and expected return as  55.14%.  
+Our objective now is to optimize this portfolio to achieve a desired outcome. To optimize a 
+portfolio in excel, we need the ‘Solver Tool’ in excel. You will fi nd the solver tool under the 
+
+ 
+55                                                               zerodha.com/varsity 
+ 
+‘Data ribbon’.
+ 
+Many of you may not find the ‘solver’ tool under the data ribbon. This is because you’ve not 
+added it from the excel add ins. To add solver, follow these simple steps – 
+1. Click on Files on the opened excel sheet  
+2. Select Options  
+3. Select Add -ins (last but one option)  
+4. Click on ‘Solver Add Ins’  
+5. Click on “Go”  
+6. Check on “Solved Add ins” once again  
+7. Click Ok and close  
+8. Close the excel sheet, if required restart your system  
+9. Check under data ribbon – you should be able to find t he solver tool  
+To begin with, let us optimize the portfolio to get the “Minimum Variance portfolio”. Here are 
+few simple steps that you can follow to achieve this.  
+Step 1  – Organize your data. This is the key to using solver. Your cells should be linked;  data 
+should be neatly organized. No hard coding of data. Here is how the data on excel sheet looks 
+at this stage.  
+
+ 
+56                                                               zerodha.com/varsity 
+ 
+ 
+I’ve highlight two important parts, which we will use for optimizing. The top most part has 
+the weights assigned to each stock. Needless to s ay, this will change once the portfolio is 
+optimized. The 2 nd part has the expected return and annual portfolio variance calculation, 
+which will also change when we optimize the portfolio.  
+Step 2  – Use the solver tool in excel to optimize the weights. I’m assuming you may be new 
+to solver, hence will give you a quick overview of this tool. You can use solver to work with 
+something called as an ‘objective’. An objective, according to solver is essentially a data 
+point, derived by set of formulas. You can min imize the objective’s value or maximize the 
+objective’s value or set the value of an objective to a certain desired value. You can do this 
+while changing certain variables. The variables, according to solver are the elements of the 
+formulas used in derivin g the objective.   For example, I can choose to minimize the variance 
+
+ 
+57                                                               zerodha.com/varsity 
+ 
+of the portfolio by changing the weights of each stock. Here, the variance is the objective and 
+the weights are the variable.  
+When we command the solver to minimize the objective (varianc e in this case), then in the 
+background, excel’s solver will quickly check the formulas used and works around it in such 
+a way that the objective’s value is least minimum.  
+Look at the image below, I’m invoking the solver tool and will soon ask it to minimi ze the 
+variance.  
+ 
+When you click on the data ribbon and click on solver, you will see the solver tool open up, 
+as seen above. We need to set the objective here. Objective as I mentioned earlier, is the 
+annual portfolio variance. Remember, we are working t owards finding the minimum variance 
+portfolio here.  
+Check the image below – 
+
+ 
+58                                                               zerodha.com/varsity 
+ 
+ 
+Objective is set to ‘Annual portfolio variance’ – you can notice the cell address is highlighted 
+in the ‘set objective’ field. The cell containing the annual portfolio variance i tself is 
+highlighted below, you will find another red arrow here. We are minimizing the objective 
+here, the same is highlighted by the green arrow.  
+Once this is set, the next step is to inform the solver tool that we need minimize the objective 
+by changing  the variables. In this case, the variable happens to be the weights assigned to 
+each stock.  
+ 
+As you can see, in the “By changing variable cells” field, I’ve highlighted the weights assigned 
+to each stocks.  
+
+ 
+59                                                               zerodha.com/varsity 
+ 
+You can also find “subject to constraints”, fiel d. This essentially means, that solver will 
+minimize the variance, by change the weights of each stock, and at this stage, it is also asking 
+us if there are any constraints it needs to keep in mind while solving to minimize the variance.  
+One constraint tha t I can think of at this stage is that the total weight of all stocks put together 
+should be 100%. This essentially means that my capital is 100% deployed across all the 5 
+stocks. If I do not specific this, then there is a chance that solver may suggest to  skip 
+investments across few stock altogether. Remember, solver is an excel tool, and it does not 
+appreciate stock picking  
+To add a constraint, click on ‘add’. When you do so the following window opens up – 
+ 
+Under Cell reference, I will give the sum of we ights of stocks – which needs to be equal to 
+100%. Next to this, you can see a drop down menu with multiple options, I’d pick ‘=’ here. 
+Finally, the constraint itself will be 100%. Note, I’ve typed out 100% here.  
+In simple words, I’m asking solver to optim ize for minimum variance, keeping the weight of 
+all stock to 100%. The window now looks like this – 
+ 
+The solver is completely set up now. The final screen before pressing “Solve” looks like this – 
+ 
+ 
+
+ 
+60                                                               zerodha.com/varsity 
+ 
+ 
+I’ve highlighted the weights of each stock for referen ce. Remember, these are pre optimized 
+weights that we randomly assigned at the beginning of this discussion. Post optimizing, the 
+weights will be changed such that the variance is least possible for these set of stocks. Let us 
+go ahead and press ‘solve’ an d check what solver has for us.  
+And here you go – 
+ 
+Solver has solved for the ‘minimum variance’ portfolio and accordingly it has worked out the 
+weights for each stock.  
+For example, it wants us to increase the weight in Cipla from current 7% to 29.58%, whi le it 
+wants us to reduce the weight in Idea to 5.22% from 16%. So on and so forth. Further, it is 
+also telling us that the least possible variance with this portfolio is  15.57%  (remember, the 
+
+ 
+61                                                               zerodha.com/varsity 
+ 
+variance was earlier at 17.64%).  Along with this, the portfolio ’s expected return too seem to 
+have dropped to  36.25%  from the earlier 55.14%.  
+So, no matter what you do, the variance cannot be lowered below 15.57%. In other words, if 
+these are the 5 stocks that you want to invest in, then the least amount of risk you w ill be 
+exposed to is 15.57% and absolutely nothing below that!  
+I’ll leave you at this. In the next chapter, we will optimize the same portfolio for few more 
+scenarios and work towards building something called as an ‘Efficient Frontier’.  
+You can  download  the excel sheet used in this chapter.  Do note, the excel contains the 
+optimized weights for the minimum variance portfolio.  
+ 
+Key takeaways from this chapter  
+1. The returns of the portfolio are dependent on the weights assigned to each stock  
+2. Minimum variance portfolio is that portfolio where the variance or risk is least 
+possible for the given set of stocks  
+3. Maximum return portfolio is that portfolio where the expe cted portfolio returns are 
+maximized for the given set of stocks  
+4. When we fix the variance of a portfolio we can achieve at least two portfolios where 
+the expected portfolio returns can be maximum or least  
+5. One can optimize a given portfolio with ‘n’ number of stocks on excel, by using the 
+solver tool  
+6. One of the most important points to remember while using solver is to ensure the 
+data is well organized. One can do this by linking all the relevant cells and avoiding 
+hard coding of values  
+7. You can optimize the portfolio by subjecting the variable to constrains  
+ 
+ 
+ 
+ 
+ 
+62                                                               zerodha.com/varsity 
+ 
+CHAPTER 9  
+ 
+Portfolio Optimization (Part 2)  
+ 
+9.1 – Working with the weights  
+In the previous chapter we introduced the concept of portfolio optimization using excel’s 
+solver tool. We will build on the same concept in this chapter and proceed to understand an 
+important portfolio concept, often referred to as the ‘Efficient Frontier’.  
+Recall in the previous chapter, we discussed how a portfolio can produce multiple return 
+series for a fixed portfolio vari ance.   We will now go ahead and see how this works. This 
+concept will eventually lead us to understanding portfolio optimization better.  
+In the previous chapter, we optimized the portfolio to produce the minimum variance 
+portfolio. The results, in terms of  weights of individual stocks were as follows – 
+
+ 
+63                                                               zerodha.com/varsity 
+ 
+ 
+And the expected portfolio returns  and the portfolio variance is as follows – 
+ 
+Here is where things start to get a little interesting. So far what we have achieved in terms of 
+portfolio optimization is mer ely a minimum variance portfolio. Like we discussed in the 
+previous chapter, for every fixed risk level, there could be multiple unique portfolio with 
+varying return characteristics. We will now go ahead and explore this in greater detail.  
+We know at 15.57 % portfolio variance, the return expected is 36.35%. We will now go ahead 
+and increase the risk maybe to 17%, and calculate the highest and lowest possible returns 
+for this. In other words, we are essentially trying to identify the highest and lowest possi ble 
+return for a fixed portfolio variance of 17%. Also, do pay attention here – when I say increase 
+the risk, we are essentially fixing the risk to certain desired level. 17% for now.  
+9.2 – More optimization  
+The general direction we are headed is this – we know the minimum risk possible for this 
+portfolio is 15.57%. We have also noted the return achievable at this level of risk i.e – 36.35%. 
+Like I mentioned earlier, we will now increase the risk a notch higher and note down the 
+maximum and minimum return f or this risk. Along with the return, we will also note the 
+investment weights. We will then increase the risk another notch higher and again note the 
+max and min return along with the weights. We will do few such iterations and note down all 
+the observatio n. 
+
+ 
+64                                                               zerodha.com/varsity 
+ 
+Eventually, I would like to plot a scatter plot of fixed risk along with its respective max return 
+and min return data points and study this scatter plot in greater detail. This scatter plot will 
+help us understand portfolio optimization.  
+So let us get started by fixing the risk at 17%. Please note, I’ve opted 17% just like that, it 
+could very well have been 16% or 18%.  
+ 
+ 
+ 
+Step 1  – Invoke the solver  
+ 
+As I explained in the previous chapter, I’ve invoked the solver calculator by clicking on the 
+data ribbo n. I’ve highlighted the optimized weights for the minimum variance portfolio, this 
+is just for your reference.  
+Step 2 – Set the parameters  
+To begin with let us find out the maximum return one can achieve for a fixed 17% risk. For 
+this, we need to set the o bjective to  maximize  the ‘expected portfolio return’. The same is 
+highlighted as shown below – 
+
+ 
+65                                                               zerodha.com/varsity 
+ 
+ 
+Step 3 – Select the weights  
+The next step is to ensure that we tell the solver tool that we want to optimize the portfolio 
+for maximum return by varying the we ights. This is very similar to what we did in the previous 
+chapter.  
+ 
+Do note, the weights here are the variable cells.  
+ 
+ 
+
+ 
+66                                                               zerodha.com/varsity 
+ 
+Step 4 – Set the constraints  
+Now, here is the important part of the optimization where we set the constraints. We now tell 
+solver that  we need to maximize the returns @ 17% risk, by varying the investment weights. 
+We do these while keeping the following two constraints – 
+1. The total weights add up to 100%  
+2. The Portfolio risk is fixed to 17%  
+The constraints section now looks like this – 
+ 
+With these constraints loaded and rest of the parameters specified, we can go ahead and click 
+on ‘solve’ to figure out the maximum return possible @ 17%, along with the respective 
+weights.  
+
+ 
+67                                                               zerodha.com/varsity 
+ 
+The result upon optimization is as follows – 
+ 
+The maximum possible r eturns @17% portfolio variance happens to be 55.87%. However, to 
+achieve this, the weights are as show above. Notice how the weights for this portfolio has 
+changes when compared to the minimum variance portfolio.  
+We will now proceed to figure out the minim um return possible for the same fixed amount of 
+risk, which is 17% in our case. Before we proceed, here is a table that I’m compiling of all the 
+various portfolios that we are building, along with its respective weights and risk return 
+characteristics.  
+ 
+We are now working on portfolio 3 (P3), which is the minimum risk possible for a fixed risk of 
+17%. Here is the solver tool, fully loaded and ready to be optimized.  
+
+ 
+68                                                               zerodha.com/varsity 
+ 
+ 
+Notice, while other variables remain the same, the objective is shifted to minimize from 
+maximize. Upon optimization, the return is now minimized to 18.35%. Clearly, for the same 
+given risk, we have now established two unique portfolios with different possible return 
+characteristics, all these while just changing the investment weights in the s tocks.  
+Here are the three unique portfolios that we have generated so far – 
+ 
+Just to recall – P1 is the minimum variance portfolio, P2 max risk @17%, and P3 is min risk at 
+17%. 
+ 
+
+ 
+69                                                               zerodha.com/varsity 
+ 
+9.3 – Efficient Frontier  
+As discussed earlier, we can now increase the risk a  notch higher to maybe 18%, 19%, and 
+21% and identify the maximum and minimum risk at both these risk levels. Remember, our 
+end objective is attain a scatter plot of the risk and return profile and study its characteristics. 
+I’ve gone ahead and optimized t he portfolios for all the risk points, and at each point, I’ve 
+identified the maximum and minimum return possible. Please note, I’ve rounded off the 
+decimal values here, just so that the table looks pretty   
+ 
+If you notice, I’ve highlighted the risk and r eturn values of each portfolios. I’ll now go ahead 
+and plot a scatter plot of these data points and see, what I can see.  
+To plot a scatter plot, simply select the data points and opt for the scatter plot under the 
+insert ribbon. This is how it looks – 
+ 
+
+ 
+70                                                               zerodha.com/varsity 
+ 
+Once you click on the scatter plot, you will be able to see the how the plot appears. Here is 
+how it looks, of course, I’ve tried to format the graph to make it look more presentable.  
+ 
+This curve that you see above my friend, is called the ‘efficient fronti er’ of this portfolio. So 
+what do we understand from this curve and why is it so important? Well, quite a few things, 
+lets deal with it one by one – 
+1. As you can see, the X -axis represents risk and the Y -axis represents returns  
+2. Starting from the left most po int, the one which seems to be a little isolated from the 
+rest, represents the minimum variance portfolio. We know this portfolio has a risk of 
+15.57% with a return of 36.25%.  
+3. We now move focus to 17% risk (notice the x axis), you can find two plots, one a t 
+18.35% and another at 55.87% – what does this tell you?  
+1. It tells us that at 17% risk (or when we are particular about fixing the risk at 17%), the 
+best possible portfolio can achieve a return of 55.87%  
+2. The worst possible portfolio (in terms of return) is  18.35%  
+3. In simple terms, when you fix a level of risk you are comfortable, you should aim to 
+maximize the return  
+4. There are multiple other portfolios that are possible between 18.35% and 55.87% 
+(when we fix risk at 17%) these would be represented as plots b etween the minimum 
+and maximum return. All these portfolios are considered inefficient, the minimum 
+return portfolio being the worst amongst the rest  
+5. So as an investor, your aim should be to maximum the return, especially when you 
+have some clarity on how much risk you are willing to bear  
+4. You can notice the same behavior for risks at 18%, 19%m and 21%  
+
+ 
+71                                                               zerodha.com/varsity 
+ 
+5. The best possible portfolios, or in other words, the efficient portfolio will always lie on 
+the line above the minimum variance portfolio. This line is highli ghted below  
+ 
+So, you as an investor, should always aim to create a portfolio, which lies on the efficient 
+frontier, and as you may realize, creating this portfolio is merely a function of rearranging 
+weights as per the results obtained in portfolio optimi zation.  
+Think about it – when you risk your money, you obviously want the best possible return, 
+right? This is exactly what the curve above is trying to convey to us. Its prompting us to create 
+portfolios more efficiently.  
+In the next chapter, we will take  a quick look at a concept called “Value at risk” and then 
+proceed to understanding risk from a trader’s perspective.  
+You can  download  the excel sheet used in this cha pter.  
+ 
+ 
+ 
+ 
+
+ 
+72                                                               zerodha.com/varsity 
+ 
+Key takeaways from this chapter  
+1. A portfolio with certain weights to each stock is considered unique  
+2. When we fix the desired level of risk, we can optimize the portfolio to yield the 
+minimum return and maximum return portfolios  
+3. Between the min a nd max return portfolio (for a given fixed level of risk), we can have 
+multiple unique portfolios  
+4. The scatter plot of risk and return gives us the efficient frontier  
+5. For a given level of risk, the best possible portfolio one can construct would lie on the 
+efficient frontier, all other portfolios are deemed inefficient  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+73                                                               zerodha.com/varsity 
+ 
+CHAPTER 10  
+ 
+Value at Risk  
+10.1 – Black Monday  
+Let’s start this chapter with a flashback. For many of us, when we think of the 70’s, we can 
+mostly relate to all the great rock an d roll music being produced from across the globe. 
+However, the economists and bankers saw the 70’s very differently.  
+The global energy crisis of 70’s had drawn the United States of America into an economic 
+depression of sorts. This lead to a high inflatio nary environment in the United States followed 
+by elevated levels of unemployment (perhaps why many took to  music and produced great 
+music ). It was only towards the late 70’s that things started to improve again and the 
+economy started to look up. The Unit es States did the right things and took the right steps to 
+ease the economy, and as a result starting late seventies / early eighties the economy of 
+United States was back on track. Naturally, as the economy flourished, so did the stock 
+markets.  
+Markets ra llied continuously starting from the early 1980s all the way to mid -1987. Traders 
+describe this as one of the dream bull runs in the United Sates. Dow made an all -time high of 
+2,722 during August 1987. This was roughly a 44% return over 1986.    However, ar ound the 
+same time, there were again signs of a stagnating economy. In economic parlance, this is 
+referred to as ‘soft landing’ of the economy, where the economy kind of takes a breather. 
+Post-August 1987’s peak, the market started to take a breather. The months of Aug, Sept, Oct 
+1987, saw an unprecedented amount of mixed emotions. At every small correction, new 
+leveraged long positions were taken. At the same time, there was a great deal of unwinding 
+of positions as well. Naturally, the markets neither ral lied nor corrected.  
+While this was panning on the domestic front, trouble was brewing offshore with Iran 
+bombing American super tankers stationed near Kuwait’s oil port. The month of October 
+1987, was one of its kind in the history of financial markets. I find the sequence of events 
+which occurred during the 2 nd week of October 1987 extremely intriguing, there were way too 
+much drama and horror panning out across the globe – 
+ 
+74                                                               zerodha.com/varsity 
+ 
+ 14th Oct 1987 (Wednesday) – Dow dropped nearly 4%, this was a record drop during th at 
+period  
+ 15th Oct 1987 (Thursday) – Dow dropped another 2.5%. Dow was nearly 12% down from 
+the August 1987’s high. On the other side of the globe, Iran attacked an American super 
+tanker stationed outside Kuwait’s oil port, with a Silkworm missile  
+ With the se two events, there were enough fear and panic spread across the global 
+financial markets  
+ 16th Oct 1987 (Friday) – London was engulfed by an unexpected giant storm, winds 
+blowing at 175 KMPH caused blackouts in London (especially the southern part, which is 
+the financial hub). London markets were officially closed. Dow opened weak, and crashed 
+nearly 5%, creating a global concern. Treasury Secretary was recorded stating economic 
+concerns. Naturally, this would add more panic  
+ 19th Oct 1987 ( Black Monday ) – Starting from the Hong Kong, markets shaved off points 
+like melting cheese. Panic spread to London, and then finally to the US. Dow recorded the 
+highest ever fall with close 508 or 22.61% getting knocked off on a single day, quite 
+naturally attracting the Black Monday tile.  
+The financial world had not witnessed such dramatic turn of events. This was perhaps the 
+very first few ‘Black Swan’ events to hit word hard. When the dust settled, a new breed of 
+traders occupied Wall Street, they called themselves, “Th e Quants”.  
+ 
+ 
+
+ 
+75                                                               zerodha.com/varsity 
+ 
+10.2 – The rise of quants  
+The dramatic chain of events of October 1987 had multiple repercussion across the financial 
+markets. Financial regulators were even more concerned about system wide shocks and 
+firm’s capability to assess risk.  Financ ial firms were evaluating the probability of a ‘firm -wide 
+survival’ if things of such catastrophic magnitude were to shake up the financial system once 
+again. After all, the theory suggested that ‘October 1987’ had a very slim chance to occur, but 
+it did.  
+It is very typical for financial firms to take up speculative trading positions across 
+geographies, across varied counterparties, across varied assets and structured assets. 
+Naturally, assessing risk at such level gets nothing short of a nightmarish task. However, this 
+was exactly what the business required. They needed to know how much they would stand 
+to lose, if October 1987 were to repeat. The new breed of traders and risk mangers calling 
+themselves ‘Quants’, developed highly sophisticated mathematical models to monitor 
+positions and evaluate risk level on a real -time basis. These folks came in with doctorates 
+from different backgrounds – statisticians, physicist, mathematicians, and of course 
+traditional finance. Firms officially recognized ‘Risk manage ment’ as an important layer in 
+the system, and risk management teams were inducted in the ‘middle office’ segment, across 
+the banks and trading firms on Wall Street. They were all working towards the common cause 
+of assessing risk.  
+Then CEO of JP Morgan Mr .Dennis Weatherstone, commissioned the famous ‘4:15 PM’ report. 
+A one -page report which gave him a good sense of the combined risk at the firm -wide level. 
+This report was expected at his desk every day 4:15 PM, just 15 minutes past market close. 
+The report  became so popular (and essential) that JP Morgan published the methodology 
+and started providing the necessary underlying parameters to other banks. Eventually, JP 
+Morgan, spun off this team and created an independent company, which goes by the name 
+‘The Risk Metrics Group’, which was later acquired by the MSCI group.  
+The report essentially contained what is called as the ‘Value at Risk’ (VaR), a metric which 
+gives you a sense of the worst case loss, if the most unimaginable were to occur tomorrow 
+morning.  
+The focus of this chapter is just that. We will discuss Value at Risk, for your portfolio.  
+ 
+ 
+76                                                               zerodha.com/varsity 
+ 
+10.3 – Normal Distribution  
+At the core of Value at Risk (VaR) approach, lies the concept of normal distribution. We have 
+touched upon this topic several times acros s multiple modules in Varsity. For this reason, I 
+will not get into explaining normal distribution at this stage. I’ll just assume you know what 
+we are talking about. The Value at Risk concept that we are about to discuss is a ‘quick and 
+dirty’ approach to  estimating the portfolio VaR. I’ve been using this for a few years now, and 
+trust me it just works fine for a simple ‘buy and hold’ equity portfolio.  
+In simple words, Portfolio VaR helps us answer the following questions – 
+1. If a black swan event were to oc cur tomorrow morning, then what is the worst case 
+portfolio loss?  
+2. What is the probability associated with the worst case loss?  
+Portfolio VaR helps us identify this. The steps involved in calculating portfolio VaR are very 
+simple, and is as stated below – 
+1. Identify the distribution of the portfolio returns  
+2. Map the distribution – idea here to check if the portfolio returns are ‘Normally 
+distributed’  
+3. Arrange portfolio returns from ascending to descending order  
+4. Observe out the last 95% observation  
+5. The least valu e within the last 95% is the portfolio VaR  
+6. Average of the last 5% is the cumulative VaR or CVar  
+Of course, for better understanding, let us apply this to the portfolio we have been dealing 
+with so far and calculate its Value at Risk.  
+10.4 – Distribution of  portfolio returns  
+In this section, we will concentrate on the first two steps (as listed above) involved in 
+calculating the portfolio VaR. The first two steps involve us to identify the distribution of the 
+portfolio returns. For this, we need to deal with  either the normalized returns or the direct 
+portfolio returns. Do recall, we have already calculated the normalized returns when we 
+discussed the ‘equity curve’. I’m just using the same here – 
+ 
+77                                                               zerodha.com/varsity 
+ 
+ 
+You can find these returns in the sheet titled ‘EQ Curve’. I ’ve copied these portfolio returns 
+onto a separate sheet to calculate the Value at Risk for the portfolio. At this stage, the new 
+sheet looks like this – 
+ 
+Remember, our agenda at this stage is to find out what kind of distribution the portfolio 
+returns fa ll under. To do this, we do the following – 
+Step 1  – From the given time series (of portfolio returns) calculate the maximum and 
+minimum return. To do this, we can use the ‘=Max()’ and ‘=Min()’ function on excel.  
+
+ 
+78                                                               zerodha.com/varsity 
+ 
+ 
+Step 2  – Estimate the number of data poin ts. The number of data points is quite straight 
+forward. We can use the ‘=count ()’ function for this.  
+ 
+There are 126 data points, please do remember we are dealing with just last six months data 
+for now. Ideally speaking, you should be running this exerc ise on at least 1 year of data. But 
+as of now, the idea is just to push the concept across.  
+Step 3  – Bin width  
+We now have to create ‘bin array’ under which we can place the frequency of returns. The 
+frequency of returns helps up understand the number of o ccurrence of a particular return. In 
+simple terms, it helps us answer ‘how many times a return of say 0.5% has occurred over the 
+last 126 day?’. To do this, we first calculate the bin width as follows – 
+Bin width = (Difference between max and min return) /  25 
+I’ve selected 25 based on the number of observations we have.  
+= (3.26% – (-2.82%))/25  
+=0.002431  
+Step 4  – Build the bin array  
+
+ 
+79                                                               zerodha.com/varsity 
+ 
+This is quite simple – we start form the lowest return and increment this with the bin width. 
+For example, lowest return is -2.82, so the next cell would contain  
+= -2.82 + 0.002431  
+= – 2.58 
+We keep incrementing this until we hit the maximum return of 3.26%. Here is how the table 
+looks at this stage – 
+ 
+And here is the full list – 
+
+ 
+80                                                               zerodha.com/varsity 
+ 
+ 
+We now have to calculate the frequency of these r eturn occurring within the bin array. Let me 
+just present the data first and then explain what is going on – 
+ 
+
+ 
+81                                                               zerodha.com/varsity 
+ 
+I’ve used the ‘=frequency ()’, function on excel to calculate the frequency. The first row, 
+suggests that out of the 126 return observation, ther e was only 1 observation where the 
+return was -2.82%. There were 0 observations between -2.82% and 2.58%. Similarly, there 
+were 13 observations 0.34% and 0.58%. So on and so forth.  
+To calculate the frequency, we simply have to select all the cells next to Bin array, without 
+deselecting, type =frequency in the formula bar and give the necessary inputs. Here is the 
+image of how this part appears – 
+ 
+Do remember to hit ‘Ctrl + shift + enter’ simultaneously and not just enter. Upon doing this, 
+you will generate  the frequency of the returns.  
+Step 5  – Plot the distribution  
+This is fairly simple. We have the bin array which is where all our returns lie and next to that 
+we have the frequency, which is the number of times a certain return has occurred. We just 
+need t o plot the graph of the frequency, and we get the frequency distribution. Our job now 
+is to visually estimate if the distribution looks like a bell curve (normal distribution) or not.  
+To plot the distribution, I simply have to select the all the frequency data and opt for a bar 
+chart. Here is how it looks – 
+
+ 
+82                                                               zerodha.com/varsity 
+ 
+ 
+Clearly what we see above is a bell -shaped curve, hence it is quite reasonable to assume that 
+the portfolio returns are normally distributed.  
+10.5 – Value at Risk  
+Now that we have established that the returns are normally distributed, we proceed to 
+calculate the Value at Risk. From here on, the process is quite straightforward. To do this, we 
+have to reorganize the portfolio returns from the ascending to descending order.  
+ 
+I’ve used excels sort functio n to do this. At this stage, I will go ahead and calculate Portfolio 
+VaR and Portfolio CVaR. I will shortly explain, the logic behind this calculation.  
+
+ 
+83                                                               zerodha.com/varsity 
+ 
+Portfolio VaR – is defined as the least value within 95% of the observation. We have 126 
+observations, s o 95% of this is 120 observations. Portfolio VaR is essential, the least most 
+value within the 120 observations. This works out to be  -1.48%.  
+I take the average of the remaining 5% of the observation, i.e the average of the last 6 
+observations, and that is  the Cumulative VaR of CVaR.  
+The CVaR works out to  -2.39%.  
+You may have many questions at this stage, let me list them down here along with the 
+answers – 
+1. Why did we plot the frequency distribution of the portfolio?  
+1. To establish the fact that the portfolio returns are normally distributed  
+2. Why should we check for normal distribution?  
+1. If the data we are studying is normally distributed, then we can characteristics of 
+normal distribution is applicable to the data set  
+3. What are the characteristics of normally dis tributed data?  
+1. There are quite a few, but you should specifically know that 68% of the data lies within 
+1 SD, 95% of the data within 2 nd, and 99.7% of the data lies within the 3 rd I’d suggest 
+you read  this chapter  to know more about the normal distribution.  
+4. Why did we sort the data?  
+1. We have established that the data set is normally distributed. Do remember, we are 
+only interested in the worst case scenario. Given  this, when we sort it from highest to 
+lowest, we are essentially in a position to look at the returns in a more systematic way.  
+5. Why did bother to take only 95% observation?  
+1. Remember, according to the normal distribution theory, 95% of the data lies within  
+the 2 nd standard deviation. This means on any random day, the return on the portfolio 
+is likely to be any value within the 95% of the observations. Therefore, quite naturally 
+the least most value within the 95% observation should represent the worst case loss 
+or the Value at Risk.  
+6. What does the VaR of -1.48% indicate?  
+1. It tells that the worst case loss for the given portfolio is -1.49% and we can conclude 
+this with a confidence of 95%  
+7. Can’t the loss not exceed -1.48%?  
+1. Yes, it certainly can and this is where  CVaR comes into play. In the case of an extreme 
+event, there is a 5% chance that the portfolio could experience a loss of -2.39%.  
+8. Can’t the loss exceed beyond -2.89%?  
+ 
+84                                                               zerodha.com/varsity 
+ 
+1. Yes, it can but the probability of this occurring is quite very low.  
+I hope the above di scussion makes sense, do apply this on your equity portfolio and I’m sure 
+you will gain a greater insight into how your portfolio is positioned.  
+We have discussed quite a few things with respect to the portfolio and the risk associated 
+with it. We will now  proceed to understand risk with respect to trading positions.  
+Download  the Excel workbook used in this chapter.  
+ 
+ 
+ 
+Key takeaways from this chapter  
+1. Events whi ch have a very low probability of occurrence is called ‘Black Swan ’events  
+2. When a black swan event occurs, a portfolio can experience higher levels of losses  
+3. Value at Risk is one approach to estimate the worst case loss if a black swan event 
+were to occur  
+4. We can estimate the portfolio VaR by studying the distribution of the portfolio returns  
+5. The average of the last 5% of the observation gives us the Value at Risk of the portfolio.  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+85                                                               zerodha.com/varsity 
+ 
+CHAPTER 11  
+ 
+Position Sizing for active trader  
+ 
+11.1 – Poker face  
+Last month I got an opportunity to play poker with a few good friends. I was playing poker 
+after a gap of 6 years and I was quite excited about it. The buy in for this friendly game was 
+Rs.1000/. For those who are not familiar with poker – it’s a card game  where in your skill and 
+luck are tested in equal measure.  
+So, the game started, cards were dealt, and in the very first round I bet Rs.200/ - and I saw it 
+go away, just like that. In the next round, I bet another 200, and again saw it go away. At this 
+stage I convinced myself that I could make up my losses in the 3 rd round, and with this 
+thought I increased the bet size to 600, only to watch it go away! So for all practical purposes, 
+I lost Rs.1000/ - in a matter of 10 minutes! In the trading world, this is equivalent to blowing 
+up your entire trading account.  
+I didn’t give up, after all, I’m supposed to know trading and poker draws many similarities to 
+trading. I decided to ‘recover’ my initial loss and stay in the game longer. I bought in for 
+another 1000 a nd started fresh. This time, I stayed on the table a bit longer – for a total of 15 
+minutes!  
+
+ 
+86                                                               zerodha.com/varsity 
+ 
+Clearly, it was not working for me. I had a better memory of me playing poker 6 years ago. 
+Though not the best, at least, I would stay on the table till the game l asted and even win few 
+hands. So what was happening this time around? I was confused and I kind of didn’t believe 
+that this was happening to me? How could I wipe my account twice in a matter of 25 minutes?  
+With these confusing thoughts on my past poker ski lls and my current game play, I decided 
+to buy in again for another 1000 Rupees. This was my 3 rd buy in. In the trading world, this is 
+equivalent to funding your account 3 rd time over after successfully blowing it up twice.  
+What advice would you give someo ne who has blown up his account twice in the markets? – 
+‘get out of the markets immediately’, would perhaps be the best -suited advice right? Well, I 
+dint pay any heed to my inner voice, gambler’s fallacy had taken over my rational thinking 
+abilities and I bought in again for 1000 Rupees more.  
+For those of you who don’t know gambler’s fallacy – if you are betting on an outcome and 
+you tend to make a long streak of losses, then at the time of quitting, your mind tells you or 
+rather tricks you to believe that your losing streak is over and your next bet will be a winner. 
+This is when you increase your betting size and lose a bigger chunk of money. Gamblers 
+fallacy is one of the biggest culprits in wiping out many trading accounts clean.  
+Anyway, back to my poker  game. This was my 3 rd buying, I had already lost 2K and was betting 
+with another 1K. I was confident I’d recover plus make some money and save myself some 
+shame, but the boys on the table had other plans for me. They knew I was the sucker on the 
+table and  it was easy to allure me to make irrational bets. So they did and wiped me out clean 
+over the next 7 minutes.  
+That was it, I called it quits and I got back more after losing 3k.  
+After the game, I thought through on what went wrong. The answer was very cle ar – 
+1. I had forgotten to recognize the odds of winning with the cards that were dealt  
+2. I was not ‘position sizing’ my bets – my bets were way too irrational and random  
+After a couple of weeks, I had another invite to the game. I had set a bad precedence of g iving 
+away easy money. This time around I had decided to position size my bets well.  
+I bought in for 1000 and started the game. Each time the cards were dealt – I accessed my 
+odds fairly well and if I thought my odds were fair, I bet accordingly. In the tr ading world, this 
+ 
+87                                                               zerodha.com/varsity 
+ 
+was equivalent to following a ‘trading system’ backed by position sizing techniques. The 
+result of this simple systematic approach had a great impact on my game – 
+1. I won few hands  
+2. At the peak, I must have had about 4K of winnings  
+3. I lasted throughout the game and had a lot of fun along the way  
+4. Towards the end I gave up some gains but was extremely happy with the fact that few 
+simple techniques helped me manage my game much better  
+Position sizing made all the difference in this game. It alway s does and this is the exact reason 
+for me to narrate this story. I do not want you to speculate in the markets without 
+understanding your odds or without position sizing your bets. If you do, you will end up 
+making a fool out of yourself.  
+Poker is played for fun but when you trade, you are essentially deploying your capital for a 
+more serious and meaningful outcome. So please do pay attention to some of the things we 
+will discuss over the next few chapters. I’m certain it will have a positive impact in you r 
+trading career.  
+At this point I have to mention this – I myself learned position sizing many years ago by 
+reading Van Tharp’s books. Van Tharp is one of the most prominent people to bring in the 
+concept of position sizing to traders. I’d even recommend y ou buy some of his books to 
+expand your knowledge on this subject.  
+11.2 – Gambler’s fallacy  
+We briefly discussed the gambler’s fallacy early on. I guess it makes sense to discuss a little 
+more on this at the very beginning especially in the context of mark ets. 
+Take a look at this chart – 
+ 
+88                                                               zerodha.com/varsity 
+ 
+ 
+This is the chart of Nifty – Nifty hit the magical number of 10,000 on 25 th July 2017. As a trader, 
+how would you trade this?  
+1. Nifty is at an all -time high – 10K 
+2. Many market participants may book profits at this point – considering it is a 
+psychological level  
+3. All time high implies no resistance points  
+4. Nifty has been in a great up wards trend over the past few weeks  
+5. Maybe Nifty would consolidate around these levels?  
+6. Maybe a correction of 2 -3% before the rally continues?  
+Let us just assume that these are some valid points for now. This means a short position is 
+justified or for that matter buying of puts. Your analysis could be as simple as this or as 
+sophisticated as studying the time series data and modeling the same using a dvanced 
+statistical or machine learning models.  
+Irrespective of what you do – there is no certainty in the markets. No one technique will tell 
+you the outcome in advance. This implies that we are dealing with fairly random draws here. 
+Of course, based on h ow meaningful your analysis is, your odds of winning can improve, but 
+at the end of the day, there is no certainty and you have to acknowledge the fact that markets 
+are indeed random.  
+
+ 
+89                                                               zerodha.com/varsity 
+ 
+Now imagine this – you have done a state of the art analysis and you pla ce your bet on Nifty 
+only to see the stop loss trigger. You do not give up, you place another trade and to your 
+misfortune, you are stopped out again. This cycle repeats for say the next 4 trades.  
+You know your analysis is bang on – but then your stop loss  is continuously getting triggered. 
+You still have money in your account to take on bets, you are still convinced that your analysis 
+is rock solid and the markets will turn around, you still have an appetite for risk – given all 
+these, what do you do?  
+1. Would you stop trading?  
+2. Would you risk the same amount of money again?  
+3. Now that you have lost 6 consecutive bets, would you consider that your odds of 
+making money on the 7 th trade is higher and therefore increase your bet size to recover 
+your previous losses plus reap in some profits?  
+Which option are you likely to take? Take a minute and answer this question honestly to 
+yourself.  
+Having been through this situation myself and having interacted with many traders let me 
+tell you – most traders would take the 3 rd option, the question however is – why? 
+Traders tend to believe that long streaks will cease when they take the ‘next’ trade. For 
+instance, in this case, the trader has faced 6 consecutive losses, but at this point his 
+conviction that the 7 trade will be a  winner is very high. This is called ‘Gambler’s fallacy’.  
+In reality, when you are dealing with random draws, the odds of making a loss on the 7 th trade 
+is as high (or low) as it was when you placed your first bet. Just because you have made a 
+series of lo sses, the odds of making money on the next trade does not improve.  
+Traders fall prey to ‘Gamblers fallacy’ and often end up increasing their bet sizes without 
+understanding how the odds stack up. In fact, gamblers fallacy ruins your position sizing 
+philoso phy and therefore is the biggest culprit in wiping out trading accounts.  
+This works on the other side as well. Imagine, that you are fortunate enough to witness a 6 or 
+let us say 10 consecutive wins. Whatever you bet on, the trade works out in your favor. You 
+are on your 11 th trade now, which of the following are you likely to do?  
+1. Considering that you made enough money, would you stop trading?  
+2. Would you risk the same amount again?  
+ 
+90                                                               zerodha.com/varsity 
+ 
+3. Would you increase your bet size?  
+4. Will you take a conservative approach, mayb e protect you profits, and therefore 
+reduce your bet size?  
+Chances are that you will take the 4 th option. You clearly want to protect your profits and do 
+not want to give back whatever you have earned in the markets and at the same time you 
+would want to t ake a trade considering you have had a great winning streak.  
+This is again ‘gamblers fallacy’ at play. Being completely influenced by the outcome of the 
+previous 10 trades, you are essentially reducing your position size for the 11 th trade. In reality, 
+this new trade has a same odds of winning or losing as the previous 10 bets.  
+Perhaps, this explains why some of the traders, even though get into profitable trading cycle 
+end up making very little money.  
+The antidote for ‘Gambler’s Fallacy’, is position sizin g. 
+11.3 – Recovery trauma  
+In the trading world, the capital we bring on the table is the raw material. If you do not have 
+enough money to trade with, then how will you make a profit? Hence we need to not just 
+protect the profits that we make, but also prot ect the capital.  
+Extending this thought – if you risk too much capital on any one trade, then you stand a 
+chance to risk your capital to an extent that you may burn your capital leaving you with very 
+little money. Now if you are trading with very little mo ney, then every trade that you take will 
+appear to be too risky. The climb back to where you started will (in terms of capital) will be a 
+Herculean task.  
+I have prepared a table to help you understand this fact. Assume you have a trading capital 
+of Rs.100, 000/-. Let us see how the numbers stack up with – 
+ 
+91                                                               zerodha.com/varsity 
+ 
+ 
+You can download the excel sheet  here. 
+Assume you lose 5% of your capital or Rs.5000/ -. Your new starting capita l is Rs.95,000/ -. Now, 
+in order to recover to Rs.5000 with a capital of 95000, you need to generate a return of 5.3%, 
+which is 0.3% more than what you lost.  
+Now, instead of 5%, assume you lost 10% and your capital becomes 90000, now in order to 
+recover 100 00 or 10% of your original capital, you have to earn back 11.1%. As you can see, 
+as the loss deepens, you will have to work really hard to bounce back to original starting 
+capital. For example at 60% loss or original capital, you are staring at a 150% boun ce back.  
+Unfortunately, the ‘recovery trauma’ affects traders with smaller account size. Assume you 
+come to the market with Rs.50,000/ - capital. Now you would have heard of stories on how 
+Rakesh Jhunjhunwala, grew his money from 10,000 to 15K Crores. You w ould want to 
+replicate at least a small portion of this success. Honestly speaking, if you can manage to 
+grow Rs.50,000/ - to say Rs.60,000 by the end of the year, you would have done a great job. 
+This translates to a 20% return. But this is not exciting, r ight? I mean earning Rs.10,000/ - over 
+1 year when you are actively trading somehow does not seem right.  
+
+ 
+92                                                               zerodha.com/varsity 
+ 
+So what do you do? You tend to take bigger risks and hope to make bigger gains, and if the 
+trade goes against you, then you are essentially falling prey  to the ‘recovery trauma’ 
+phenomena.  
+This is exactly the reason why you should never risk too much on any one trade, especially if 
+you have a small capital. Remember, your odds of making good money in the markets is high 
+if you can manage to stay in game f or long, and to stay for a longer period, you need to have 
+enough capital, and to have enough capital, you need to risk the right amount of money on 
+each trade. This really boils down to working towards longer term ‘consistency’ in 
+markets,  and to be cons istent you need to position size your trades really well.  
+I’m going to close this chapter with a quote from  Larry Hite . 
+ 
+Over the next few chapter, we will dig deeper into position sizing techniques.  
+ 
+Key takeaways from this chapter  
+1. Position sizing forms the corner stone of a trading system  
+2. Gamblers fallacy is a bias highly applicable to the trading world. It makes the trader 
+believe that a long streak of a certain outcome can break  
+3. When there are infinite draws, the odds of making a profit or loss on the N th trade is 
+similar to the odds of making the same profit or loss on the 1 st trade  
+4. The recovery of capital is much m ore difficult task than one can imagine  
+5. Traders with small accounts have a tendency to take larger bets, which they need to 
+avoid  
+
+ 
+93                                                               zerodha.com/varsity 
+ 
+CHAPTER 12  
+ 
+Position Sizing for active traders (Part 2)  
+12.1 –Defining Equity Capital  
+The last chapter we laid down few key t houghts on position sizing and with that, I guess it is 
+amply clear as to why one has to incorporate position sizing at the core of every trading 
+strategy. Position sizing technique helps you identify how much of your equity capital has to 
+be exposed for a  given trade. In this chapter, we will take that discussion forward and explore 
+ways to position size.  
+A quick recap of sorts before we proceed. What is position sizing?  
+Position sizing is all about answering how much capital you will expose to a particula r trade 
+given that you have ‘x’ amount of trading capital. One classic position sizing strategy which 
+most people employ is the standard 5% rule. The 5% rule does not permit you to risk more 
+than 5% of the capital on a given trade. For example, if the capi tal is Rs.100,000/ -, then they 
+will not risk more Rs.5000/ - on any single trade.  
+Here 5000 is the exposure to a trade and 10000 is the equity capital. You have decided to 
+invest 5000 a trade based on a position sizing rule or a strategy.  
+Needless to say, t here are many different ways to position size, which by the way, also means 
+(unfortunately) that there is no single guided technique to position size. You as a trader need 
+to experiment and figure out what works for you. Of course, I will discuss few posit ion sizing 
+techniques soon.  
+Now, irrespective of which position sizing technique you will follow, at some point the 
+technique will require you to estimate your equity capital. For this reason, we will address 
+the technique of estimating equity capital firs t and then proceed to learn position sizing 
+techniques.  
+What do I mean by equity capital?  
+ 
+94                                                               zerodha.com/varsity 
+ 
+Equity capital is the basically the amount of money you have in your trading account based 
+on which you decide how much capital to deploy in a trade. This may seem ve ry trivial to you 
+at this point. But allow me to illustrate why this is a tricky task.  
+Assume you have Rs.500,000 capital and you work with a simple position sizing principle of 
+exposing not more than 10% capital to a single trade. Given this, assume you t ake a position 
+worth Rs.50,000/ -. 
+Now for the next trade, how much is your equity capital?  
+1. Is it Rs.450,000?  
+2. Is it still Rs.500,000 considering the fact 50K is deployed in a trade?  
+3. Should it be 450,000 plus 50K ± the P&L from the trade that exists in the m arket?  
+Given that there are numerous outcomes and possibilities, estimating equity for the trade is 
+not really a straightforward task. Hence, getting our act right in estimating the equity capital 
+is very important before we proceed to learn position sizin g concepts.  
+ 
+12.2 – Estimating  Equity Capital  
+At this point, I’d like to go back to good old Van Tharp and talk to you some of the techniques 
+he uses to estimate equity capital. These are some of the better techniques compared to the 
+many out there. Essen tially there are three techniques or models as he calls them – 
+1. Core Equity model  
+
+ 
+95                                                               zerodha.com/varsity 
+ 
+2. Total Equity model  
+3. Reduced total equity model  
+The core equity model  requires you to deduct the capital allocated to a trade from the 
+existing capital.   This way, the exposure to a trade goes on reducing as you ladder up more 
+and more positions. Let me give you an example – assume your equity capital is Rs.50,000/ - 
+and you follow a simple 10% position sizing formula. The 10% rule implies that you do not 
+expose or risk more than 10% of your capital to a trade.  So the first trade gets an exposure 
+of Rs.5000. The core equity is now reduced to Rs.45000. Have a look at the following table – 
+ 
+Download the excel sheet  here. 
+So, the first trade assumes the equity available is Rs.50,000, hence 10% of the available equity 
+is exposed first trade i.e Rs.5000/ -. The core equity model requires you to deduct the capital 
+deployed to a trade and re work on the core equity model. So, the core equity is now 
+Rs.45000/ -, which is also the available equity for the 2 nd trade.  
+For the 2 nd trade, we again deploy 10% of the equity available i.e 10% * 45000 = Rs.4500/ -. We 
+deduct this amount to calculate the new core equity, which is now Rs.40,500/ -. This also is 
+now the newly available equity for the 3 rd trade.  
+So for the 3 rd trade, the capital exposure for the trade is Rs.4050 and the new core equity is 
+Rs.36,450/ -. So on and so forth, I’m assuming you get the drift.  
+I consider this as a slightly conservative equity estimation model as you tend to reduce the 
+capital allocation as the number of opportunities increases. For all you know, your 5 th trade 
+(for which the equity exposure is far lesser) may be a great winner.  The other side of the 
+argument is that the 5 th trade could be the worst loser compared to the rest.  
+
+ 
+96                                                               zerodha.com/varsity 
+ 
+Having said that, I like this model for the sake of its simplicity. Once you commit the capital 
+to a trade, you kind of forget about that and move on with what is available.  
+The Total equity model  aggregates all the positions in the market along with its respective 
+P&L and cash balance to estimate the equity. Let me straight away take an example to explain 
+this – 
+Free cash available – Rs.50,000  
+Margin blocke d for Trade 1 = Rs.75,000  
+P&L on Trade 1 = + Rs.2,000  
+Margin blocked for Trade 2 = Rs.115,000  
+P&L on Trade 2 = + Rs.7000  
+Margin blocked for Trade 3 = Rs.55,000  
+P&L on Trade 1 = – Rs.4,000  
+Total Equity = 50000 + 7000 + 2000 +115000+7500+55000 -4000 
+= Rs.300, 000/- 
+So, as you can see, in the total equity model, free cash along with margins blocked and the 
+P&L per position is taken into consideration. Now, if my position sizing strategy suggests a 
+10% exposure to a new position, then I’d expose Rs.30,000/ - on a new trade. If the free 
+balance in my account does not permit me to take this position, then I’d not really initiate a 
+new position. I’d wait to close one of the existing positions to take a new position.  
+The fact that this model considers a live position a long with its P&L into account for 
+estimating equity makes it a little risky. I’m personally not a big fan of this equity estimation 
+model. This is somewhat like counting the chicken before they hatch.  
+I do like the 3 rd model to estimate the equity, this o ne is called the ‘ Reduced Total Equity 
+Model ’. 
+This model kind of combines the best of both the core equity model and the total equity 
+model. It basically reduces the capital allocation to a particular trade (similar to core equity 
+ 
+97                                                               zerodha.com/varsity 
+ 
+model) and at the same t ime includes the P&L of the trade which is already in place (similar 
+to total equity model). However, the P&L is only on the locked in profits.  
+Let me work with an example to help you understand this better. Assume I have a capital of 
+Rs.500,000/ -. Further , assume my position sizing strategy allows me to invest not more than 
+20% on a single trade, which is Rs.100,000/ - per trade.  
+I’m looking at the chart of ACC and I decide to go long on ACC futures at 1800 by blocking a 
+margin of approximately Rs.90,000/ -, which is well within my position sizing limit of 
+Rs.100,000/ -. 
+I’ve now entered a position and waiting for the market to move. Meanwhile, as per the 
+reduced total equity model, my the capital available for the 2 nd trade is – 
+20%*( 500,000 – 90,000)  
+= Or a bout 20% of Rs.410,000/ - 
+= Rs. 82,000/ - 
+Note, because of the existing position, the exposure capital has reduced from Rs.100,000 to 
+Rs.82,000/ -. Up to this point, it works exactly like the core equity capital model.  
+Now, assume the stock moves, and ACC jum ps by 25 points to 1850. Considering the lot size 
+of 400, I’m now sitting on a paper profit of – 
+400*50  
+= Rs.20,000/ - 
+I would now put in a trailing stop loss and lock in at least about 25 points out of 50 point  move 
+or in Rupee terms, I want to lock in Rs. 10,000 as profits.  
+This means, for the long ACC position at 1800, I have to now place a stop loss at 1825 and 
+locked in Rs.10,000/ - as profits.  
+I will now add this locked in profits back to the total equity. Hence my total equity now stands 
+at – 
+410,000 +1 0,000 
+=420,000/ - 
+ 
+98                                                               zerodha.com/varsity 
+ 
+This means, my new exposure capital will be 20% of the total equity – 
+=20% * 420000  
+= Rs.84,000/ - 
+As you notice, the exposure capital has now increased by an additional 2000/ -. 
+I kind of like the reduced total equity model to estimate the total capital available to position 
+size.   If one follows tends to follow this technique, then it kind of forces you to practice basic 
+stop loss principles, which according to me is very good.  
+Anyway, I’d like to close this chapter at this point. In the ne xt chapter, we will consider one 
+of the above -stated methods to estimate equity and look into few position sizing techniques.  
+ 
+Key takeaways from this chapter  
+1. Estimating equity capital is crucial for position sizing  
+2. Core equity model deducts the capital a llocated to a trade and recalculate the capital 
+available  
+3. Total Equity model requires you to add the free cash, margins blocked, and the P&L of 
+the positions to estimate the equity capital  
+4. Reduced Total Equity model requires you to add the free cash to the  locked in profits 
+of an existing position  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+99                                                               zerodha.com/varsity 
+ 
+CHAPTER 13  
+ 
+Position S izing for active traders (Part 3 ) 
+ 
+13.1 – Choose your path  
+We addressed a very crucial concept in the previous chapter. We looked at how one can 
+determine equity based on 3 differe nt models. Each of these three models on its own merit 
+imposes some sort of position sizing discipline, but clearly that’s not enough. We still need a 
+standalone method to position size. Given this, we will move forward to discuss some of Van 
+Tharp’s techn iques on position sizing.  
+I’d like to talk about three core position sizing techniques at this point, they are – 
+1. Unit per fixed amount  
+2. Percentage margin  
+3. Percentage of volatility  
+Do note, these models are asset independent and time frame independent. What d o I mean 
+by this? This means that you can apply these position sizing techniques to any asset you 
+want. It could be stocks, stock futures, commodity futures, or currency futures. Further you 
+
+ 
+100                                                               zerodha.com/varsity 
+ 
+can apply them across any time frame – intraday, few trading sess ion, or even trades 
+extending for over few months.  
+To understand this really well, I’d suggest you pick a trading system, it could be as basic as a 
+moving average crossover system. Identify entry and exit rules and evaluate the returns you 
+would generated for the given time period. Now for the same set of data, apply one of the 
+position sizing technique (which we will shortly discuss) and evaluate the performance. I’m 
+sure, you will observe a huge improvement not just in terms of P&L but also the stability of 
+the system.  
+Just to throw some light into how complex this can get – 
+ Assume you have a trading system – a simple moving average cross over system  
+ You intend to deploy cash on this and start trading every signal that the system generates  
+ There are 3 mode ls to define equity and there are at least 3 basic models to define position 
+sizing techniques  
+ This means you can position size in 3 x 3 = 6 different ways to deploy cash for the same 
+opportunity (signal)  
+ The P&L for each will be different  
+However, from my  experience, I would suggest you stick one method to estimate equity and 
+maybe 1 or at the most 2 (meaningful) techniques to position size. Anything more may not be 
+a great, in the sense, it would induce complexity, and complex does not necessarily mean 
+better.  
+So you as a trader need to assess which path to follow based on your temperament. Anyway, 
+let’s get started on the core position sizing techniques.  
+13.2 – Unit per fixed amount  
+Let’s discuss the ‘ Unit per fixed amount ’ model first. This is a fairly s imple model. Any trader 
+who has a slight inkling towards position sizing would have explored this model in the initial 
+days. I like and dislike this model for the same reason – its simplicity.  
+The model requires you to simply state how many shares or lots (in case of futures) you will 
+trade for a given amount. For example, assume you have Rs.200,000 in your trading account 
+and you have the following 5 assets (futures) as your opportunity universe – 
+1. Nifty 
+ 
+101                                                               zerodha.com/varsity 
+ 
+2. SBI 
+3. HDFC 
+4. Tata Motors  
+5. Infosys  
+You could simply state t hat you would not want to trade more than 1 lot of futures per 100,000 
+of any asset at any given point. Given this, assume you get a signal to buy Nifty, now since 
+there is 2L in the account, you can choose to buy one or 2 lots.  
+The best part about this mo del is that it does not complicate the decision -making process. 
+However, there are few problems with this model.  
+Consider this – the trading system that you follow generates a signal to buy Nifty Futures and 
+at the same time the system signals you to buy T ata Motors. Since you have 2L in your 
+account, you decide to buy 1 lot each. Do note at the point of writing this article, Nifty Futures 
+requires a margin of about 60K and Tata Motors around 72K.  
+Irrespective of the margin, the rule simply states, 1 lot pe r 1L. This means, position sizing rule 
+is assigning an equal weight to both the contracts, ignoring the implicit ‘riskiness’ of the 
+asset. To give you a perspective, Nifty Futures has an annualized volatility of around 14% and 
+Tata Motors has an annualized  volatility of over 40%. So essentially, you are exposing yourself 
+to a higher risk at the portfolio level.  
+This in fact, is both good and bad at the same time. Good in the sense that it does not reject 
+a trade based on the riskiness and bad in the sense i t does not really factor in risk.  
+There is another angle here – think about this, consider you are following a trading system to 
+which you apply the 1 lot per 100,000 position size rule. Assume you have a 2 lac capital. Now, 
+further assume that the system performs really well and you are bestowed with multiple 
+winning trades. Now, for each signal, the maximum number of lots you can buy is restricted 
+to just 2. For you to increase another lot or 2, you really need to double your capital or wait 
+for your prof its to double up you capital. So in a sense this particular position sizing 
+technique limits the scalability of a system. The only antidote to this is to bring in a much 
+larger account size.  
+For these reasons, I kind of don’t prefer the ‘unit per fixed amo unt’ position sizing technique. 
+However, please don’t take my word, I’d suggest you work around and figure out your 
+comfort level with this technique before deciding to adopt or not adopt this as your core 
+position sizing technique.  
+ 
+102                                                               zerodha.com/varsity 
+ 
+13.3 – Percentage Margi n 
+The percentage margin is an interesting position sizing technique. I personally think this 
+technique is far more structured than the ‘unit per fixed amount’, technique especially for 
+intraday traders. The percentage margin technique requires you to posit ion size based on the 
+margins.  
+Here you essentially fix a ‘X’ percentage of your capital as margin amount to any particular 
+trade. Let’s work with an example to understand this better.  
+Assume you have a capital of Rs.500,000/ -, with this you decide that yo u will not expose more 
+than 20% as margin amount to a particular trade. This translates to a capital of Rs.100,000/ - 
+per trade.  
+Assume you spot an opportunity to trade Nifty Futures, you can easily take this position as 
+the margins for this is roughly arou nd 60K.  However, let’s say you spot an opportunity in 
+ICICI, you will be forced to let go of this as the margin for this is close to Rs.105,000/ -. This 
+means, ICICI will be out of your trading universe until and unless you increase your capital. 
+Obviously , one should not randomly increase the capital just to accommodate opportunities. 
+Capital should increase as an outcome on profits accumulating in your account.  
+Anyway, after you initiate the position in Nifty, assume you spot an opportunity in ACC, the 
+margin for this is 90K.  
+Will you take this position?  
+The answer to this really depends on the way you estimate equity.  
+If you consider the total equity model, then you will still consider your capital to be 5L, 20% 
+of which is 1L, hence you can safely take t he position in ACC.  
+However, if you consider the reduced total equity model, then this is how it would work 
+(assuming 20% position sizing rule) – 
+Starting Capital = 5L  
+Margin blocked = 60K  
+New capital = 4.4L  
+Margin @ 20% = 88K  
+ 
+103                                                               zerodha.com/varsity 
+ 
+Given this, you’d fall short by (just) 2K for a 90K position, hence you would have to let go…and 
+as you realize, equity estimation plays very crucial role here.  
+Lastly, assume, you spot an opportunity which requires a margin of 40K, since you have 88K, 
+you can comfortably take up 2 lo ts of this position.  
+So on and so forth.  
+The percentage margin rule ensures you pay roughly the same margin to all positions. 
+However, the volatility from each position could vary. You could end up with risky bets and 
+therefore altering the entire risk pro file of your account.  
+This exposure to risk is overcome by next position sizing model.  
+13.4 – Percentage Volatility  
+The percentage volatility rule accounts for volatility of the underlying asset. The volatility as 
+per this technique is not really the ‘stan dard deviation’, but rather the daily expected 
+movement in the underlying.  
+For example, if SBI’s OHLC is 276, 279, 274, and 278, then the volatility for the day is simply 
+the difference between low and high i.e  
+279 – 274 
+= 5 
+To get a sense of the generic v olatility measured this way, I can look at the difference between 
+low and high for last ‘n’ days and take an average. However, the only problem here would be 
+that I would be ignoring the gap up and gap down openings. For this reason, Van Tharp 
+suggest the use of ‘Average True Range’ to measure the stock’s volatility.  
+The ‘Percentage Volatility’ method of position sizing requires us to define the maximum 
+amount of volatility exposure one can assume for the given equity capital.  
+For example, if the equity cap ital is Rs.500,000/ - then I could make a rule saying that I do not 
+want to expose more than 2% of the capital to volatility.  
+Let’s work with an example. Here is the chart of Piramal Enterprises Limited (PEL) – 
+ 
+104                                                               zerodha.com/varsity 
+ 
+ 
+The 14 -day ATR is 76. This means each share of PEL contributes to a fluctuation (volatility) of 
+Rs.76/ - to my equity capital.  
+Now assume I spot an opportunity to trade PEL, the question is how many share should I buy 
+considering my equity is 5L and I’ve capped volatility exposure as not more than 2% . 
+2% of 5L is 10,000/ -. This means I should only so many number of shares of PEL, such that the 
+overall volatility caused by PEL is not more than 10k.  
+Given this, I simply have to divide 10,000 by 76 to find out the number of shares that I can buy 
+– 
+10,000 /76 
+= 131.57 or about 131 shares.  
+PEL is currently trading around 2700, which means to say, your overall exposure would be – 
+131 * 2700  
+=Rs.353,700/ - 
+
+ 
+105                                                               zerodha.com/varsity 
+ 
+I’d suggest you stick to the reduced total equity model for estimating equity here. This 
+means, the capita l available for the next trade would be – 
+500,000 – 353,700  
+=146,300  
+Now @ 2% volatility, the capital exposure reduced to Rs.2929/ -. Clearly the capital exposure 
+to the next trade would reduce, but the exposure to volatility would remain the same.  
+Here is an advice (from Van Tharp, of course) if you are inclined to follow percentage volatility 
+technique – the do estimate the total amount of volatility you want to expose your portfolio 
+too. If the number is say 15% then on a 5L capital this works out to Rs.7 5,000/ -. 
+Think about it, if every position goes against you, then you stand to lose 75k on a capital of 
+5L on a single day. How does that feel? If your stomach churns, then 15% portfolio volatility 
+maybe a bit high for you.  
+In the next chapter, we will exp lore few more concepts before we proceed to understanding 
+‘Trading biases’.  
+ 
+Key takeaways from this chapter  
+1. Estimating equity plays an important part in position sizing  
+2. Suppose you have 3 ways to estimate equity and 4 ways to position size, then 
+essentia lly you have a 4 x 3 = 12 position sizing technique  
+3. Unit fixed model requires you to ascertain how many shares or lots you will trade for 
+every ‘x’ amount of capital in your account  
+4. Unit fixed model does not consider risk  
+5. Percentage margin method requires you to define the maximum margin amount you 
+will expose your capital to. You ideally should club this with total reduced equity 
+model  
+6. Percentage volatility measures volatility in term or ATR.  
+7. Percentage volatility equal weights ‘volatility’ exposure to eac h position  
+ 
+ 
+ 
+106                                                               zerodha.com/varsity 
+ 
+CHAPTER 14  
+ 
+Kelly’s Criterion  
+14.1 – Percentage Risk  
+Last chapter we looked at three important position sizing techniques, all of them were unique 
+in their own merit. The three techniques were – 
+ Unit per fixed amount  
+ Percentage Margin  
+ Percent age Volatility  
+All three methods work differently and when combined with a certain equity estimation 
+technique, they produce totally different results. Given this, it is really up to you to figure out 
+the marriage of which position sizing technique with wh ich equity estimation technique 
+works best for you.  
+Before I proceed, I thought it is important to discuss another practical position sizing 
+technique, called the ‘Percentage Risk’, method. I do know quite a few traders who use this 
+and I myself find this quite simple and intuitive technique to use.  
+ 
+
+ 
+107                                                               zerodha.com/varsity 
+ 
+The percentage risk method, relies upon your own assessment of ‘loss’ that you are willing 
+to bear for a given trade. This, as you may know is also called the ‘Stop loss’ for the trade. 
+The stop loss for a tra de is the price at which you decide to close the trade and take a hit. The 
+percentage risk technique controls the position size as a function of risk defined by stop loss.  
+Let me take the example of a stock futures and explain how this works, in fact, I th ink this is 
+a good trade setup   – 
+ 
+Here is an intraday chart of Tata Motors, the frequency is 15 mins (14 th Sept 2017, around 
+11:30 AM).  
+Let me explain why this is a trade worth considering – 
+Tata Motors is at 393.65, which happens to be a price action zo ne, considering it tested the 
+same level, twice in the past. So this makes 393.65, a support price for Tata Motors (on an 
+intraday basis). Both the times in the past, the price declined of Tata Motors declined when 
+the stock tested 393.65. Given this, ther e is a possibility that the price could again test 393.65 
+and react to bounce back to the price from which it started to decline i.e 400.  
+
+ 
+108                                                               zerodha.com/varsity 
+ 
+Also, do notice the low volume retracement between 400 to 393.65 – I’ve discussed why I like 
+trades like these in the Technical Analysis module. If you’ve not read that module, maybe you 
+should   
+Considering these factors, a trader could be inclined to go long on Tata Motors Futures at 
+393.65.  
+What if the trade heads the other direction? What is the stop loss?  
+I notice so me sort of support at 390/ -, hence I’d be happy to set this as stop loss for the trade.  
+Nothing complicated, as you can see this is a very straightforward setup.  
+So the trade would be – 
+Stock: Tata Motors Limited  
+Trade: Long  
+Trade Price: 393.65  
+Target Pric e: At least 400  
+Target value 6.35  
+Stop loss Price: 390  
+Stop loss value: 3.65  
+Reward to Risk: 1.7 (which is great for an intraday trade)  
+Lot size: 1500  
+Margin Required: 73.5K  
+Now assume I have a capital of Rs.500,000/ -, how many lots of Tata Motors can I bu y 
+considering the margin per lot is Rs.73,500/ -? 
+Technically speaking one can buy up to 6.8 or 6 lots – 
+500000/73500  
+=6.8 
+ 
+109                                                               zerodha.com/varsity 
+ 
+However the question is – would you expose your entire capital to this one trade alone? Not 
+a smart thing to do, if you were to ask me , because if the trade goes wrong, you would be 
+losing Rs.32,850/ - (3.65 * 1500 * 6) on this trade.  
+In other words, you would lose – 
+32850/500000  
+=6.57% of your capital on one trade.  
+However great a trade set up is, it is not a smart thing to expose so muc h capital to risk. As a 
+thumb rule, professional traders do not risk more than 1 to 3% of their capital on any single 
+trade, and this rule forms the core of the ‘Percentage risk’ position sizing technique.  
+Given this, let us define the  maximum risk  per tra de as a percentage of overall capital – 
+maybe 1.5% for now. This means on this trade, the maximum loss I’m willing to bear is  
+1.5% * 500000  
+Rs.7,500/ - 
+In other words, I don’t intend to lose more than Rs.7,500/ - on any single trade. This is the 
+maximum loss  threshold.  
+We know the stop loss for this trade is 390, from an entry price of 393.65, the stop loss in 
+absolute Rupee terms is – 
+393.65 – 390 
+= 3.65  
+The loss per lot is – 
+3.65 * 1500  
+= 5475  
+In the event the stop loss is triggered I would be taking a hit of Rs.5475 per lot.  
+Now to identify the number of lots I could take for the risk I’m willing to bear, I simply have 
+to divide the maximum threshold by the loss per trade.  
+= 7500/5475  
+ 
+110                                                               zerodha.com/varsity 
+ 
+= 1.36  
+Therefore, on this trade I can go ahead and buy up to 1 lot, which  will cost me Rs.73,500/ - as 
+margin deposits.  
+For the next trade, it is prudent (or rather conservative in a positive way) to reduce the money 
+blocked from the overall capital and re -work the maximum loss threshold. Let’s do that and 
+identify the new max l oss threshold – 
+500000 – 73500 
+= 426,500  
+1.5% * 426500  
+= 6397.5  
+Given this, for the next trade, I will work out the stop loss, multiply that with the lot size and 
+divide the max risk i.e 6397.5 by loss threshold to identify how many lots I can transact in.  
+So on and so forth!  
+By the way, curious to know how the trade panned out? Here you go – 
+ 
+
+ 
+111                                                               zerodha.com/varsity 
+ 
+I like trades like these, when the price does not even approach close to the stop loss J. As I 
+had pointed out earlier, I did have a great amount of conviction on th is trade. This leads me 
+to the next topic – how do I position size when my conviction on a particular trade is high? 
+What in such situations I want to expose a slightly higher capital?  
+Well, say hello to Kelly’s Criterion!  
+14.2 – Kelly’s Criterion  
+Kelly’ C riterion has an interesting background. It was proposed by John Kelly in the 50’s who 
+at that point was working for AT&T’s Bell Laboratories. He in fact, suggested the Kelly’s 
+Criterion to help the telecom company with long distance telephone noise issues.  However, 
+the same theory was adopted by professional gamblers to identify the optimal bet size. This 
+soon found its way to the stock markets as well, and there are many professional traders and 
+investors who use Kelly’s Criterion for bet sizing. Perhaps, this is one of those very few tools 
+that both traders and investors commonly use.  
+I still don’t know how the transition from Telecom to stock markets happened – I’m a Telecom 
+Engineer by qualification (although I know nothing about Telecommunications now) and I’ve 
+been involved in Stock markets for over 13+ years….but I just can’t wrap my head around 
+how Kelly’s Criterion made its transition across these two different worlds J  
+Anyway, the Kelly’s Criterion essentially helps us estimate the optimal bet size (or the fraction 
+of our trading capital) considering – 
+ We have a certain information on the bet we are about to take  
+ We have an edge taking that particular bet  
+Let’s jump straight to Kelly’s Criterion with an example. The Kelly’s Criterion is an equation, 
+the output of which is a percentage, also known as a the Kelly’s percent. The equation is as 
+below – 
+Kelly % = W – [(1-W)/R]  
+Where,  
+W = Winning probability  
+R = Win/Loss ratio.  
+ 
+112                                                               zerodha.com/varsity 
+ 
+o The winning probability is defined as the total number of winning trades divided  over the 
+total number of trades  
+o The win/loss ratio is the average gain of winning trades divided over average loss of the 
+negative trades.  
+To understand this better, let’s take up an example. Assume I have a trading system which 
+has produced the following  results, for sake of simplicity, let’s assume this is a trading system 
+to trade just one stock, Tata Motors.  
+ 
+Given the above data – 
+W = Total Number of winners / Total number of trades  
+= 6/10  
+=0.6 
+R = Average Gain / Average Loss  
+Average gain = Average o f [5325, 2312, 4891, 1763, 8675, 4231]  
+= 4,532  
+Average loss = Average of [6897, 231, 989, 1980]  
+=3,274  
+
+ 
+113                                                               zerodha.com/varsity 
+ 
+R = 4532 / 3274  
+= 1.384  
+Do note, a number greater than 1 is always desirable as it indicates that your average gains 
+are higher than your average loss.  
+Lets plug these numbers back to the Kelly’s Criterion equation – 
+Kelly % = W – [(1-W)/R]  
+= 0.6 – [(1-0.6)/1.384]  
+=0.6 – [0.4/1.384]  
+= 0.31 or  31%. 
+As per the original school of thought – Kelly’s percentage is a direct representation of how 
+much capital one should expose for a trade. For example, for the 11 th trade on Tata Motors, 
+Kelly’s Criterion suggests a capital exposure of 31%.  
+But I think this can be a little tricky, imagine a trading system with great accuracy – the Kelly;s 
+Percentage can turn out to be 70%, suggesting a capital exposure of 70% to the next trade. 
+Not a very smart thing to do if you ask me. However, you may ask why not? After all a system 
+with 70% accuracy is a great, so why not maximize the bet?  
+This is because, there is still a 30% ch ance to lose 70% of your capital!  
+Given this, here is a simple modification to Kelly’s criterion. Let us go back to the percentage 
+risk position sizing technique we discussed earlier in the chapter.  
+We defined the percentage risk as a technique wherein the  exposure to a trade is defined as 
+1.5% (or any percentage) of the capital. Given Kelly’s criterion, we can modify the exposure 
+as ‘up to 5%’ (or any percentage you deem suitable).  
+What does this mean? This means for a given trade, I would not expose more than 5% of the 
+capital. This also means that capital exposed could range from as low as 0.1% to all the way 
+up to 5%. So how do I decide?  
+ 
+114                                                               zerodha.com/varsity 
+ 
+We can use Kelly’s percentage here. For example,  if the Kelly’s percentage is 30%, then I’d 
+expose, 30% of 5% or in ot her words, I’d expose 1.5%. If the Kelly’s percentage is 70%, then 
+I’d expose 70% of 5% or say 3.5% of the capital on the trade.  
+So higher the Kelly’s percentage, higher is the capital exposed and vice versa.  
+For a more Mathematical explanation on Kelly’s Criterion, I’d suggest you  watch this video , 
+if not for anything, watch from the 10 th minute onward.  
+With this, I’d like to close the discussion on position sizing, hopefully the last 4 chapters has 
+given you a fair understanding of the importance of position sizing and techniques to position 
+size your bets.  
+Onwards to ‘Trading and Investing Biases’.  
+ 
+Key takeaways from this chapter  
+1. Percentage Risk is an easy and intuitive position sizing technique  
+2. One has to define the maximum amount of risk one as a percentage of capital, dividing 
+this over the stop -loss gives us a sense of how much capital one should expose to a 
+trade 
+3. Kelly’s Criterion suggests how much capital one can expose for a given trade  
+4. One can combine Kelly’s Criterion with percentage risk for optimal results  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+115                                                               zerodha.com/varsity 
+ 
+CHAPTER 15  
+ 
+Trading Biases  
+15.1 – Mind games  
+If you are a part of any WhatsApp group related to stock markets, then chances are that you 
+may have watched this video  – 
+If you are in no mood to watch it, then let me give you a quick summary – This is a show where 
+people call in during the show and ask the show host questions related to stock markets. This 
+is a video clip of one such caller asking the host of the show, the procedure to convert 20,000 
+shares of MRF LTD from paper to digital form. The shares were bought by his grandfather back 
+in the 90’s and were kept in the paper form – ‘physical certificates’, as they  are called.  
+After informing the caller the procedure to convert the shares from the physical form to 
+DEMAT form, the show host casually informs him the value of his shares in today’s terms.  
+The price of MRF on a per share basis was roughly Rs.64,000/ -. Co nsidering the fact that he 
+has 20,000 shares, the overall value works out to – 
+20,000 * 64,000 = 1,280,000,000  
+Or about Rs.128 Crores.  
+Can you imagine that – ONE TWENTY -EIGHT Crore!  
+ 
+
+ 
+116                                                               zerodha.com/varsity 
+ 
+I was flabbergasted when I first saw this video.  
+The first thought that occurred to my mind was – how can someone have the vision to buy 
+MRF 25 years ago? How is he motivating himself to still stay invested? How could he resist the 
+temptation to not sell the stock? Especially after watching the stock grow multiple times over 
+his initial investment?  
+A common investor according to me would probably sell his investment if he saw his 
+investment return say – 50%, maybe 100%…or at most 200%. But this guy has held his stock 
+across years, watching it grow at least 20 times or 2000%.  
+How did this happen?  
+Think about this – if we can understand what exactly is happening here, maybe it will throw 
+out a bunch of insights which will help us create similar wealth right?  
+When I thought through this again (and watched the video again) – I kind of figured what was 
+going on here. Here are my observations – 
+ His grandfather had bought the shares of MRF back in days, has not paid much attention 
+to it since the purchase  
+ One fine day he realized that he has few shares of MRF lying in the attic  
+ He must have mentioned this to his grandson (the caller)  
+ The grandson has now decided to convert them to DEMAT  
+ I’m assuming that he would probably sell the shares as soon as it gets them converted  
+I find this situation extremely interesting, there is a lot happeni ng here and one can draw few 
+conclusions here – 
+1. It is likely that the grandfather has forgotten about his investment, and spent his time 
+somewhere else  
+ This is a valid conclusion as otherwise;  he would have taken efforts to convert shares 
+to DEMAT long ago  
+2. Because he had forgotten, he has not paid much attention to the price appreciation 
+over the years  
+What can we infer from this?  
+One straightforward inference that you would agree I suppose – granddad had made a ton of 
+money by simply forgetting the fact th at he owns shares of MRF.  
+ 
+117                                                               zerodha.com/varsity 
+ 
+Now for a moment imagine – what if he had not forgotten about his investments? What if he 
+had access to a broker or a friend who would call him every day to tell him the stock price of 
+MRF? 
+Do you think he would have held on to hi s shares for these many years? Don’t you think there 
+is a high probability of him selling out his investment – at say a return of 100%, 200% or even 
+500%? 
+In other words – because he forgot and did not pay attention to his investment, he held on to 
+his inv estment over the years and reaped its benefit.  
+Now, had he deiced to track the stock price and update himself with the latest developments 
+– what do you think would have happened? He would analyze the data – when people analyze 
+data – they don’t just analy ze the facts, they try and be smart about it by adding their own 
+imagination. These imaginations originate from our own interpretation of an ideal world. We 
+often refer to this as ‘biases’.  
+Biases, in the trading and investing world, is the only thing stan ding between you and a 
+profitable P&L.  
+This objective of this chapter and the next is to discuss some of these common biases and 
+help you overcome these biases.  
+15.2 – Illusion of Control  
+Let us start with one of the most common biases traders and investor s tend to have. Have a 
+look at the chart below, a typical chart you’d find on any technical analyst’s desk. There are 
+quite a few things happening here in this chart – 
+1. Candlestick chart for price action  
+2. Bollinger band to track volatility  
+3. Fibonacci retracem ent to identify retracements  
+4. Pivot points for support and resistance  
+5. Volume chart  
+6. ATR 
+7. Stochastic indicator  
+ 
+118                                                               zerodha.com/varsity 
+ 
+I’m certain, at least 8 out of every 10 technical traders would have a similar setup while 
+analysing  charts. Clearly, for someone not familiar with c harts or technical analysis this chart 
+would look quite intimidating. After all, there are so many things happening here.  
+ 
+Each element on this chart gives out a unique insight to the trader. Along with these so -called 
+insights, the chart does something e lse to the trader at the subconscious level.  
+Because of the complexity of the chart, and the fact that not many people can relate to it – it 
+somehow makes the trader believe that he is dealing with a complex subject – and he is in 
+total control over the st ock by virtue of all the ‘important insights’ he seems to have derived.  
+This is often called the ‘illusion of control’ – one of the biggest trading biases for a technical 
+trader. Traders who are heavily influenced by the illusion of control often make stat ements 
+like ‘This stock is not going to go above 500’ or sometimes they make super confident 
+statements like  ‘Go ahead and buy puts’, you question them why, and they will be quick to 
+say ‘Boss, I’m telling you just buy Puts’.  
+Why do they do this?  
+Well, tr aders have this tendency to get attracted to complex things, it just feels very nice to 
+be looking at complex charts and making sense out of it. This is like fighting fire with fire – 
+markets are so complex, the default notion is to fight this complex beas t with complex 
+analysis. Further, the fact that only you can make sense of it and others cannot give you that 
+additional kick.  
+This physiological behavior can be attributed to the ‘Illusion of control’.  
+
+ 
+119                                                               zerodha.com/varsity 
+ 
+Remember, no matter how many indicators you load or h ow many numbers you crunch, there 
+is no way you can control all the outcomes. End of the day, there are several different 
+outcomes possible for every possible situation in the market. You cannot control them all.  
+The only way to overcome this behavior is t o stay focused on results and statistics. If you are 
+dealing with a trading strategy, then you got to know the odds of the next trade being 
+profitable. When you start looking at market opportunities this way, you will start being 
+truthful to yourself (and others around you) and will always remain humble. If not for 
+anything, you not get carried away by noise.  
+From all my market experience I can tell you one thing with conviction – the best analysis is 
+done when things are kept simple.  Complex does not nece ssarily mean ‘better’. Hence, you 
+as a trader need to be completely aware of this and work towards building a data -driven 
+approach and not get swayed by inputs that don’t really matter.  
+15.3 – Recency Bias  
+Here is another bias that plagues traders. I find this quite interesting – no matter how many 
+years of experience you have, at some point, you will fall prey to it. Let me illustrate with a 
+recent example.  
+If you have been tracking ‘Café Coffee Day Enterprises’ (CCD), then you’d know what is really 
+happen ing with the company and stock price. For the uninitiated – the company has been 
+under the radar of ‘Income Tax Department’ for tax evasion and hoarding large amounts of 
+income. Couple of days ago, Economic Times carried out the story in great detail, here  is what 
+the headlines said – 
+ 
+I’ve always maintained one stance when it comes to making long -term investments – if the 
+company’s corporate governance is questionable, then no matter how attractive the 
+investment appears, one has to avoid. History has tau ght us many times that such 
+investments will eventually go down the drain. Given this investment stance and the recent 
+events in CCD, I’d be hesitant in making a long -term investment in CCD.  
+
+ 
+120                                                               zerodha.com/varsity 
+ 
+But what if you already have an investment and this news rolls ou t? Well, assuming there is 
+truth in the news, the first thing I’d do would be to get out, no matter how much money I’d 
+be making or losing at that point.  
+A good family friend had made an investment in CCD, he called me  a couple of days after  the 
+news rolle d out asking me for my advice.   Do note, the news by the time he called me was 
+already 2 -3 days old. Things had calmed down (but the fact that the income was concealed, 
+still remains). When he asked me for my advice – I asked him to get out. He quickly pul led the 
+chart of CCD and asked me to take a look – 
+ 
+As you can see, after the steep fall, the latest green candle suggests that there was some 
+buying in the stock. Maybe, there were few traders/investors trying to bottom fish.  
+Now, if the idea is to get o ut because of corporate governance issue – you have to. There are 
+no two ways about it. However, this friend of mine suggested, ‘Maybe I’ll hold for few days 
+before selling, I could get a better price’.  
+I just left it at that and didn’t really try convinci ng him to get rid of the sock.  
+
+ 
+121                                                               zerodha.com/varsity 
+ 
+But why do you think this friend of mine wanted to hang on to the stock? Does the latest 
+green candle override the fact that there was concealed income at CCD? Or does it give a 
+clean chit to the c ompany’s corporate governance?  
+I don’t think so.  
+Instead, what it does is – it induces a bias called the ‘Recency bias’.  
+‘Recency bias’, gets you carried away with the latest information/event by making you turn a 
+blind eye to the past events or facts. Thi s is exactly what is happening to my friend – the latest 
+green candle is making him turn bullish and he is convincing himself that there is more up 
+move left. Well, there could be an up move – but that still does not override corporate 
+governance and turns  the stock to an investable grade stock.  
+Recency bias distorts your sense of judgment. It makes you weigh the recent event far higher 
+than what you probably should.  
+The only way to overcome recency bias is by taking cognizance of the wider picture. You 
+should be in a position to see things from an overall perspective and not really a microscopic 
+view.  
+ 
+Key takeaways from this chapter  
+1. Markets are complex, but the means to analyze markets need not be complex  
+2. Traders often complicate their charts, subconsciou sly it makes them think they are 
+invincible, gives them a sense of control  
+3. Illusion of control makes you spend many hours trying to derive data, which is otherwise 
+pointless  
+4. More data does not necessarily mean quality of information  
+5. Recency bias makes you turn a blind eye to the past events (which could have more impact 
+on markets)  
+6. Having a sense of the overall picture helps you prevent yourself from falling prey to recency 
+bias 
+ 
+ 
+122                                                               zerodha.com/varsity 
+ 
+CHAPTER 16  
+ 
+Trading Biases (Part 2)  
+ 
+16.1 – Anchoring Bias  
+I’ve spent close to about 13 years participating in the stock markets. I’ve spent these years in 
+various capacities – as a trader, investor, broker, money manager, analyst etc. I’ve had my 
+fair share of happiness and regrets in the markets and I’ve learned  a lot (still continue to 
+learn) during these years. I’ve realized that happiness and regret may not always be a linked 
+to the outcome of a trade that you’ve taken up – you feel happy when you make a profit and 
+regret when the trade results in a loss. Thes e feelings can also manifest out of trades that 
+you’ve not taken up. Let me tell you one of my biggest regrets in the stock markets till date.  
+I the recent years, August / Sept 2013 was one of the greatest times to build a long -term 
+portfolio from scratch.   Stocks of great business were available at throwaway valuations. I 
+was fortunate enough to be aware of this situation in the market and I was  really busy 
+structuring my equity portfolio. I had a tough time selecting stocks to include in my portfolio. 
+Tough time in the sense that there were too many opportunities to choose from. In fact, this 
+is what a bear market does to you – it spoils you for  choices.  
+
+ 
+123                                                               zerodha.com/varsity 
+ 
+I included few stocks in the portfolio (which I still continue to hold) and I let go of many stoc ks 
+including MRF, Bajaj Finserv,  etc. The decision to let go of these stocks was based on the fact 
+that I perceived investing in other stocks more at tractive. Stocks like MRF and Bajaj Finserve 
+have performed phenomenally well, but then I don’t regret my decision.  
+However, the decision to not invest in Sundaram Clayton Limited pains my heart – I consider 
+this as one of the biggest regrets.  
+Take a look at this chart – 
+ 
+I did my usual stock research and was convinced that the stock was a great buy. I’ve circled 
+the area around which I wanted to buy – roughly around 270 per stock. Given that it was a 
+bear market, I was kind of rigid on the price to buy – 270 or lower.  
+The stock price moved slightly higher to about 280, but I did not budge. I waited. The stock 
+price moved to 290, I waited. A couple of days later, the stock shot to 310 and I remember 
+convincing myself – the stock will retrace back to 270 considering that it was a bear market. 
+After all, I was in no mood to pay a 15% ‘premium’ on a price that I perceived as ‘the best 
+price’.  
+As you may have guessed, 270 never occurred and I never got to buy  this stock, and here is 
+what really happened to the stock later on – 
+
+ 
+124                                                               zerodha.com/varsity 
+ 
+ 
+I’ve circled the 270 price mark again for your reference, which is where my so -called ‘price 
+conflict’ occurred – all in my mind!  
+I probably missed out one of the greatest investment opportunity in my life, and all thanks to 
+the games my mind played with me. More formally, what really prevented me from buying 
+Sundaram Clayton can be attributable to a notorious tradi ng bias called ‘The Anchoring Bias’.  
+I was looking up on Wikipedia for ‘Anchoring Bias’, and I discovered a new term for the same 
+– it is also called ‘Focalism’. Anchoring bias belongs to a group of biases grouped under 
+‘Cognitive Biases’. Cognitive bias i s a systematic error in our thinking that affects the way 
+human beings make their decisions or judgments. Anchoring Bias leads the list of cognitive 
+biases.  
+Under the influence of Anchoring Bias, we tend to get fixated to the first level of information 
+we get. For example, in my very own case, the first price I saw on the terminal was 270 (for 
+Sundaram Clayton), and I was fixed to that price. Here 270, formed a price anchor.  
+Think about your own trading situations – how many times you may have missed placin g that 
+buy order or a stop loss order because the price that you perceived as ‘right’ never occurred, 
+only to later see the stock perform exactly the way you thought it would. After all, in most of 
+these situations, the price difference between what we per ceived as right and the one 
+available in the markets would be marginal – few Rupees probably, but then our minds just 
+do not permit us to go ahead.  
+Like any other biases, there is no real cure for anchoring bias. The only real cure is to be aware 
+of it and  adopt critical thinking in your approach to markets.  
+
+ 
+125                                                               zerodha.com/varsity 
+ 
+16.2 – Functional Fixedness  
+This is yet another cognitive biases – although you will not read much about this particular 
+bias in the trading world. However, I think it kind of has its impact on traders,  especially the 
+ones who trade derivatives.  
+Let me give you a generic explanation of ‘functional fixedness’ bias and then relate this to the 
+trading world.  
+There is juice shop near my office which I frequent for a glass of fresh juice. On one of those 
+visits, I asked for my regular orange juice, but the guy at the juice shop was busy fixing the 
+mixer jar. The handle of the jar was loose and had to be fixed. The guy was busy trying to find 
+a screwdriver to tighten the mixer’s handle. Unable to find one, he w as kind of clueless on 
+how to proceed.  
+At the same time, his colleague walked in and learned about the issue. He simply picked up 
+a spoon which was lying around, used the other end of the spoon (which basically has a flat 
+side) as a makeshift screwdriver a nd tightened the jar. Problem solved, juice was served.  
+This is functional fixedness at its best. Functional Fixedness is a cognitive bias that limits a 
+person to using an object only in the way it is traditionally used. We assign tasks to objects 
+and we l ive with that rigidity all our lives. For example – we have all grown up with the notion 
+that we only need to look for a screwdriver to tighten screws, without which one cannot. 
+However, a simple spoon can do the same job! One has to start thinking out of the box to 
+solve problems in unconventional ways.  
+There are few ways in which Functional Fixedness limits our way of thinking when it comes 
+trading. Let me start with a classic example.  
+Assume you have Rs.100,000/ - in your trading account. You have identif ied a great trading 
+opportunity in Nifty and you expect to hold onto the trade for the next 2 or 3 days.   Since you 
+intend to hold this trade overnight, you have to opt for a ‘NRML’, product type.   The typical 
+margin blocked for this trade would be about R s.65,000/ -. 
+So you take the trade around 3:20 PM and carry the position forward. End of the day 65K 
+would be blocked as margin and 45K would be your available balance, which can be utilized 
+toward another trade the next day.  
+ 
+126                                                               zerodha.com/varsity 
+ 
+The next day market opens, Nift y starts moving in the direction that you expect it to move. 
+You are happy with the way things are going.  
+Now, assume that you spot a great intraday opportunity, TCS stock futures, which requires 
+you to pay an MIS margin of 60K. What will you do? The avail able margin is 45K, you’d fall 
+short of 15K right? Therefore,  you cannot take the TCS intraday trade.  
+Now, this is where the functional fixedness is playing the culprit. We consider the NRML 
+(margins blocked for overnight positions) as ‘margins blocked’, an d we invariably forget 
+about this capital until we square off the position.  
+With a little bit of ‘out of the box’, thinking (and some efforts) we can, in fact, continue to hold 
+the overnight position plus take up the intraday opportunity.  
+Here is how it would work – 
+1. At the start of the day, you have available margin of 45K, short of 15K to take up the 
+intraday trade  
+2. Convert the NRML Nifty position to MIS. When you do this, from the 65k that was 
+blocked, nearly 39K would be freed up – as MIS  for Nifty is about 26K  
+3. You now have 45K + 39K or 84K free cash for the day  
+4. With 84K, you can easily place an MIS order, blocking 60K. You will still have 14k as 
+available margin  
+5. End of the day, square off the MIS stock futures trade – remember this was an  intraday 
+trade 
+6. Your available margin goes up to 84K  
+7. Convert back the MIS Nifty trade to NRML and carry forward the position  
+The snapshot below shows you how you can do this on Kite – 
+ 
+
+ 
+127                                                               zerodha.com/varsity 
+ 
+16.3 – Confirmation Bias  
+Have a look at the Tata Motor’s below  
+ 
+I’ve marked few important points on this chart – 
+1. The stock is around 430 today  
+2. 430 seems to be a price action zone considering the past price reactions  
+3. Sometime in early August, the price cracked through 430 and declined to 370 
+4. The stock price stabilized around 370, quite evident with the double/triple bottom 
+formation  
+5. Since 370, the price has consistently trended up, all the way back to 430, which is 
+where the current stock price is  
+Considering the above, guess the stock is all primed up for an up move – don’t you think so?  
+Also, keeping that analysis in the back of our mind how would you view this piece of news 
+which made the headlines earlier today – 
+ 
+
+ 
+128                                                               zerodha.com/varsity 
+ 
+Chances are that you will views this news piece as a trigger for Tata Motors to edge higher 
+and therefore support your logic of buying the stock. However, in reality, the fundamental 
+news may not really be a great trigger to drive the stock price higher. B ut then, at a 
+subconscious level, you start looking for pieces of information that support your view. In 
+other words, when you form a trading opinion, no matter what happens, you only look and 
+assimilate information that supports your view. Your brain some how does not allow you to 
+pay attention to information that does not support your original contention.  
+This is called the ‘Confirmation Bias’.  
+Critical reasoning is the key to overcome the confirmation bias. You got to ask yourself – so 
+what?  
+16.4 – Attribution Bias  
+This one is funny.  
+How many times have you had a winning trade and ended up feeling proud of your analysis? 
+Perhaps you bought an option and it gained 100% on the premium or maybe you bought a 
+stock and saw it appreciate multifold.  
+Every time you make a profit – it is somehow because of your smart trading logic, and 
+therefore you give yourself a pat on your back. But what about the times you’ve made a loss? 
+How do you deal with it?  
+Coming from a stockbroking industry, let me tell you  one thing – when people make a loss, 
+they invariably attribute this as broker’s fault and not really their own. Traders find all sorts 
+of reasons to blame the broker – broker’s system failed, charts not loading, orders are slow, 
+and what not.  
+Everything t hing is attributable to someone else’s mistake (mainly the broker) and not really 
+the subpar analysis in the first place!  
+This is called the ‘Attribution Bias’ and people succumb to it owing to acknowledge the fact 
+that they are wrong. One way to overcome the attribution bias is to maintain a trading journal 
+and make entries which reason outs why you’ve entered into a trade and why you decided to 
+close the trade. These journal entries over time give you a great insight into your own trading 
+behavior.  
+ 
+129                                                               zerodha.com/varsity 
+ 
+16.5 – And it’s a wrap!  
+The list of these biases gets endless. Naturally, covering all of them would be hard. However, 
+here is what I’ll do – I’ll keep this chapter open and I will continue to add more biases as and 
+when I discover them myself   
+With this chapter, I’d like to close this module on Risk and Trading Psychology. As usual, I 
+hope you enjoyed reading this module, as much as I enjoyed writing it for you all.  
+Keep those comments coming!  
+ 
+Key takeaway from this chapter  
+1. Anchoring Bias can be quite notorious – tricks the trader/investor to anchor them to 
+the first piece of information  
+2. Anchoring Bia s may lead you to miss great opportunities  
+3. Functional Fixedness fixes your opinion on the utility of the tools, restricts your 
+imagination  
+4. One can overcome functional fixedness by practicing ‘out of the box’ thinking 
+approach  
+5. Confirmation bias makes you se ek information (or tricks you to assimilate 
+information) which can support your original hypothesis  
+6. In a typical trading world, traders attribute losses to problems in the outside works 
+and not really because of subpar analysis  
+7. Attribution Bias can be over come by maintaining a trading journal  
+ 
+ 
+ 

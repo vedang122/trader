@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(./raw/*.pdf)",
+      "Edit(./state/risk_bounds.yaml)",
+      "Write(./state/risk_bounds.yaml)"
+    ]
+  }
+}

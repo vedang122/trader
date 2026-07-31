@@ -1,0 +1,17 @@
+{
+  "cash": 6596.67,
+  "positions": {
+    "M&M": {
+      "qty": 1,
+      "avg_price": 3403.33,
+      "stop": 3295,
+      "target": 3700,
+      "opened": "2026-07-31",
+      "thesis": "Q1-beat volume breakout (2.1x) above the 3295-3330 SMA200/supply ceiling; expects 3560-3700 supply shelf within 2-4 weeks; falsified by any daily close <3295."
+    }
+  },
+  "realized_today": {
+    "date": "2026-07-31",
+    "pnl": 0.0
+  }
+}

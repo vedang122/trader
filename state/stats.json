@@ -1,0 +1,27 @@
+{
+  "as_of": "2026-07-27T12:02:39+05:30",
+  "closed_trades": 0,
+  "win_rate": null,
+  "avg_win": null,
+  "avg_loss": null,
+  "expectancy_inr": null,
+  "expectancy_R": null,
+  "total_pnl": 0,
+  "by_strategy": {},
+  "calibration": {
+    "lt55": {
+      "n": 0,
+      "hit_rate": null
+    },
+    "55-70": {
+      "n": 0,
+      "hit_rate": null
+    },
+    "gt70": {
+      "n": 0,
+      "hit_rate": null
+    }
+  },
+  "last_10": [],
+  "all_trades": []
+}

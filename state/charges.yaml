@@ -1,0 +1,12 @@
+# Transaction cost model (Groww equity DELIVERY defaults, editable if the fee
+# schedule changes). Applied to every paper fill so the desk trains against
+# real friction, and used by the risk gate's cost-viability check.
+brokerage_pct: 0.1        # % of turnover per executed order...
+brokerage_cap: 20.0       # ...capped at ₹20
+brokerage_min: 2.0        # minimum ₹2 (Groww policy)
+stt_pct: 0.1              # securities transaction tax, both sides (delivery)
+exchange_txn_pct: 0.00297 # NSE transaction charge
+sebi_pct: 0.0001
+stamp_duty_buy_pct: 0.015 # buy side only
+gst_pct: 18.0             # on brokerage + exchange txn + SEBI
+dp_charge_sell: 16.5      # depository charge per scrip per sell day

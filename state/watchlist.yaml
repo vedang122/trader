@@ -1,0 +1,22 @@
+# Liquid NIFTY names the desk scans each cycle. Curated for liquidity and
+# sector spread; the trade-coach may propose changes during /debrief, a human
+# or the main session approves them.
+symbols:
+  - {symbol: RELIANCE,   sector: energy}
+  - {symbol: HDFCBANK,   sector: banks}
+  - {symbol: ICICIBANK,  sector: banks}
+  - {symbol: SBIN,       sector: banks}
+  - {symbol: INFY,       sector: it}
+  - {symbol: TCS,        sector: it}
+  - {symbol: LT,         sector: infra}
+  - {symbol: ITC,        sector: fmcg}
+  - {symbol: HINDUNILVR, sector: fmcg}
+  - {symbol: M&M,        sector: auto}
+  - {symbol: NTPC,       sector: power}     # replaced MARUTI (~₹12k/share — unaffordable at ₹10k capital)
+  - {symbol: TATASTEEL,  sector: metals}
+  - {symbol: BHARTIARTL, sector: telecom}
+  - {symbol: SUNPHARMA,  sector: pharma}
+  - {symbol: TATAPOWER,  sector: power}     # replaced TITAN (~₹4.7k/share exceeds the ₹3.5k position cap)
+
+# Context symbols (never traded, used by macro-sentinel / scans):
+context: [NIFTY, BANKNIFTY, INDIAVIX, USDINR, CRUDE, GOLD, DXY]

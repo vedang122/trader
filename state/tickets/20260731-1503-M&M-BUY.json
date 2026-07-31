@@ -1,0 +1,32 @@
+{
+  "symbol": "M&M",
+  "side": "BUY",
+  "qty": 1,
+  "type": "LIMIT",
+  "limit_price": 3395,
+  "product": "CNC",
+  "stop": 3295,
+  "target": 3700,
+  "thesis": "Q1-beat volume breakout (2.1x) above the 3295-3330 SMA200/supply ceiling; expects 3560-3700 supply shelf within 2-4 weeks; falsified by any daily close <3295.",
+  "conviction": 65,
+  "strategy_tag": "earnings-breakout",
+  "committee": {
+    "risk_officer_ruling_ts": "2026-07-31T15:00:59+05:30",
+    "ruling": "APPROVE",
+    "approved_qty": 1,
+    "order_spec": "LIMIT <= 3395 CNC, valid only while price >= 3350, dead unfilled at 15:25 IST, no market conversion",
+    "min_rrr_check": "3.05 at worst fill vs 2.0 floor",
+    "risk_amount": "<= 100 (1% cap)",
+    "cost_gate": "32.73 round trip = 10.7% < 25%",
+    "conditions": [
+      "No-chase integrity: if M&M trades below 3,350 before the limit fills, CANCEL the working order immediately - a fast fade through 3,395 must not hand us an adversely-selected fill on a failing tell. Unfilled at 15:25 -> order dead, Monday's committee starts fresh.",
+      "Stop Rs 3,295 hard from ticket time, never lowered. Thesis falsified by any daily close < 3,295 -> exit next session's first liquid price regardless of intraday wiggle.",
+      "Confirmation backstop (tightening): if filled today AND Friday's official close is < 3,330, the formal trigger never existed - exit at Monday's first liquid price; do NOT hold an unconfirmed position waiting passively for 3,295. This caps the worst branch (~Rs 65) well under the planned Rs 100.",
+      "Underwritten to Rs 3,700 only - 3,560 fails the 2.0 RRR floor (1.65 at worst fill), so no mid-flight target-lowering to declare victory; any partial/trail change goes back through committee.",
+      "Data hygiene: M&M's daily feed is missing Thursday's bar - stop/close monitoring on this position must use live quotes until the feed is fixed; stale quotes on Monday = stand-down alert on this position per non-negotiable 5. Log the feed bug for the engineer.",
+      "No additional auto-sector exposure while this position is open."
+    ],
+    "feed_bug_note": "M&M daily bar for Thu 2026-07-30 is missing from the primary yfinance feed; execution-trader used live quotes (engine.data snapshot) for all monitoring per condition 5."
+  },
+  "risk_officer_approval": true
+}

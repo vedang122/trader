@@ -1,0 +1,9 @@
+# Broker routing. The desk is born in paper mode and must EARN live mode.
+# Switching to live requires a human to complete /go-live and type the
+# acknowledgement line verbatim. Credentials NEVER live in this file — the
+# Groww adapter reads GROWW_API_KEY / GROWW_API_SECRET from the environment
+# (put them in ~/.zshrc).
+mode: paper
+provider: groww            # groww | kite (legacy adapter kept)
+
+# live_acknowledgement: "I accept real-money order placement"   # human types this verbatim

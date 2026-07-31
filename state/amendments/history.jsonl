@@ -1,0 +1,1 @@
+{"ts": "2026-07-24T02:09:02+05:30", "action": "tightened", "param": "risk_per_trade_pct", "from": 1.0, "to": 0.9, "note": "smoke test: tightening is unilateral"}

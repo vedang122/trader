@@ -1,0 +1,17 @@
+{
+  "tone": "neutral",
+  "per_symbol": {
+    "M&M": "bullish",
+    "TCS": "bearish",
+    "INFY": "bearish",
+    "ITC": "neutral",
+    "SUNPHARMA": "neutral"
+  },
+  "top_risks": [
+    "ITC & SUNPHARMA Q1 results due today - binary event risk, no directional lean pre-print",
+    "Crude at $88, off $102 war-peak, as US-Iran ceasefire/pause holds - re-check if Red Sea/Hormuz attacks resume and reverse the de-escalation",
+    "IT sector dragging index (INFY -2.4%, TCS -2.7%) while autos/financials rally on Q1 beats - sector rotation so far, not broad risk-off"
+  ],
+  "basis": "Nifty +50pts above 24,350 on strong Q1 auto/financial beats (M&M +4.8% confirmed live, Bajaj Finance +5-7%) offset by IT sector weakness (INFY -2.4%, TCS -2.7%) and crude easing to $88 as Iran ceasefire holds - stock-specific earnings dispersion, not a market-wide regime; ITC and SUNPHARMA print later today.",
+  "as_of": "2026-07-31T10:41:31+05:30"
+}
