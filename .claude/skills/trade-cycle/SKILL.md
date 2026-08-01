@@ -75,9 +75,20 @@ thesis, entry/stop/target, requested qty (from `python3 -m engine.risk size
 1. Journal the cycle: append via a small heredoc `python3 - <<'EOF'` calling
    `engine.common.journal({"type": "cycle_summary", ...})` — phase outcomes,
    candidates considered/dropped/traded, one-line market read.
-2. Tell the user (this is your final message): book state, P&L, actions taken
+2. Desk minutes — capture the REASONING, not just the outcome. Only for cycles
+   where the committee convened, the risk gate ruled, or a position decision
+   was made (never for no-op ticks): write `state/minutes/<YYYY-MM-DD-HHMM>.md`
+   (≤80 lines) with (a) each analyst's verdict compressed to 3-5 lines — bias,
+   levels, confidence, their strongest argument AND the strongest
+   counter-argument they acknowledged; (b) your synthesis — why each candidate
+   advanced or dropped and what you weighed most; (c) the risk-officer's
+   grounds and bias flags if consulted; (d) one falsifiable self-prediction
+   ("this read is wrong if X happens by <date>"). The coach reads these at
+   /debrief to score the desk's arguments, not just its P&L. Do not paste raw
+   agent reports — compress; the cap is the point.
+3. Tell the user (this is your final message): book state, P&L, actions taken
    with reasons, actions REJECTED with reasons, next thing you're watching.
-3. If running under /loop dynamic scheduling, choose the next wake: market open
+4. If running under /loop dynamic scheduling, choose the next wake: market open
    → 1800s; pre-open → time until 09:20 IST (cap 3600s); closed → 3600s.
 
 ## Non-negotiables (repeat offenders get the desk shut down)

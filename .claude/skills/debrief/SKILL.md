@@ -7,9 +7,14 @@ description: Weekly (or on-demand) performance review of the trading desk — ex
 
 1. Launch the `trade-coach` agent with the review period (default: since the
    last file in `state/debriefs/`, else desk inception). It reads the
-   deterministic scorecard (`engine.stats`), writes `state/debriefs/<date>.md`,
+   deterministic scorecard (`engine.stats`) AND the cycle minutes in
+   `state/minutes/` (the desk's recorded reasoning — use them to score the
+   quality of arguments, not just outcomes: were confident calls well-argued,
+   did dropped candidates fail for the stated reason, did the falsifiable
+   self-predictions come true?), writes `state/debriefs/<date>.md`,
    routes lessons to `state/lessons/<agent>.md` (capped, lifecycle-managed),
-   and files any limit amendments through `engine.amend`.
+   files any limit amendments through `engine.amend`, and prunes minutes
+   older than 30 days (the journal remains the permanent record).
 2. Read the debrief file it produced and relay to the user: the scorecard
    (expectancy, calibration table, discipline flags), the one most damaging
    pattern, lessons issued/promoted/retired, and any amendment it proposed or
