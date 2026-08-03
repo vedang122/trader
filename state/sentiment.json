@@ -1,17 +1,14 @@
 {
-  "tone": "neutral",
+  "tone": "bullish",
   "per_symbol": {
     "M&M": "bullish",
-    "TCS": "bearish",
-    "INFY": "bearish",
-    "ITC": "neutral",
-    "SUNPHARMA": "neutral"
+    "ITC": "bullish"
   },
   "top_risks": [
-    "ITC & SUNPHARMA Q1 results due today - binary event risk, no directional lean pre-print",
-    "Crude at $88, off $102 war-peak, as US-Iran ceasefire/pause holds - re-check if Red Sea/Hormuz attacks resume and reverse the de-escalation",
-    "IT sector dragging index (INFY -2.4%, TCS -2.7%) while autos/financials rally on Q1 beats - sector rotation so far, not broad risk-off"
+    "Iran/Hormuz de-escalation could reverse - EY flags UK inflation risk from Hormuz disruption; re-check crude/rupee if tensions resume",
+    "Fed pause sparked a Treasury twist rattling global bond markets - rate-vol risk that could hit EM flows/rupee",
+    "Earnings dispersion still sharp beneath the index beat - Muthoot Finance -10%, Zee -12% on Q1/regulatory news despite Nifty Q1 earnings +11%"
   ],
-  "basis": "Nifty +50pts above 24,350 on strong Q1 auto/financial beats (M&M +4.8% confirmed live, Bajaj Finance +5-7%) offset by IT sector weakness (INFY -2.4%, TCS -2.7%) and crude easing to $88 as Iran ceasefire holds - stock-specific earnings dispersion, not a market-wide regime; ITC and SUNPHARMA print later today.",
-  "as_of": "2026-07-31T10:41:31+05:30"
+  "basis": "Rupee at one-month peak 95.13 on oil slump + FII inflows, easing Iran/Hormuz tensions lifting European sentiment, and Nifty Q1 earnings beating by 11% (Motilal Oswal) together read risk-on; M&M reinforced by Tata Motors CV sales +37% YoY (Nomura, Iveco recovery read-through), ITC by Q1 beat + Nomura Buy upgrade - tempered by Fed-pause bond volatility and lingering Hormuz-inflation risk in Europe.",
+  "as_of": "2026-08-03T15:29:21+05:30"
 }
