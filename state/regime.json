@@ -1,6 +1,6 @@
 {
-  "regime": "risk_on",
-  "gross_multiplier": 1.0,
-  "as_of": "2026-08-03T15:32:50+05:30",
-  "note": "HOLD, re-verified 08-03 (yfinance down, sourced via WebSearch): score ~0.85 (5.5/6.5) unchanged from 07-31 -- USDINR ~95.29 (95.13 1mo-peak per news) well <96 trigger; India VIX 11.76 (down from 12.16) well <14.5 trigger; WTI ~84.7/Brent ~87.9 flat vs 07-31, Nifty/Sensex rallying today explicitly on crude falling further; DXY 99.72 continuing downtrend from 100.22. Gold data this session was contradictory/unreliable (search returned a 'renewed ME hostilities' narrative conflicting with verified de-escalation) -- discounted, scored neutral. CAVEAT: INR-strength and crude-softness and today's Nifty pop are largely ONE driver (Hormuz de-escalation), not three independent confirmations -- true independent-driver count is closer to 3 clusters (crude/Hormuz, US-Europe equity-tape reversal, domestic vol compression) all still risk-on, not 5-6. Two flagged latent risks re-checked: yen-carry/BOJ -- web sources contradictory/stale-dated, genuinely unverifiable this session, no confirmed escalation found; Fed-pause Treasury-twist -- REAL and CURRENT (today's digest + sentiment.json both flag it live), not yet showing in hard numbers (DXY/VIX/INR/Nifty all still constructive) but is the single biggest live thread to re-score against next cycle if bond vol spills over."
+  "regime": "neutral",
+  "gross_multiplier": 0.7,
+  "as_of": "2026-08-03T19:57:42+05:30",
+  "note": "Reconciliation correction 2026-08-03 evening: three informed cloud runs (10:34, 11:35 per minutes; also 08:35) independently capped at neutral 0.7x on the RBI MPC event override (policy decision due ~Aug 5, inside the 24-48h event window). The 15:16 run's risk_on HOLD was made blind to those rulings (state fork - it started from Friday's clone) and did not weigh the MPC window. Honoring the event-override protocol until the MPC decision lands; tomorrow's pre-open run re-scores with full continuity."
 }
