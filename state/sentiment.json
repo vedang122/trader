@@ -1,17 +1,14 @@
 {
-  "tone": "neutral",
+  "tone": "bullish",
   "per_symbol": {
-    "M&M": "bullish",
-    "TCS": "bearish",
-    "INFY": "bearish",
-    "ITC": "neutral",
+    "ITC": "bullish",
     "SUNPHARMA": "neutral"
   },
   "top_risks": [
-    "ITC & SUNPHARMA Q1 results due today - binary event risk, no directional lean pre-print",
-    "Crude at $88, off $102 war-peak, as US-Iran ceasefire/pause holds - re-check if Red Sea/Hormuz attacks resume and reverse the de-escalation",
-    "IT sector dragging index (INFY -2.4%, TCS -2.7%) while autos/financials rally on Q1 beats - sector rotation so far, not broad risk-off"
+    "Crude/rupee tailwind hinges on US-Iran ceasefire holding (Brent -7% to <$84) - reversal risk if talks collapse",
+    "Zee -12% on SEBI action vs Subhash Chandra/Punit Goenka - governance/regulatory risk, single name but watch for read-across",
+    "RBI MPC referenced in overnight roundup with no explicit rate-decision headline in digest - macro-sentinel should confirm outcome"
   ],
-  "basis": "Nifty +50pts above 24,350 on strong Q1 auto/financial beats (M&M +4.8% confirmed live, Bajaj Finance +5-7%) offset by IT sector weakness (INFY -2.4%, TCS -2.7%) and crude easing to $88 as Iran ceasefire holds - stock-specific earnings dispersion, not a market-wide regime; ITC and SUNPHARMA print later today.",
-  "as_of": "2026-07-31T10:41:31+05:30"
+  "basis": "Broad Q1-earnings-led rally (Sensex +650, Nifty >24,600) plus crude crash on US-Iran talks (Brent <$84) and rupee at one-month high (95.13) corroborated across ET+Livemint; ITC +3-4% on Q1 print and Nomura upgrade to Buy (already largely priced in intraday); no fresh SUNPHARMA or M&M story today, business-standard+gnews feeds down and moneycontrol served stale Apr-2024 cached items mixed into digest.",
+  "as_of": "2026-08-03T11:23:37+05:30"
 }

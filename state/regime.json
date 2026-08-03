@@ -1,6 +1,6 @@
 {
-  "regime": "risk_on",
-  "gross_multiplier": 1.0,
-  "as_of": "2026-07-31T10:57:46+05:30",
-  "note": "Score ~+0.85 (5.5/6.5), 5-of-6 risk-on: crude de-escalated (WTI 81.93 -2%, Brent ~88 vs 102 war-peak, ceasefire verified), USDINR 95.39 stable well below 96 trigger, DXY 100.22 off 52wk-high trend down, India VIX 11.89 near 52wk-lows well below 14.5 trigger, Wall St fully reversed Wed rout (Dow+1.2/S&P+1.7/Nasdaq+2.8 on MSFT) with same-day Nifty confirmation (24349 green, autos/financials on Q1 beats, sector rotation not selloff); gold neutral (modest +0.9% bounce, still sub-50/200sma). No qualifying event-override (BOJ hold already resolved; ITC/SUNPHARMA prints are stock-specific, not systemic). Biggest risk: global-tape reversal is one session old post a Fed-hawkish rout -- BOJ signaling further hikes is a latent yen-carry unwind risk if it resumes."
+  "regime": "neutral",
+  "gross_multiplier": 0.7,
+  "as_of": "2026-08-03T11:26:52+05:30",
+  "note": "Score +0.82 (4.5/5.5) on INR/crude/DXY/Nifty-VIX all risk-on -- but RBI MPC meeting is IN PROGRESS (Aug3-5, decision ~Aug5 AM, ~46h out), an active event-risk override per protocol caps verdict at Neutral regardless of score. Crude -5.9% to 79.67 (Iran ceasefire), USDINR 95.22 strengthening (sma20>sma50>spot), DXY 99.68 downtrend, India VIX 11.98 near 52w lows, Nifty 24597 +0.88% MACD bullish but still below its 200sma(24777) and within the same 15-week consolidation range (52w high 26373 untouched) -- read as range-top retest, not confirmed breakout. Gold +1.7%/MACD bullish but below sma50/200, scored neutral (modest bounce alongside rising equities, not a safe-haven panic signal). Biggest risk: RBI decision Aug5 -- consensus is hold at 5.25% (3rd straight hold) so likely a non-event, but any surprise on rate/stance flips INR and rates fast; re-score immediately once it lands."
 }
