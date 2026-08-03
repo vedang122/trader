@@ -1,17 +1,15 @@
 {
-  "tone": "neutral",
+  "tone": "bullish",
   "per_symbol": {
-    "M&M": "bullish",
-    "TCS": "bearish",
-    "INFY": "bearish",
-    "ITC": "neutral",
-    "SUNPHARMA": "neutral"
+    "SUNPHARMA": "bullish",
+    "TATASTEEL": "bearish",
+    "MARUTI": "neutral"
   },
   "top_risks": [
-    "ITC & SUNPHARMA Q1 results due today - binary event risk, no directional lean pre-print",
-    "Crude at $88, off $102 war-peak, as US-Iran ceasefire/pause holds - re-check if Red Sea/Hormuz attacks resume and reverse the de-escalation",
-    "IT sector dragging index (INFY -2.4%, TCS -2.7%) while autos/financials rally on Q1 beats - sector rotation so far, not broad risk-off"
+    "Crude <$84 (-5-7%) on Trump/Iran de-escalation hopes, still unconfirmed deal - reversible on Red Sea/Hormuz flare-up",
+    "Nifty range-bound 15wks, todays 750pt pre-open pop needs to clear 24,800 to confirm breakout not just bounce",
+    "Tata Steel margin squeeze as prices fall and input costs rise"
   ],
-  "basis": "Nifty +50pts above 24,350 on strong Q1 auto/financial beats (M&M +4.8% confirmed live, Bajaj Finance +5-7%) offset by IT sector weakness (INFY -2.4%, TCS -2.7%) and crude easing to $88 as Iran ceasefire holds - stock-specific earnings dispersion, not a market-wide regime; ITC and SUNPHARMA print later today.",
-  "as_of": "2026-07-31T10:41:31+05:30"
+  "basis": "Crude crash on Iran de-escalation (corroborated ET+Livemint) drove rupee firmer and a broad pre-open rally (Sensex +750pts, Nifty >24,550) - genuine risk-on macro move, not single-headline noise; SUNPHARMA gets a fresh bullish broker call, TATASTEEL a fresh margin-pressure story, rest of digest is stale Apr-2024 wire copy or generic stocks-in-news listings with no directional content.",
+  "as_of": "2026-08-03T09:21:17+05:30"
 }
