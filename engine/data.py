@@ -237,6 +237,31 @@ if __name__ == "__main__":
         print(json.dumps(snapshot(sym), indent=2))
     elif cmd == "ohlcv":
         print(get_ohlcv(sym, period=sys.argv[3] if len(sys.argv) > 3 else "3mo").tail(60).to_string())
+    elif cmd == "growwcheck":
+        status = {"creds_present": bool(os.environ.get("GROWW_API_KEY") and os.environ.get("GROWW_API_SECRET")),
+                  "auth": None, "ltp_reliance": None}
+        try:
+            from growwapi import GrowwAPI
+            key, sec = os.environ.get("GROWW_API_KEY"), os.environ.get("GROWW_API_SECRET")
+            try:
+                import pyotp
+                resp = GrowwAPI.get_access_token(api_key=key, totp=pyotp.TOTP(sec).now())
+                status["auth"] = "ok (TOTP flow — self-refreshing, 6AM resets harmless)"
+            except Exception as e1:
+                try:
+                    resp = GrowwAPI.get_access_token(api_key=key, secret=sec)
+                    status["auth"] = "ok (approval flow — DIES at 6AM daily until re-approved in console; switch to a TOTP key)"
+                except Exception as e2:
+                    status["auth"] = f"FAILED — totp: {str(e1)[:80]} | secret: {str(e2)[:120]}"
+                    resp = None
+            if resp:
+                token = resp.get("token") if isinstance(resp, dict) else resp
+                g = GrowwAPI(token)
+                out = g.get_ltp(exchange_trading_symbols=("NSE_RELIANCE",), segment=g.SEGMENT_CASH)
+                status["ltp_reliance"] = list((out or {}).values())[0] if out else None
+        except Exception as e:
+            status["auth"] = status["auth"] or f"FAILED — {str(e)[:150]}"
+        print(json.dumps(status, indent=2))
     elif cmd == "warm":
         from engine import common
         wl = common.load_yaml(ROOT / "state" / "watchlist.yaml", {}) or {}
