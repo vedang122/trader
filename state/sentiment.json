@@ -1,17 +1,15 @@
 {
-  "tone": "neutral",
+  "tone": "bullish",
   "per_symbol": {
-    "M&M": "bullish",
-    "TCS": "bearish",
-    "INFY": "bearish",
-    "ITC": "neutral",
-    "SUNPHARMA": "neutral"
+    "SUNPHARMA": "bullish",
+    "MARUTI": "neutral",
+    "TATASTEEL": "bearish"
   },
   "top_risks": [
-    "ITC & SUNPHARMA Q1 results due today - binary event risk, no directional lean pre-print",
-    "Crude at $88, off $102 war-peak, as US-Iran ceasefire/pause holds - re-check if Red Sea/Hormuz attacks resume and reverse the de-escalation",
-    "IT sector dragging index (INFY -2.4%, TCS -2.7%) while autos/financials rally on Q1 beats - sector rotation so far, not broad risk-off"
+    "Heavy Q1 earnings week (573 cos incl SBI, Trent, Nykaa; Airtel/LIC next week) - binary event risk, no directional lean pre-print",
+    "~100 stocks incl MARUTI, ICICIBANK turn ex-date this week - dividend/split gaps could false-trigger technical reads",
+    "Crude down 5-7% to <$84 on Trump Iran de-escalation is fresh (today) - re-check if talks collapse and Hormuz risk resumes"
   ],
-  "basis": "Nifty +50pts above 24,350 on strong Q1 auto/financial beats (M&M +4.8% confirmed live, Bajaj Finance +5-7%) offset by IT sector weakness (INFY -2.4%, TCS -2.7%) and crude easing to $88 as Iran ceasefire holds - stock-specific earnings dispersion, not a market-wide regime; ITC and SUNPHARMA print later today.",
-  "as_of": "2026-07-31T10:41:31+05:30"
+  "basis": "Pre-open lift from crude crashing on Iran de-escalation, GIFT Nifty gap-up signal, and FII-inflow/AI-unwind story brightening August outlook; no traded data yet and a 573-company earnings week ahead keep single-name dispersion high (Sun Pharma bullish on MOFSL note, Maruti mixed Q1, Tata Steel margin pressure).",
+  "as_of": "2026-08-03T08:24:00+05:30"
 }

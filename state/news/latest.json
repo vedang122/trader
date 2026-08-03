@@ -1,5 +1,5 @@
 {
-  "ts": "2026-07-31T10:53:32+05:30",
+  "ts": "2026-08-03T08:17:08+05:30",
   "feeds_ok": [
     "et-markets(50)",
     "moneycontrol-markets(4)",
@@ -13,75 +13,54 @@
   ],
   "headlines": [
     {
-      "t": "SBI Life Share Price Live Updates: SBI Life Stock Details",
-      "date": "Fri, 31 Jul 2026 08:43",
-      "src": "et-markets",
-      "tags": [
-        "SBIN"
-      ]
-    },
-    {
-      "t": "Sun Pharma Share Price Live Updates: Sun Pharma's Market Movement",
-      "date": "Fri, 31 Jul 2026 08:30",
+      "t": "MOFSL stays bullish on Sun Pharma; sees 16% upside on innovation pipeline",
+      "date": "Mon, 03 Aug 2026 06:29",
       "src": "et-markets",
       "tags": [
         "SUNPHARMA"
       ]
     },
     {
-      "t": "SBI Share Price Live Updates: SBI Stock Details",
-      "date": "Fri, 31 Jul 2026 08:27",
+      "t": "Stocks in news: Maruti Suzuki, ITC, ZEE, Persistent Systems, and Muthoot Finance",
+      "date": "Mon, 03 Aug 2026 06:00",
       "src": "et-markets",
       "tags": [
-        "SBIN"
+        "ITC",
+        "MARUTI"
       ]
     },
     {
-      "t": "TCS Share Price Live Updates: TCS Trading Under Pressure",
-      "date": "Fri, 31 Jul 2026 08:27",
-      "src": "et-markets",
-      "tags": [
-        "TCS"
-      ]
-    },
-    {
-      "t": "Infosys Share Price Live Updates: Infosys Market Update",
-      "date": "Fri, 31 Jul 2026 08:20",
-      "src": "et-markets",
-      "tags": [
-        "INFY"
-      ]
-    },
-    {
-      "t": "HDFC Bank Share Price Live Updates: HDFC Bank Stock Details",
-      "date": "Fri, 31 Jul 2026 08:20",
-      "src": "et-markets",
-      "tags": [
-        "HDFCBANK"
-      ]
-    },
-    {
-      "t": "Tech Mahindra Share Price Live Updates: Tech Mahindra's Stock Overview",
-      "date": "Fri, 31 Jul 2026 08:15",
-      "src": "et-markets",
-      "tags": [
-        "M&M"
-      ]
-    },
-    {
-      "t": "ITC Share Price Live Updates: ITC Trading Volume Report",
-      "date": "Fri, 31 Jul 2026 08:15",
-      "src": "et-markets",
-      "tags": [
-        "ITC"
-      ]
-    },
-    {
-      "t": "Tata Steel Share Price Live Updates: Tata Steel's beta value indicates steady market trends",
-      "date": "Fri, 31 Jul 2026 08:11",
+      "t": "Value addition key for Tata Steel as prices fall and costs increase",
+      "date": "Mon, 03 Aug 2026 01:48",
       "src": "et-markets",
       "tags": [
         "TATASTEEL"
+      ]
+    },
+    {
+      "t": "HDFC, ICICI Bank rates up for dollar deposits",
+      "date": "Mon, 03 Aug 2026 00:28",
+      "src": "et-markets",
+      "tags": [
+        "ICICIBANK"
+      ]
+    },
+    {
+      "t": "Dividends &amp; stock splits: Maruti Suzuki, ICICI Bank among nearly 100 stocks turning ex-date this week. Do you own?",
+      "date": "Sun, 02 Aug 2026 10:39",
+      "src": "et-markets",
+      "tags": [
+        "ICICIBANK",
+        "MARUTI"
+      ]
+    },
+    {
+      "t": "Q1 earnings this week: SBI, Trent, Nykaa among 573 companies set to announce June quarter results",
+      "date": "Sun, 02 Aug 2026 09:11",
+      "src": "et-markets",
+      "tags": [
+        "SBIN",
+        "MACRO"
       ]
     },
     {
@@ -126,116 +105,170 @@
       ]
     },
     {
-      "t": "Q1 results 2026: ITC to Maruti Suzuki, Sun Pharma, among companies to declare Q1 earnings today; full list here",
-      "date": "Fri, 31 Jul 2026 08:39",
+      "t": "Stocks to watch: IREDA, ITC, Maruti Suzuki among shares in focus today; check list here",
+      "date": "Mon, 03 Aug 2026 07:49",
       "src": "livemint-markets",
       "tags": [
         "ITC",
-        "MARUTI",
-        "SUNPHARMA",
-        "MACRO"
+        "MARUTI"
       ]
     },
     {
-      "t": "Stocks to watch: Maruti Suzuki, IOC, Tata Steel among shares in focus today; check list here",
-      "date": "Fri, 31 Jul 2026 06:54",
+      "t": "Maruti Suzuki hit a speed bump in Q1, but a smoother road lies ahead",
+      "date": "Mon, 03 Aug 2026 06:05",
       "src": "livemint-markets",
       "tags": [
-        "MARUTI",
-        "TATASTEEL"
+        "MARUTI"
       ]
     },
     {
-      "t": "Bitcoin Slides as Investors Fret Over Prospect of Higher Rates",
-      "date": "Fri, 31 Jul 2026 05:03",
+      "t": "Q1 results 2026: Bharti Airtel to LIC among companies to declare Q1 results next week; check full list here",
+      "date": "Sun, 02 Aug 2026 12:21",
       "src": "livemint-markets",
       "tags": [
-        "ITC"
+        "BHARTIARTL",
+        "MACRO"
       ]
     },
     {
-      "t": "Fitch\u2019s Private Credit Default Rate Hit Record in Second Quarter",
-      "date": "Fri, 31 Jul 2026 02:18",
+      "t": "HDFC Mid Cap Fund tops \u20b91 trillion AUM: Is it still worth considering?",
+      "date": "Sun, 02 Aug 2026 09:00",
       "src": "livemint-markets",
       "tags": [
-        "ITC"
+        "RELIANCE"
       ]
     },
     {
-      "t": "Vedanta Aluminium share price target: Why Citi, CLSA, Nuvama see up to 20% upside after Q1 earnings",
-      "date": "Fri, 31 Jul 2026 10:22",
+      "t": "Oil Price Today (August 3): Crude oil crashes 5% below $84 as Trump delays attack on Iran. What are experts saying?",
+      "date": "Mon, 03 Aug 2026 07:52",
       "src": "et-markets",
       "tags": [
         "MACRO"
       ]
     },
     {
-      "t": "Global Market: BoE outlines inflation, growth paths under three economic scenarios after holding rates",
-      "date": "Fri, 31 Jul 2026 10:14",
+      "t": "Sensex Today | Stock Market LIVE Updates: GIFT Nifty signals a positive start; Asian shares trade mixed",
+      "date": "Mon, 03 Aug 2026 07:35",
       "src": "et-markets",
       "tags": [
         "MACRO"
       ]
     },
     {
-      "t": "Vedanta share price target: Why brokerages see up to 24% upside after Q1 earnings?",
-      "date": "Fri, 31 Jul 2026 09:40",
+      "t": "UAE to revamp crude pricing amid sharp market fluctuations",
+      "date": "Mon, 03 Aug 2026 07:28",
       "src": "et-markets",
       "tags": [
         "MACRO"
       ]
     },
     {
-      "t": "Bajaj Finance shares rally 5% after Q1 results. What Nomura, Nuvama, other brokerages expect",
-      "date": "Fri, 31 Jul 2026 09:34",
+      "t": "Gold gains as oil slumps after Trump holds off on Iran attack",
+      "date": "Mon, 03 Aug 2026 07:28",
       "src": "et-markets",
       "tags": [
         "MACRO"
       ]
     },
     {
-      "t": "M&amp;M shares climb 3% after strong Q1 results. Morgan Stanley sees up to 29% upside scope",
-      "date": "Fri, 31 Jul 2026 09:32",
+      "t": "Oil tumbles as Trump cancels attack on Iran to reach nuclear deal",
+      "date": "Mon, 03 Aug 2026 07:23",
       "src": "et-markets",
       "tags": [
         "MACRO"
       ]
     },
     {
-      "t": "Sensex rises over 50 points, Nifty above 24,350; Bajaj twins, M&amp;M among top gainers",
-      "date": "Fri, 31 Jul 2026 09:31",
+      "t": "Nifty rally has enough steam left to move closer to 25,000: Analysts",
+      "date": "Mon, 03 Aug 2026 07:09",
       "src": "et-markets",
       "tags": [
         "MACRO"
       ]
     },
     {
-      "t": "BOJ keeps rates steady, signals further rate hikes",
-      "date": "Fri, 31 Jul 2026 09:09",
+      "t": "Global Market Today: Asian shares mixed, oil slumps on hopes of Iran deal",
+      "date": "Mon, 03 Aug 2026 06:32",
       "src": "et-markets",
       "tags": [
         "MACRO"
       ]
     },
     {
-      "t": "ICRA Q1 Results: Profit rises 32% YoY to Rs 56 crore",
-      "date": "Fri, 31 Jul 2026 09:01",
+      "t": "D-St set for a positive opening as GIFT Nifty signals firm start",
+      "date": "Mon, 03 Aug 2026 06:00",
       "src": "et-markets",
       "tags": [
         "MACRO"
       ]
     },
     {
-      "t": "From 87% to 51%: How Nifty50 companies lost their grip on India Inc's profits",
-      "date": "Fri, 31 Jul 2026 08:52",
+      "t": "AI trade unwind, FII inflows brighten August outlook for Indian stocks",
+      "date": "Mon, 03 Aug 2026 05:59",
       "src": "et-markets",
       "tags": [
         "MACRO"
       ]
     },
     {
-      "t": "Oil Price Today (July 31): Crude oil extends fall to $88. What\u2019s behind the decline amid Iran war?",
-      "date": "Fri, 31 Jul 2026 08:16",
+      "t": "RBI likely to extend rate pause; neutral stance seen unchanged",
+      "date": "Mon, 03 Aug 2026 05:31",
+      "src": "et-markets",
+      "tags": [
+        "MACRO"
+      ]
+    },
+    {
+      "t": "RBI special windows seen big enough to bring in $100B",
+      "date": "Mon, 03 Aug 2026 00:43",
+      "src": "et-markets",
+      "tags": [
+        "MACRO"
+      ]
+    },
+    {
+      "t": "Real estate firm Assetz files IPO papers with Sebi via confidential route; plans Rs 1,200 cr issue",
+      "date": "Sun, 02 Aug 2026 12:57",
+      "src": "et-markets",
+      "tags": [
+        "MACRO"
+      ]
+    },
+    {
+      "t": "AI isn\u2019t a catch-all trade for stocks in this earnings season",
+      "date": "Sun, 02 Aug 2026 12:04",
+      "src": "et-markets",
+      "tags": [
+        "MACRO"
+      ]
+    },
+    {
+      "t": "Will Nifty, Sensex extend gains on Monday? 6 factors which will drive D-Street action this week",
+      "date": "Sun, 02 Aug 2026 09:09",
+      "src": "et-markets",
+      "tags": [
+        "MACRO"
+      ]
+    },
+    {
+      "t": "GHCL Q1 profit rises 32% to Rs 191 cr on lower costs, warns of margin pressure ahead",
+      "date": "Sat, 01 Aug 2026 15:39",
+      "src": "et-markets",
+      "tags": [
+        "MACRO"
+      ]
+    },
+    {
+      "t": "CDSL Q1 Results: Net profit rises 15% YoY to Rs 118 crore, revenue up 13%",
+      "date": "Sat, 01 Aug 2026 15:22",
+      "src": "et-markets",
+      "tags": [
+        "MACRO"
+      ]
+    },
+    {
+      "t": "F&amp;O Talk: Nifty lacks direction on charts, says Sudeep Shah; outlines Bajaj Finance, Eternal strategy after Q1",
+      "date": "Sat, 01 Aug 2026 15:17",
       "src": "et-markets",
       "tags": [
         "MACRO"
@@ -258,80 +291,48 @@
       ]
     },
     {
-      "t": "Bajaj Finance share price jumps around 7% to record high on strong Q1 results FY27: Should you buy, sell or hold?",
-      "date": "Fri, 31 Jul 2026 09:50",
+      "t": "Stock market today: Gift Nifty hints a gap-up start; seven day trading stocks to buy on Monday, 3 August",
+      "date": "Mon, 03 Aug 2026 08:06",
       "src": "livemint-markets",
       "tags": [
         "MACRO"
       ]
     },
     {
-      "t": "Gold and silver prices fall on MCX amid a stronger dollar, escalating US-Iran conflict",
-      "date": "Fri, 31 Jul 2026 09:09",
+      "t": "Buy or sell: Gift Nifty hints at a big gap-up start! Vaishali Parekh recommends three intraday stocks to buy today",
+      "date": "Mon, 03 Aug 2026 08:01",
       "src": "livemint-markets",
       "tags": [
         "MACRO"
       ]
     },
     {
-      "t": "Rupee jumps 29 paise to open at three-week high of 95.39 against US dollar",
-      "date": "Fri, 31 Jul 2026 09:05",
+      "t": "Nifty 50, Sensex prediction today: Check how Indian stock market is expected to trade on 3 August",
+      "date": "Mon, 03 Aug 2026 07:30",
       "src": "livemint-markets",
       "tags": [
         "MACRO"
       ]
     },
     {
-      "t": "Stock market today: Gift Nifty hints a flat-to-positive start; five day trading stocks to buy on Friday, 31 July",
-      "date": "Fri, 31 Jul 2026 08:04",
+      "t": "From Gift Nifty to RBI MPC meeting: 8 key things that changed for Indian stock market overnight",
+      "date": "Mon, 03 Aug 2026 07:24",
       "src": "livemint-markets",
       "tags": [
         "MACRO"
       ]
     },
     {
-      "t": "Buy or sell: Gift Nifty hints positive start, Vaishali Parekh recommends three intraday stocks to buy today",
-      "date": "Fri, 31 Jul 2026 07:52",
+      "t": "Crude oil prices crash 7% on US-Iran peace talks; Brent crude below $84 per barrel",
+      "date": "Mon, 03 Aug 2026 06:52",
       "src": "livemint-markets",
       "tags": [
         "MACRO"
       ]
     },
     {
-      "t": "Nifty 50, Sensex prediction today: Check how Indian stock market is expected to trade on 31 July",
-      "date": "Fri, 31 Jul 2026 07:35",
-      "src": "livemint-markets",
-      "tags": [
-        "MACRO"
-      ]
-    },
-    {
-      "t": "Curtains down on co-location, dark fibre: Sebi agrees to NSE's \u20b91,491 crore settlement",
-      "date": "Fri, 31 Jul 2026 06:30",
-      "src": "livemint-markets",
-      "tags": [
-        "MACRO"
-      ]
-    },
-    {
-      "t": "Sebi's mutual fund-only PMS proposal is a game-changer for advisers, but compliance barriers loom",
-      "date": "Fri, 31 Jul 2026 06:01",
-      "src": "livemint-markets",
-      "tags": [
-        "MACRO"
-      ]
-    },
-    {
-      "t": "Oil on Pace for 21% Monthly Rally as US-Iran War Strains Supply",
-      "date": "Fri, 31 Jul 2026 04:55",
-      "src": "livemint-markets",
-      "tags": [
-        "MACRO"
-      ]
-    },
-    {
-      "t": "Gold, silver prices today: Comex gold jumps $144, silver gains $1 as softer US inflation dents dollar",
-      "date": "Thu, 30 Jul 2026 22:42",
+      "t": "Oil slumps on hopes of Iran deal, yen spikes suddenly after intervention",
+      "date": "Mon, 03 Aug 2026 06:32",
       "src": "livemint-markets",
       "tags": [
         "MACRO"
