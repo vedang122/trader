@@ -10,9 +10,21 @@ Read `CLAUDE.md` if you haven't this session. Run the phases IN ORDER. Exits
 before entries, always. Log one journal note at the end via a `decision` entry.
 
 ## Phase 0 — Clock, book & guardian
-`python3 -m engine.status && python3 -m engine.amend guardian` (status includes
-the clock and sentiment age; guardian auto-tightens on drawdown and applies any
-ripe limit amendment — report its actions to the user if non-empty).
+`python3 -m engine.status && python3 -m engine.amend guardian && python3 -m engine.ops preflight`
+(status includes the clock and sentiment age; guardian auto-tightens on
+drawdown and applies any ripe limit amendment — report its actions to the user
+if non-empty). Preflight verdicts bind you:
+- **STAND_DOWN** → no new entries this cycle, period. If the reason is stale
+  state (behind origin/main), `git pull --rebase` and re-run preflight once; if
+  still stale, do nothing but report. Defend existing positions only if a live
+  quote is obtainable (feed ok/degraded).
+- **DEGRADED** (cache/Groww fallback) → position defense and exits allowed on
+  live LTP; new entries only if the candidate's snapshot has `source: "yf"` —
+  never initiate on patched or stale data. Snapshots carry a `source` field;
+  `vol_ratio_20d: null` means volume is unverifiable — volume-gated setups
+  cannot confirm.
+- Stray `claude/*` branches in the preflight = the state auto-merge workflow
+  is broken; flag it to the user in your final message every cycle until clean.
 If broker mode is LIVE and this is the first cycle of the day:
 `python3 -m engine.broker sync` — reconcile local book vs Groww holdings and
 report any drift. On live auth failure, the desk stands down for the day. Branch:

@@ -24,3 +24,8 @@ description: Weekly (or on-demand) performance review of the trading desk — ex
    it. Watchlist diffs still need explicit user approval before you apply them.
 4. If the desk has fewer than 5 closed trades, say the sample is too small for
    calibration claims and keep the review qualitative — process only.
+5. Ops audit: grep the journal for `ops_alert` entries since the last debrief
+   and check the gap pattern of `cycle_summary` timestamps (missed runs).
+   Recurring infrastructure failures (feed outages, state-sync breaks, merge
+   workflow failures) are lessons/engineering items with the same standing as
+   trading lessons — an unreliable desk cannot compound an edge.

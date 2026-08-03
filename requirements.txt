@@ -1,0 +1,8 @@
+yfinance
+pandas
+pyyaml
+feedparser
+requests
+curl_cffi
+growwapi
+pyotp

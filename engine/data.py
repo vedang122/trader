@@ -1,11 +1,33 @@
-"""Market data via yfinance (NSE symbols get a .NS suffix) plus indicator math."""
+"""Market data via yfinance (NSE symbols get a .NS suffix) plus indicator math.
+
+Resilience layers (cloud IPs get 429-throttled by Yahoo):
+1. retry with backoff, browser-impersonated session when curl_cffi is present;
+2. on-disk daily-bar cache in state/cache/ohlcv/ (committed to git, so cloud
+   runs inherit history and only need the incremental bar);
+3. Groww live LTP fallback (data-only; needs GROWW_API_KEY/SECRET in env) to
+   patch a live price onto cached history when Yahoo is down.
+Every snapshot carries a "source" field so agents can see what they're
+standing on: "yf" | "cache+groww_ltp" | "cache_stale".
+"""
+import os
+import pathlib
+import re
 import sys
+import time
 
 import pandas as pd
 import yfinance as yf
 
+ROOT = pathlib.Path(__file__).resolve().parent.parent
+CACHE_DIR = ROOT / "state" / "cache" / "ohlcv"
+CACHE_ROWS = 420          # ~20 months of daily bars
+CACHE_MAX_AGE_BARS = 5    # refuse cache whose last bar is older than this many trading days
+
 INDEX_MAP = {"NIFTY": "^NSEI", "BANKNIFTY": "^NSEBANK", "INDIAVIX": "^INDIAVIX",
              "USDINR": "USDINR=X", "GOLD": "GC=F", "CRUDE": "CL=F", "DXY": "DX-Y.NYB"}
+
+_session = None
+_groww = None
 
 
 def yf_symbol(symbol: str) -> str:
@@ -17,19 +39,137 @@ def yf_symbol(symbol: str) -> str:
     return s + ".NS"
 
 
+def _http_session():
+    global _session
+    if _session is None:
+        try:
+            from curl_cffi import requests as curl_requests
+            _session = curl_requests.Session(impersonate="chrome")
+        except Exception:
+            _session = False
+    return _session or None
+
+
+def _yf_fetch(symbol: str, period: str, interval: str) -> pd.DataFrame:
+    last_err = None
+    for delay in (0, 2, 5):
+        if delay:
+            time.sleep(delay)
+        try:
+            kwargs = dict(period=period, interval=interval, progress=False,
+                          auto_adjust=True, multi_level_index=False)
+            sess = _http_session()
+            try:
+                df = yf.download(yf_symbol(symbol), session=sess, **kwargs) if sess \
+                    else yf.download(yf_symbol(symbol), **kwargs)
+            except TypeError:  # older yfinance without session kwarg
+                df = yf.download(yf_symbol(symbol), **kwargs)
+            if df is not None and not df.empty:
+                return df.dropna(subset=["Close"])
+        except Exception as e:
+            last_err = e
+    raise RuntimeError(f"yfinance failed for {symbol}: {last_err or 'empty response'}")
+
+
+def _cache_path(symbol: str) -> pathlib.Path:
+    return CACHE_DIR / (re.sub(r"[^A-Za-z0-9._&-]", "_", symbol.upper()) + ".csv")
+
+
+def _load_cache(symbol: str) -> pd.DataFrame | None:
+    p = _cache_path(symbol)
+    if not p.exists():
+        return None
+    try:
+        df = pd.read_csv(p, index_col=0, parse_dates=True)
+        return df if not df.empty else None
+    except Exception:
+        return None
+
+
+def _save_cache(symbol: str, df: pd.DataFrame) -> None:
+    CACHE_DIR.mkdir(parents=True, exist_ok=True)
+    old = _load_cache(symbol)
+    if old is not None:
+        df = pd.concat([old, df])
+        df = df[~df.index.duplicated(keep="last")].sort_index()
+    df.tail(CACHE_ROWS).to_csv(_cache_path(symbol))
+
+
+def _cache_age_bars(df: pd.DataFrame) -> int:
+    """Approximate trading days between the cache's last bar and now (IST)."""
+    days = pd.bdate_range(df.index[-1].date(), pd.Timestamp.now(tz="Asia/Kolkata").date())
+    return max(len(days) - 1, 0)
+
+
+def groww_ltp(symbol: str) -> float | None:
+    """Live LTP from Groww (data-only). None if creds/SDK absent or call fails."""
+    global _groww
+    s = symbol.upper()
+    if s in INDEX_MAP or s.startswith("^") or "=" in s:
+        return None
+    if _groww is False:
+        return None
+    try:
+        if _groww is None:
+            from growwapi import GrowwAPI
+            api_key, secret = os.environ.get("GROWW_API_KEY"), os.environ.get("GROWW_API_SECRET")
+            if not api_key or not secret:
+                _groww = False
+                return None
+            try:
+                import pyotp
+                resp = GrowwAPI.get_access_token(api_key=api_key, totp=pyotp.TOTP(secret).now())
+            except Exception:
+                resp = GrowwAPI.get_access_token(api_key=api_key, secret=secret)
+            token = resp.get("token") if isinstance(resp, dict) else resp
+            if not token:
+                _groww = False
+                return None
+            _groww = GrowwAPI(token)
+        out = _groww.get_ltp(exchange_trading_symbols=(f"NSE_{s}",), segment=_groww.SEGMENT_CASH)
+        for v in (out or {}).values():
+            return float(v)
+        return None
+    except Exception:
+        return None
+
+
 def get_ohlcv(symbol: str, period: str = "1y", interval: str = "1d") -> pd.DataFrame:
-    df = yf.download(yf_symbol(symbol), period=period, interval=interval,
-                     progress=False, auto_adjust=True, multi_level_index=False)
-    if df is not None and not df.empty:
-        df = df.dropna(subset=["Close"])  # yfinance emits NaN rows pre-open
-    if df is None or df.empty:
-        raise RuntimeError(f"no data for {symbol}")
-    return df
+    if interval != "1d":
+        return _yf_fetch(symbol, period, interval)
+    try:
+        df = _yf_fetch(symbol, period, interval)
+        _save_cache(symbol, df)
+        df.attrs["source"] = "yf"
+        return df
+    except RuntimeError:
+        cached = _load_cache(symbol)
+        if cached is None or _cache_age_bars(cached) > CACHE_MAX_AGE_BARS:
+            raise
+        ltp = groww_ltp(symbol)
+        if ltp:
+            patched = cached.copy()
+            ts = pd.Timestamp.now(tz="Asia/Kolkata").normalize().tz_localize(None)
+            row = {c: None for c in patched.columns}
+            row.update({"Open": ltp, "High": ltp, "Low": ltp, "Close": ltp, "Volume": 0})
+            patched.loc[ts] = row
+            patched = patched[~patched.index.duplicated(keep="last")].sort_index()
+            patched.attrs["source"] = "cache+groww_ltp"
+            return patched
+        cached.attrs["source"] = "cache_stale"
+        return cached
 
 
 def last_price(symbol: str) -> float:
-    df = get_ohlcv(symbol, period="5d", interval="1d")
-    return float(df["Close"].iloc[-1])
+    try:
+        df = _yf_fetch(symbol, "5d", "1d")
+        _save_cache(symbol, df) if "=" not in symbol and not symbol.startswith("^") else None
+        return float(df["Close"].iloc[-1])
+    except RuntimeError:
+        ltp = groww_ltp(symbol)
+        if ltp:
+            return ltp
+        raise
 
 
 def rsi(close: pd.Series, n: int = 14) -> pd.Series:
@@ -52,6 +192,7 @@ def atr(df: pd.DataFrame, n: int = 14) -> pd.Series:
 def snapshot(symbol: str) -> dict:
     """One-symbol technical snapshot: everything the desk needs to triage a chart."""
     df = get_ohlcv(symbol, period="1y", interval="1d")
+    source = df.attrs.get("source", "yf")
     c = df["Close"]
     last, prev = float(c.iloc[-1]), float(c.iloc[-2])
     sma20, sma50 = c.rolling(20).mean(), c.rolling(50).mean()
@@ -62,8 +203,12 @@ def snapshot(symbol: str) -> dict:
     vol = df["Volume"]
     a = atr(df)
     high52, low52 = float(df["High"].max()), float(df["Low"].min())
+    vol_ratio = None
+    if source == "yf":
+        vol_ratio = round(float(vol.iloc[-1] / max(vol.rolling(20).mean().iloc[-1], 1)), 2)
     return {
         "symbol": symbol.upper(),
+        "source": source,  # yf | cache+groww_ltp | cache_stale — agents must treat non-yf as degraded
         "last": round(last, 2),
         "change_pct": round((last / prev - 1) * 100, 2),
         "rsi14": round(float(rsi(c).iloc[-1]), 1),
@@ -73,7 +218,7 @@ def snapshot(symbol: str) -> dict:
         "macd_hist": round(float((macd - macd_sig).iloc[-1]), 2),
         "macd_cross": "bullish" if macd.iloc[-1] > macd_sig.iloc[-1] else "bearish",
         "atr14": round(float(a.iloc[-1]), 2),
-        "vol_ratio_20d": round(float(vol.iloc[-1] / max(vol.rolling(20).mean().iloc[-1], 1)), 2),
+        "vol_ratio_20d": vol_ratio,
         "pos_52w_pct": round((last - low52) / max(high52 - low52, 1e-9) * 100, 1),
         "high_52w": round(high52, 2),
         "low_52w": round(low52, 2),
@@ -92,3 +237,17 @@ if __name__ == "__main__":
         print(json.dumps(snapshot(sym), indent=2))
     elif cmd == "ohlcv":
         print(get_ohlcv(sym, period=sys.argv[3] if len(sys.argv) > 3 else "3mo").tail(60).to_string())
+    elif cmd == "warm":
+        from engine import common
+        wl = common.load_yaml(ROOT / "state" / "watchlist.yaml", {}) or {}
+        raw = wl.get("symbols", wl) if isinstance(wl, dict) else wl
+        syms = [s["symbol"] if isinstance(s, dict) else s for s in raw]
+        ok, fail = [], []
+        for s in syms + list(INDEX_MAP):
+            try:
+                get_ohlcv(s, period="2y")
+                ok.append(s)
+            except Exception:
+                fail.append(s)
+            time.sleep(1)
+        print(json.dumps({"cached": ok, "failed": fail}))
