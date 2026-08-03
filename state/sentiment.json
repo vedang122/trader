@@ -1,17 +1,13 @@
 {
-  "tone": "neutral",
+  "tone": "bullish",
   "per_symbol": {
-    "M&M": "bullish",
-    "TCS": "bearish",
-    "INFY": "bearish",
-    "ITC": "neutral",
-    "SUNPHARMA": "neutral"
+    "ITC": "bullish"
   },
   "top_risks": [
-    "ITC & SUNPHARMA Q1 results due today - binary event risk, no directional lean pre-print",
-    "Crude at $88, off $102 war-peak, as US-Iran ceasefire/pause holds - re-check if Red Sea/Hormuz attacks resume and reverse the de-escalation",
-    "IT sector dragging index (INFY -2.4%, TCS -2.7%) while autos/financials rally on Q1 beats - sector rotation so far, not broad risk-off"
+    "Crude/Iran de-escalation could reverse (rupee at one-month high, oil slump - re-check if Hormuz/Red Sea tensions flare)",
+    "Fed pause rattling global bond markets - watch for spillover into EM/FII flows",
+    "Auto Q1 print dispersion (Maruti soft on Q1, Tata Motors CV strong on July sales) - no fresh M&M-specific news today, open position unconfirmed by new catalyst"
   ],
-  "basis": "Nifty +50pts above 24,350 on strong Q1 auto/financial beats (M&M +4.8% confirmed live, Bajaj Finance +5-7%) offset by IT sector weakness (INFY -2.4%, TCS -2.7%) and crude easing to $88 as Iran ceasefire holds - stock-specific earnings dispersion, not a market-wide regime; ITC and SUNPHARMA print later today.",
-  "as_of": "2026-07-31T10:41:31+05:30"
+  "basis": "Digest tone net-positive: Nifty Q1 EPS growth ~11% beating estimates (Motilal Oswal), rupee at one-month high on oil slump/inflows, ITC Q1 beat + Nomura Buy upgrade well-corroborated; offset by scattered single-name misses (Muthoot -10%, Zee -12%) and Fed-driven bond volatility that dont set tone; no new M&M story today.",
+  "as_of": "2026-08-03T14:28:03+05:30"
 }

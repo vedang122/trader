@@ -1,6 +1,6 @@
 {
-  "regime": "risk_on",
-  "gross_multiplier": 1.0,
-  "as_of": "2026-07-31T10:57:46+05:30",
-  "note": "Score ~+0.85 (5.5/6.5), 5-of-6 risk-on: crude de-escalated (WTI 81.93 -2%, Brent ~88 vs 102 war-peak, ceasefire verified), USDINR 95.39 stable well below 96 trigger, DXY 100.22 off 52wk-high trend down, India VIX 11.89 near 52wk-lows well below 14.5 trigger, Wall St fully reversed Wed rout (Dow+1.2/S&P+1.7/Nasdaq+2.8 on MSFT) with same-day Nifty confirmation (24349 green, autos/financials on Q1 beats, sector rotation not selloff); gold neutral (modest +0.9% bounce, still sub-50/200sma). No qualifying event-override (BOJ hold already resolved; ITC/SUNPHARMA prints are stock-specific, not systemic). Biggest risk: global-tape reversal is one session old post a Fed-hawkish rout -- BOJ signaling further hikes is a latent yen-carry unwind risk if it resumes."
+  "regime": "neutral",
+  "gross_multiplier": 0.7,
+  "as_of": "2026-08-03T14:31:50+05:30",
+  "note": "Event-override triggered: (1) Iran war paused-not-resolved -- Trump called off planned massive strike over weekend, talks resume Mon Aug3 PM, binary outcome pending (CNBC/Fortune/WaTimes/CNN, corroborated by WTI -5.2% to 80.24 today per tradingeconomics + Nifty/Sensex rally on the news per IndiaTV/BizStd); (2) RBI MPC meets Aug3-5, decision due Aug5 (pause widely expected but unconfirmed); (3) rare US-Japan joint yen intervention confirmed Mon, first since 2011, both sides signal readiness for more -- active FX-stress flag, not fully latent anymore. Underlying tape reads risk-on in isolation (USDINR 95.29 stable, DXY 99.72 continuing down, Fri US close confirmed Wed-rout reversal sustained w/ 4th straight winning Dow month, Nifty/Sensex up Mon) -- weighted score ~+0.64 pre-override -- but protocol Step 2 caps at Neutral given two live pending-event flags. Gold roughly flat (~4061, +0.46%d/d) -- no acute safe-haven surge, not read as risk-off on its own. yfinance feed hard-down all session (429s); no engine snapshot data used, all levels above are web-sourced and attributed, none invented/carried-forward."
 }
