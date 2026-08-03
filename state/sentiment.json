@@ -1,17 +1,15 @@
 {
-  "tone": "neutral",
+  "tone": "bullish",
   "per_symbol": {
-    "M&M": "bullish",
-    "TCS": "bearish",
-    "INFY": "bearish",
-    "ITC": "neutral",
-    "SUNPHARMA": "neutral"
+    "ITC": "bullish",
+    "SUNPHARMA": "neutral",
+    "M&M": "neutral"
   },
   "top_risks": [
-    "ITC & SUNPHARMA Q1 results due today - binary event risk, no directional lean pre-print",
-    "Crude at $88, off $102 war-peak, as US-Iran ceasefire/pause holds - re-check if Red Sea/Hormuz attacks resume and reverse the de-escalation",
-    "IT sector dragging index (INFY -2.4%, TCS -2.7%) while autos/financials rally on Q1 beats - sector rotation so far, not broad risk-off"
+    "RBI MPC meeting started today, rate decision due later this week - event risk for broad tone",
+    "Crude decline hinges on US refraining from Iran strikes; resumption of Red Sea/Iran strikes would flip the tailwind",
+    "US jobs data (NFP) this week - Wall St awaiting fresh direction, could spill into global risk appetite"
   ],
-  "basis": "Nifty +50pts above 24,350 on strong Q1 auto/financial beats (M&M +4.8% confirmed live, Bajaj Finance +5-7%) offset by IT sector weakness (INFY -2.4%, TCS -2.7%) and crude easing to $88 as Iran ceasefire holds - stock-specific earnings dispersion, not a market-wide regime; ITC and SUNPHARMA print later today.",
-  "as_of": "2026-07-31T10:41:31+05:30"
+  "basis": "Weekend was quiet; Monday open rallying on crude falling as US holds off fresh Iran strikes (Sensex +788pts, Nifty >24,550) plus RBI MPC start and PMI data in focus. ITC +3.8% on Q1 beat + Nomura upgrade to Buy is a real stock story; SUNPHARMA mixed (Citi buy retain vs dip below 20-EMA today). M&M has no fresh headline this cycle - Fridays Q1-beat news is already priced in (stock +0.2% today on light volume, holding above 3330 SMA200), so downgraded from bullish to neutral pending a fresh catalyst; thesis (breakout hold above 3295-3330) is intact, not broken.",
+  "as_of": "2026-08-03T10:24:21+05:30"
 }
