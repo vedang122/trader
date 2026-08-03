@@ -1,0 +1,37 @@
+name: Merge cloud desk state into main
+
+# The claude.ai cloud sandbox pushes each routine run's state commit to an
+# ephemeral claude/* branch. This folds those commits back into main so the
+# next run (which clones main) inherits the desk's full memory.
+on:
+  push:
+    branches:
+      - "claude/**"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: merge-cloud-state
+  cancel-in-progress: false
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Merge the run branch into main
+        run: |
+          git config user.name "kautilya-state-bot"
+          git config user.email "actions@github.com"
+          # union merge for *.jsonl comes from .gitattributes;
+          # -X theirs resolves whole-file JSON state to the newer run's version
+          git merge "origin/${GITHUB_REF_NAME}" -X theirs --no-edit
+          git push origin main
+
+      - name: Delete the ephemeral branch
+        run: git push origin --delete "${GITHUB_REF_NAME}" || true
