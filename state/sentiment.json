@@ -1,17 +1,14 @@
 {
-  "tone": "neutral",
+  "tone": "bullish",
   "per_symbol": {
-    "M&M": "bullish",
-    "TCS": "bearish",
-    "INFY": "bearish",
-    "ITC": "neutral",
-    "SUNPHARMA": "neutral"
+    "ITC": "bullish",
+    "TCS": "neutral"
   },
   "top_risks": [
-    "ITC & SUNPHARMA Q1 results due today - binary event risk, no directional lean pre-print",
-    "Crude at $88, off $102 war-peak, as US-Iran ceasefire/pause holds - re-check if Red Sea/Hormuz attacks resume and reverse the de-escalation",
-    "IT sector dragging index (INFY -2.4%, TCS -2.7%) while autos/financials rally on Q1 beats - sector rotation so far, not broad risk-off"
+    "Maruti -2%+ post-Q1 (single-name so far, not auto-wide) - watch for broadening pressure on M&Ms auto-breakout thesis",
+    "Nifty stuck in a 1,531-pt/15-week range; todays +650 rally needs a close above 24,600 to matter, FII return still tied to a global AI-unwind narrative",
+    "Rupee strength (95.13, one-month peak) rides an oil slump - re-check if crude reverses on any Red Sea/Hormuz flare-up"
   ],
-  "basis": "Nifty +50pts above 24,350 on strong Q1 auto/financial beats (M&M +4.8% confirmed live, Bajaj Finance +5-7%) offset by IT sector weakness (INFY -2.4%, TCS -2.7%) and crude easing to $88 as Iran ceasefire holds - stock-specific earnings dispersion, not a market-wide regime; ITC and SUNPHARMA print later today.",
-  "as_of": "2026-07-31T10:41:31+05:30"
+  "basis": "Sensex +650/Nifty >24,600 plus rupee at a one-month peak on an oil slump are two independent, corroborated macro tailwinds; ITC gets a real catalyst (Nomura Buy upgrade despite a profit drop); Maruti Q1 weakness is stock-specific (auto peer, not on watchlist) and not read as an auto-sector de-rate for M&M; roughly a third of the digest was live-blog filler or stale reposts (ICICI Pru Q4, HUL Q4 preview, an April Stellantis item) and excluded from this read.",
+  "as_of": "2026-08-03T12:24:32+05:30"
 }
