@@ -1,17 +1,16 @@
 {
-  "tone": "neutral",
+  "tone": "bullish",
   "per_symbol": {
-    "M&M": "bullish",
-    "TCS": "bearish",
-    "INFY": "bearish",
-    "ITC": "neutral",
-    "SUNPHARMA": "neutral"
+    "ITC": "bullish",
+    "SBIN": "bullish",
+    "ICICIBANK": "bullish",
+    "BHARTIARTL": "bullish"
   },
   "top_risks": [
-    "ITC & SUNPHARMA Q1 results due today - binary event risk, no directional lean pre-print",
-    "Crude at $88, off $102 war-peak, as US-Iran ceasefire/pause holds - re-check if Red Sea/Hormuz attacks resume and reverse the de-escalation",
-    "IT sector dragging index (INFY -2.4%, TCS -2.7%) while autos/financials rally on Q1 beats - sector rotation so far, not broad risk-off"
+    "Rupee one-month high (95.13) rests on oil slump holding - re-check if crude reverses",
+    "Q1 season punishing misses hard (Muthoot -10%, Zee -12%) - earnings-event volatility, not a market-wide risk",
+    "Auto read-through mixed post-Q1 (Maruti -2%) though no M&M-specific print today"
   ],
-  "basis": "Nifty +50pts above 24,350 on strong Q1 auto/financial beats (M&M +4.8% confirmed live, Bajaj Finance +5-7%) offset by IT sector weakness (INFY -2.4%, TCS -2.7%) and crude easing to $88 as Iran ceasefire holds - stock-specific earnings dispersion, not a market-wide regime; ITC and SUNPHARMA print later today.",
-  "as_of": "2026-07-31T10:41:31+05:30"
+  "basis": "Sensex +650/Nifty >24,600 on broad Q1 earnings beat (Motilal Oswal: Nifty EPS +11% vs estimate, top picks Bharti/SBI/ICICI) plus rupee at one-month high on oil slump - two corroborating macro threads, not a single headline.",
+  "as_of": "2026-08-03T13:24:27+05:30"
 }
