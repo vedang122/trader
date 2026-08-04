@@ -1,0 +1,21 @@
+{
+  "symbol": "M&M",
+  "side": "SELL",
+  "qty": 1,
+  "type": "MARKET",
+  "product": "CNC",
+  "thesis": "Discretionary risk exit (not a stop-out; stop 3295 not breached). Position sizes to ZERO under current risk_per_trade_pct policy (0.75%): cost-loaded risk to stop is 1.32% of capital. Unhedgeable overnight gap risk into RBI MPC decision 2026-08-05 ~10:00 IST with INDIA VIX 11.98-12.04 signaling an under-hedged options market; a -7% to -10% gap through stop would breach the daily-loss circuit breaker. Exit is economically ~breakeven (+INR1 net at 3428.60). 100% book concentration into a rate-sensitive event with no hedge buildable. Original entry thesis: Q1-beat volume breakout (2.1x) above the 3295-3330 SMA200/supply ceiling; expects 3560-3700 supply shelf within 2-4 weeks; falsified by any daily close <3295.",
+  "conviction": 100,
+  "strategy_tag": "risk-officer-exit",
+  "committee": {
+    "risk_officer_ruling": "VETO on continuing to hold -> EXIT. approved_qty: 1 (full position, no partial possible).",
+    "grounds": [
+      "Position sizes to ZERO under current policy: cost-loaded risk to stop = INR132.13 = 1.32% of capital vs risk_per_trade_pct 0.75%; engine.risk size 3428.60/3403.33 with stop 3295 both return suggested_qty 0",
+      "Unhedgeable, unmonitorable gap risk: RBI MPC decision 2026-08-05 ~10:00 IST; INDIA VIX 11.98-12.04 signals under-hedged options market; -7% to -8% gap through stop = -INR239 to -INR273; -10% tail breaches the INR300 daily-loss circuit breaker outright",
+      "Exit is economically free: at ~3421-3428 net exit is ~breakeven (+INR1 at 3428.60 after INR24.10 sell-side charges)",
+      "100% concentration: M&M is the whole directional book, into a directly rate-sensitive event, with no hedge buildable"
+    ],
+    "conditions": "Route to execution-trader immediately as a market-on-LTP sell, this session, before the RBI window opens tomorrow. Do not re-enter M&M today (DEGRADED feed forbids new entries regardless). Any future M&M re-entry is a fresh ticket, sized fresh under current policy."
+  },
+  "risk_officer_approval": true
+}
