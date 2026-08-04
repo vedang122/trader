@@ -1,27 +1,59 @@
 {
-  "as_of": "2026-08-04T10:28:17+05:30",
-  "closed_trades": 0,
-  "win_rate": null,
-  "avg_win": null,
+  "as_of": "2026-08-04T12:42:10+05:30",
+  "closed_trades": 1,
+  "win_rate": 1.0,
+  "avg_win": 24.09,
   "avg_loss": null,
-  "expectancy_inr": null,
-  "expectancy_R": null,
-  "total_pnl": 0,
-  "by_strategy": {},
+  "expectancy_inr": 24.09,
+  "expectancy_R": 0.24,
+  "total_pnl": 24.09,
+  "by_strategy": {
+    "earnings-breakout": {
+      "n": 1,
+      "pnl": 24.09,
+      "wins": 1
+    }
+  },
   "calibration": {
     "lt55": {
       "n": 0,
       "hit_rate": null
     },
     "55-70": {
-      "n": 0,
-      "hit_rate": null
+      "n": 1,
+      "hit_rate": 1.0
     },
     "gt70": {
       "n": 0,
       "hit_rate": null
     }
   },
-  "last_10": [],
-  "all_trades": []
+  "last_10": [
+    {
+      "symbol": "M&M",
+      "qty": 1,
+      "entry": 3395.3,
+      "exit": 3419.39,
+      "pnl": 24.09,
+      "R": 0.24,
+      "conviction": 65,
+      "tag": "earnings-breakout",
+      "opened": "2026-07-31T15:14:41+05:30",
+      "closed": "2026-08-04T11:45:01+05:30"
+    }
+  ],
+  "all_trades": [
+    {
+      "symbol": "M&M",
+      "qty": 1,
+      "entry": 3395.3,
+      "exit": 3419.39,
+      "pnl": 24.09,
+      "R": 0.24,
+      "conviction": 65,
+      "tag": "earnings-breakout",
+      "opened": "2026-07-31T15:14:41+05:30",
+      "closed": "2026-08-04T11:45:01+05:30"
+    }
+  ]
 }
