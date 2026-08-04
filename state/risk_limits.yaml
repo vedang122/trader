@@ -6,7 +6,7 @@
 # Re-scoped 2026-07-24 for REAL capital: ₹10,000 on Groww (user decision).
 
 capital_base: 10000            # INR — real money scale (not amendable by agents)
-risk_per_trade_pct: 1.0        # ₹100 max loss to stop per trade (Module 9)
+risk_per_trade_pct: 0.75        # ₹100 max loss to stop per trade (Module 9)
 max_daily_loss_pct: 3.0        # ₹300 realized; trips the circuit breaker
 max_open_positions: 3          # small book — concentration beats confetti
 max_position_notional_pct: 35  # ₹3,500 — small capital needs workable lot sizes
