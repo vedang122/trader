@@ -1,14 +1,17 @@
 {
-  "tone": "bullish",
+  "tone": "neutral",
   "per_symbol": {
-    "M&M": "bullish",
-    "ITC": "bullish"
+    "RELIANCE": "bullish",
+    "ICICIBANK": "bullish",
+    "SUNPHARMA": "neutral",
+    "ITC": "neutral",
+    "SBIN": "neutral"
   },
   "top_risks": [
-    "Iran/Hormuz de-escalation could reverse - EY flags UK inflation risk from Hormuz disruption; re-check crude/rupee if tensions resume",
-    "Fed pause sparked a Treasury twist rattling global bond markets - rate-vol risk that could hit EM flows/rupee",
-    "Earnings dispersion still sharp beneath the index beat - Muthoot Finance -10%, Zee -12% on Q1/regulatory news despite Nifty Q1 earnings +11%"
+    "RBI MPC decision due Aug 5 - inside 24-48h event window",
+    "crude near $85 and rising on US-Iran talks uncertainty",
+    "FPI/G-Sec inflows drying up as US rate hike looms"
   ],
-  "basis": "Rupee at one-month peak 95.13 on oil slump + FII inflows, easing Iran/Hormuz tensions lifting European sentiment, and Nifty Q1 earnings beating by 11% (Motilal Oswal) together read risk-on; M&M reinforced by Tata Motors CV sales +37% YoY (Nomura, Iveco recovery read-through), ITC by Q1 beat + Nomura Buy upgrade - tempered by Fed-pause bond volatility and lingering Hormuz-inflation risk in Europe.",
-  "as_of": "2026-08-03T15:29:21+05:30"
+  "basis": "GIFT Nifty muted/flat, RBI MPC event risk tomorrow, crude firming and FPI G-Sec outflows offset RIL/ICICI earnings-upgrade positives; downgrade from bullish to neutral",
+  "as_of": "2026-08-04T08:19:50+05:30"
 }

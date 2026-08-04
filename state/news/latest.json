@@ -1,7 +1,7 @@
 {
-  "ts": "2026-08-03T15:30:18+05:30",
+  "ts": "2026-08-04T08:22:46+05:30",
   "feeds_ok": [
-    "et-markets(50)",
+    "et-markets(49)",
     "moneycontrol-markets(4)",
     "moneycontrol-business(15)",
     "livemint-markets(35)",
@@ -13,8 +13,42 @@
   ],
   "headlines": [
     {
-      "t": "Rub-off effect? Godfrey Phillips shares jump 6% after rival cigarette maker ITC's Q1 earnings",
-      "date": "Mon, 03 Aug 2026 13:53",
+      "t": "Reliance Industries, ICICI Bank among 11 stocks with over 3% FY27 earnings upgrades. Own any?",
+      "date": "Tue, 04 Aug 2026 08:05",
+      "src": "et-markets",
+      "tags": [
+        "RELIANCE",
+        "ICICIBANK",
+        "MACRO"
+      ]
+    },
+    {
+      "t": "Stocks to buy in 2026 for long term: Sun Pharma, Bajaj Finserv among 5 stocks that could give 10-30% return",
+      "date": "Tue, 04 Aug 2026 07:28",
+      "src": "et-markets",
+      "tags": [
+        "SUNPHARMA"
+      ]
+    },
+    {
+      "t": "Amazon hits $3 trillion market value",
+      "date": "Tue, 04 Aug 2026 06:31",
+      "src": "et-markets",
+      "tags": [
+        "RELIANCE"
+      ]
+    },
+    {
+      "t": "Stocks in news: Paytm, LIC, Airtel, BSE and ONGC",
+      "date": "Tue, 04 Aug 2026 06:03",
+      "src": "et-markets",
+      "tags": [
+        "BHARTIARTL"
+      ]
+    },
+    {
+      "t": "ITC Q1 earnings hit by cigarette tax burden; FMCG, paper businesses offer support",
+      "date": "Tue, 04 Aug 2026 05:58",
       "src": "et-markets",
       "tags": [
         "ITC",
@@ -22,35 +56,26 @@
       ]
     },
     {
-      "t": "Zinc India to remain at the driver seat for Vedanta, says ICICI Securities but cuts target price to Rs 345",
-      "date": "Mon, 03 Aug 2026 13:43",
+      "t": "Amazon joins $3 trillion club as AI, cloud growth fuel stock rally",
+      "date": "Mon, 03 Aug 2026 20:52",
       "src": "et-markets",
       "tags": [
-        "ICICIBANK"
+        "RELIANCE"
       ]
     },
     {
-      "t": "Nifty Q1 earnings grow 11% to beat estimate, says Motilal Oswal; picks Bharti Airtel, SBI, ICICI Bank among top bets",
-      "date": "Mon, 03 Aug 2026 13:03",
+      "t": "Market wrap: TCS, IndiGo, Sun Pharma among top gainers and losers on Nifty and Sensex on Monday",
+      "date": "Mon, 03 Aug 2026 18:00",
       "src": "et-markets",
       "tags": [
-        "ICICIBANK",
-        "SBIN",
-        "BHARTIARTL",
+        "TCS",
+        "SUNPHARMA",
         "MACRO"
       ]
     },
     {
-      "t": "Maruti Suzuki shares decline over 2% after Q1. Morgan Stanley, Motilal Oswal decode the road ahead",
-      "date": "Mon, 03 Aug 2026 09:57",
-      "src": "et-markets",
-      "tags": [
-        "MARUTI"
-      ]
-    },
-    {
-      "t": "ITC shares gain 3% after Q1 results. Here\u2019s why Nomura upgraded the stock to Buy",
-      "date": "Mon, 03 Aug 2026 09:28",
+      "t": "Bitcoin trades near $63,000 as falling oil prices ease inflation worries; weak flows limit recovery",
+      "date": "Mon, 03 Aug 2026 17:55",
       "src": "et-markets",
       "tags": [
         "ITC",
@@ -99,6 +124,40 @@
       ]
     },
     {
+      "t": "Stocks to watch: Bharti Airtel, Nykaa, LIC among shares in focus today; check list here",
+      "date": "Tue, 04 Aug 2026 07:57",
+      "src": "livemint-markets",
+      "tags": [
+        "BHARTIARTL"
+      ]
+    },
+    {
+      "t": "SBI Funds Q1 Results: PAT rises 3% YoY to \u20b9873 crore in first earnings after listing",
+      "date": "Mon, 03 Aug 2026 22:00",
+      "src": "livemint-markets",
+      "tags": [
+        "SBIN",
+        "MACRO"
+      ]
+    },
+    {
+      "t": "HSBC, SBI and ICICI Bank get half of India's FCNR flows under incentive window",
+      "date": "Mon, 03 Aug 2026 19:49",
+      "src": "livemint-markets",
+      "tags": [
+        "ICICIBANK",
+        "SBIN"
+      ]
+    },
+    {
+      "t": "Top Gainers &amp; Losers on 3 August: Urban Company, Pine Labs, Redington, Paytm, TCS, Meesho among top gainers",
+      "date": "Mon, 03 Aug 2026 16:20",
+      "src": "livemint-markets",
+      "tags": [
+        "TCS"
+      ]
+    },
+    {
       "t": "ITC looks past its worst quarter. Can the recovery last?",
       "date": "Mon, 03 Aug 2026 15:11",
       "src": "livemint-markets",
@@ -107,148 +166,128 @@
       ]
     },
     {
-      "t": "ITC share price rallies 4% despite a drop in Q1 profit. Should you buy, sell FMCG stock after Q1 results 2026?",
-      "date": "Mon, 03 Aug 2026 10:25",
-      "src": "livemint-markets",
-      "tags": [
-        "ITC",
-        "MACRO"
-      ]
-    },
-    {
-      "t": "Stocks to buy: Nifty 50 may end 2026 around 26,800\u201327,000, says Rahul Ghose of Hedged, bets on these 10 shares",
-      "date": "Mon, 03 Aug 2026 08:57",
-      "src": "livemint-markets",
-      "tags": [
-        "HINDUNILVR",
-        "MACRO"
-      ]
-    },
-    {
-      "t": "Q1 results 2026: IREDA to SBI Funds among companies to declare Q1 results today; full list here",
-      "date": "Mon, 03 Aug 2026 08:27",
-      "src": "livemint-markets",
-      "tags": [
-        "SBIN",
-        "MACRO"
-      ]
-    },
-    {
-      "t": "Stocks to watch: IREDA, ITC, Maruti Suzuki among shares in focus today; check list here",
-      "date": "Mon, 03 Aug 2026 07:49",
-      "src": "livemint-markets",
-      "tags": [
-        "ITC",
-        "MARUTI"
-      ]
-    },
-    {
-      "t": "Global Market: UK growth at risk as EY flags inflation surge from Hormuz disruption",
-      "date": "Mon, 03 Aug 2026 14:10",
+      "t": "ETMarkets NRI Talk | RBI's FCNR(B) reforms could bring in over $20 billion of foreign inflows: Keyur Majmudar",
+      "date": "Tue, 04 Aug 2026 08:09",
       "src": "et-markets",
       "tags": [
         "MACRO"
       ]
     },
     {
-      "t": "Global Market: European shares rise as easing Iran tensions lift sentiment; energy stocks slide",
-      "date": "Mon, 03 Aug 2026 14:06",
+      "t": "Oil Price Today (August 4): Crude oil nears $85 as peace talks uncertainty loom after fresh attacks. What are experts saying?",
+      "date": "Tue, 04 Aug 2026 07:51",
       "src": "et-markets",
       "tags": [
         "MACRO"
       ]
     },
     {
-      "t": "Global Market: Fed pause sparks Treasury twist, rattles bond markets",
-      "date": "Mon, 03 Aug 2026 13:57",
+      "t": "Sensex Today | Stock Market LIVE Updates: GIFT Nifty signals a muted start; Asian shares trade higher",
+      "date": "Tue, 04 Aug 2026 07:33",
       "src": "et-markets",
       "tags": [
         "MACRO"
       ]
     },
     {
-      "t": "Swiggy shares fall 6% in 2 days despite strong Q1 earnings. Should you buy, sell or hold?",
-      "date": "Mon, 03 Aug 2026 13:10",
+      "t": "Oil ticks up after selloff as talks to end US-Iran war remain uncertain",
+      "date": "Tue, 04 Aug 2026 07:12",
       "src": "et-markets",
       "tags": [
         "MACRO"
       ]
     },
     {
-      "t": "Tata Motors CV shares rise 4% as July sales jump 37% YoY. Nomura expects Iveco to support earnings recovery; check target price",
-      "date": "Mon, 03 Aug 2026 13:07",
+      "t": "Promoter ownership climbs to two-year high despite persistent FII selling",
+      "date": "Tue, 04 Aug 2026 06:12",
       "src": "et-markets",
       "tags": [
         "MACRO"
       ]
     },
     {
-      "t": "Muthoot Finance shares crash 10% after Q1 results. What Motilal, other brokerages said",
-      "date": "Mon, 03 Aug 2026 12:29",
+      "t": "FPI inflows into Indian G-Secs dry up as US rate hike looms",
+      "date": "Tue, 04 Aug 2026 05:52",
       "src": "et-markets",
       "tags": [
         "MACRO"
       ]
     },
     {
-      "t": "One MobiKwik Q1 Results: Firm reports profit for 3rd consecutive quarter; stock jumps 9% on strong performance",
-      "date": "Mon, 03 Aug 2026 12:14",
+      "t": "If the earnings don't come through, markets will struggle: Paul Wilson",
+      "date": "Tue, 04 Aug 2026 05:37",
       "src": "et-markets",
       "tags": [
         "MACRO"
       ]
     },
     {
-      "t": "Zee shares tumble 12% after Sebi action against Subhash Chandra, Punit Goenka",
-      "date": "Mon, 03 Aug 2026 11:01",
+      "t": "D-St set for a cautious opening as GIFT Nifty signals muted start",
+      "date": "Tue, 04 Aug 2026 05:34",
       "src": "et-markets",
       "tags": [
         "MACRO"
       ]
     },
     {
-      "t": "Rupee climbs to one-month peak of 95.13 vs USD on oil slump, stronger inflows",
-      "date": "Mon, 03 Aug 2026 10:50",
+      "t": "New closing auction triggers confusion, sparks late Nifty swings",
+      "date": "Tue, 04 Aug 2026 05:31",
       "src": "et-markets",
       "tags": [
         "MACRO"
       ]
     },
     {
-      "t": "Blue Dart Express shares surge 7% after Q1 results. Here's why Nuvama retains Buy, raises target",
-      "date": "Mon, 03 Aug 2026 10:38",
+      "t": "US stocks: Dow closes at record high on Iran talks optimism",
+      "date": "Tue, 04 Aug 2026 01:32",
       "src": "et-markets",
       "tags": [
         "MACRO"
       ]
     },
     {
-      "t": "Why is market rising today? Sensex surges 650 points, Nifty tops 24,600. 6 key factors fueling the rally",
-      "date": "Mon, 03 Aug 2026 09:38",
+      "t": "Muthoot Microfin case: Sebi exempts six family trusts from open offer obligation",
+      "date": "Mon, 03 Aug 2026 23:06",
       "src": "et-markets",
       "tags": [
         "MACRO"
       ]
     },
     {
-      "t": "Urban Company shares zoom 15% after Q1 results. Why Motilal Oswal raised target price",
-      "date": "Mon, 03 Aug 2026 09:34",
+      "t": "Sebi extends PaRRVA enrollment deadline to Sep 3 for investment advisers, research analysts",
+      "date": "Mon, 03 Aug 2026 20:12",
       "src": "et-markets",
       "tags": [
         "MACRO"
       ]
     },
     {
-      "t": "US Stock Market: Wall Street braces for jobs data, earnings as markets seek fresh direction",
-      "date": "Mon, 03 Aug 2026 09:28",
+      "t": "DLF Q1 Results: Profit rises 4% to Rs 794 crore; revenue declines 46%",
+      "date": "Mon, 03 Aug 2026 18:37",
       "src": "et-markets",
       "tags": [
         "MACRO"
       ]
     },
     {
-      "t": "Bajaj Finserv shares rise over 2% after Q1 earnings. Here's why Motilal Oswal upgrades to Buy, raises target price",
-      "date": "Mon, 03 Aug 2026 09:20",
+      "t": "RBI sells USD 14.9 bn during Jan-May to check excess volatility in rupee",
+      "date": "Mon, 03 Aug 2026 18:35",
+      "src": "et-markets",
+      "tags": [
+        "MACRO"
+      ]
+    },
+    {
+      "t": "US 10-year yield falls from 18-month high on Iran peace talk hopes",
+      "date": "Mon, 03 Aug 2026 17:53",
+      "src": "et-markets",
+      "tags": [
+        "MACRO"
+      ]
+    },
+    {
+      "t": "200 point-jump in 2 minutes: Why Nifty made a surprising surge before closing bell",
+      "date": "Mon, 03 Aug 2026 16:33",
       "src": "et-markets",
       "tags": [
         "MACRO"
@@ -271,72 +310,32 @@
       ]
     },
     {
-      "t": "Urban Company shares jump 18% to 12-week high after Q1 earnings",
-      "date": "Mon, 03 Aug 2026 14:40",
+      "t": "Stock market today: Gift Nifty hints a flat start; five day trading stocks to buy on Tuesday, 4 August",
+      "date": "Tue, 04 Aug 2026 08:06",
       "src": "livemint-markets",
       "tags": [
         "MACRO"
       ]
     },
     {
-      "t": "Penny stock under \u20b91 hits 9% upper circuit after this MoU to strengthen software development business",
-      "date": "Mon, 03 Aug 2026 13:48",
+      "t": "Buy or sell: Gift Nifty signals gap-down start, Vaishali Parekh recommends three intraday stocks to buy today",
+      "date": "Tue, 04 Aug 2026 07:53",
       "src": "livemint-markets",
       "tags": [
         "MACRO"
       ]
     },
     {
-      "t": "FPIs turn net buyers in cash market for first time since war began",
-      "date": "Mon, 03 Aug 2026 13:10",
+      "t": "Nifty 50, Sensex prediction today: Check how Indian stock market is expected to trade on 4 August",
+      "date": "Tue, 04 Aug 2026 07:39",
       "src": "livemint-markets",
       "tags": [
         "MACRO"
       ]
     },
     {
-      "t": "Muthoot Finance share price crashes over 11% after Q1 results 2026. Do you own?",
-      "date": "Mon, 03 Aug 2026 12:49",
-      "src": "livemint-markets",
-      "tags": [
-        "MACRO"
-      ]
-    },
-    {
-      "t": "Eternal vs Swiggy: Which food delivery stock to buy after Q1 results 2026?",
-      "date": "Mon, 03 Aug 2026 11:52",
-      "src": "livemint-markets",
-      "tags": [
-        "MACRO"
-      ]
-    },
-    {
-      "t": "Healthcare stock Park Medi World inches close to record high after the Q1 results 2026",
-      "date": "Mon, 03 Aug 2026 09:55",
-      "src": "livemint-markets",
-      "tags": [
-        "MACRO"
-      ]
-    },
-    {
-      "t": "Rupee opens 25 paise higher at 95.14 against US dollar amid easing crude oil prices",
-      "date": "Mon, 03 Aug 2026 09:08",
-      "src": "livemint-markets",
-      "tags": [
-        "MACRO"
-      ]
-    },
-    {
-      "t": "Gold and silver prices climb on MCX as dollar, crude oil prices decline on hopes of US-Iran truce",
-      "date": "Mon, 03 Aug 2026 09:08",
-      "src": "livemint-markets",
-      "tags": [
-        "MACRO"
-      ]
-    },
-    {
-      "t": "Stock market today: Gift Nifty hints a gap-up start; seven day trading stocks to buy on Monday, 3 August",
-      "date": "Mon, 03 Aug 2026 08:06",
+      "t": "Crude oil prices rebound after 7% decline amid ongoing US-Iran war; Brent remains below $85 per barrel",
+      "date": "Tue, 04 Aug 2026 07:26",
       "src": "livemint-markets",
       "tags": [
         "MACRO"

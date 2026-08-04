@@ -1,6 +1,6 @@
 {
   "regime": "neutral",
   "gross_multiplier": 0.7,
-  "as_of": "2026-08-03T19:57:42+05:30",
-  "note": "Reconciliation correction 2026-08-03 evening: three informed cloud runs (10:34, 11:35 per minutes; also 08:35) independently capped at neutral 0.7x on the RBI MPC event override (policy decision due ~Aug 5, inside the 24-48h event window). The 15:16 run's risk_on HOLD was made blind to those rulings (state fork - it started from Friday's clone) and did not weigh the MPC window. Honoring the event-override protocol until the MPC decision lands; tomorrow's pre-open run re-scores with full continuity."
+  "as_of": "2026-08-04T08:27:06+05:30",
+  "note": "Event-override HOLD: RBI MPC decision lands Aug 5 10am (still pending as of pre-open) caps verdict at neutral regardless of score, per Brexit-lesson protocol. Feed is DEGRADED (yfinance 429/reset on all tickers, cache_stale snapshots) so this rests on cached daily bars + news/WebSearch, not live quotes. Weighted vote on best-available data (INR pullback +1, DXY soft +1, gold flat 0, global calm +1.5, crude -1 on Brent near 83-84 USD/bbl on US-Iran Strait-of-Hormuz uncertainty per news+WebSearch) computes approx +0.45 -- itself neutral-band even absent the override, so this is not purely event-driven caution. No basis to loosen or tighten beyond current 0.7x; book (1 pos, M&M) has ample headroom either way."
 }
