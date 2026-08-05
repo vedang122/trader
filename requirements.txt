@@ -1,9 +1,31 @@
+# Core desk — `pip install -r requirements.txt` must always succeed.
 yfinance
 pandas
 pyyaml
 feedparser
 requests
 curl_cffi
-growwapi
-pyotp
 pytest
+
+# Groww live-LTP fallback (data-only; engine.data.groww_ltp / groww_status).
+# growwapi is deliberately NOT listed as a requirement: its metadata pulls
+# clint -> args, sdist-only packages whose legacy setup.py build dies against
+# the Debian-patched setuptools in the cloud container
+# ("AttributeError: install_layout"). pip fails the WHOLE file on one
+# unbuildable dep, so a bare `growwapi` line silently left pandas, yfinance and
+# pytest uninstalled too. Its runtime deps install cleanly, so they live here
+# and the SDK itself goes in without its broken metadata:
+#     pip install -r requirements.txt
+#     pip install --no-deps growwapi
+# Verify with `python3 -m engine.data growwcheck`; `engine.ops preflight`
+# reports feed.live_ltp so a dead fallback can never pose as a live one.
+pyotp
+pynacl
+protobuf
+websocket-client
+nkeys
+nats-py
+aiohttp
+pydantic
+colorama
+certifi

@@ -175,6 +175,32 @@ def _cache_age_bars(df: pd.DataFrame) -> int:
     return max(len(days) - 1, 0)
 
 
+def _groww_sdk():
+    """The Groww SDK class, or None when the package isn't installed."""
+    try:
+        from growwapi import GrowwAPI
+        return GrowwAPI
+    except Exception:
+        return None
+
+
+def groww_status(symbol: str = "RELIANCE") -> dict:
+    """Whether the live-LTP fallback actually works, and if not, why.
+
+    groww_ltp() collapses every failure into None; preflight needs to tell a
+    missing SDK from absent creds from a dead call, because a DEGRADED verdict
+    whose stated remedy is "exits on live LTP" must prove live LTP exists.
+    """
+    if _groww_sdk() is None:
+        return {"live_ltp": "dead", "why": "sdk_missing", "ltp": None}
+    if not (os.environ.get("GROWW_API_KEY") and os.environ.get("GROWW_API_SECRET")):
+        return {"live_ltp": "dead", "why": "no_creds", "ltp": None}
+    ltp = groww_ltp(symbol)
+    if ltp:
+        return {"live_ltp": "ok", "why": None, "ltp": ltp}
+    return {"live_ltp": "dead", "why": "auth_or_call_failed", "ltp": None}
+
+
 def groww_ltp(symbol: str) -> float | None:
     """Live LTP from Groww (data-only). None if creds/SDK absent or call fails."""
     global _groww
@@ -185,7 +211,9 @@ def groww_ltp(symbol: str) -> float | None:
         return None
     try:
         if _groww is None:
-            from growwapi import GrowwAPI
+            GrowwAPI = _groww_sdk()
+            if GrowwAPI is None:
+                return None
             api_key, secret = os.environ.get("GROWW_API_KEY"), os.environ.get("GROWW_API_SECRET")
             if not api_key or not secret:
                 _groww = False

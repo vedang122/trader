@@ -6,6 +6,8 @@ answers three questions no agent should be trusted to answer from vibes:
    claude/* run branches (= the auto-merge workflow failed)?
 2. CONTINUITY: when did the desk last journal anything?
 3. FEED: is the price feed live, degraded (cache/Groww fallback), or dead?
+   Degraded is not one state: feed.live_ltp says whether the Groww fallback
+   actually answers, because "exits allowed on live LTP" is a lie without it.
 
 Verdict: GO | DEGRADED | STAND_DOWN. STAND_DOWN and stray-branch findings are
 auto-journaled as ops_alert so the weekly debrief audits infrastructure, not
@@ -60,20 +62,23 @@ def check_continuity() -> dict:
 
 def check_feed() -> dict:
     from engine import data
-    canary = {"status": "dead", "detail": None}
+    canary = {"status": "dead", "detail": None, "live_ltp": "unprobed", "live_ltp_why": None}
     try:
         data._yf_fetch("NIFTY", "5d", "1d")
         canary.update(status="ok", detail="yfinance live")
         return canary
     except Exception as e:
         canary["detail"] = f"yfinance: {str(e)[:120]}"
-    ltp = data.groww_ltp("RELIANCE")
-    if ltp:
+    gw = data.groww_status("RELIANCE")
+    canary.update(live_ltp=gw["live_ltp"], live_ltp_why=gw["why"])
+    if gw["live_ltp"] == "ok":
         canary.update(status="degraded", detail=canary["detail"] + " | groww LTP live")
         return canary
     cached = data._load_cache("NIFTY") if hasattr(data, "_load_cache") else None
     if cached is not None and data._cache_age_bars(cached) <= data.CACHE_MAX_AGE_BARS:
-        canary.update(status="degraded", detail=canary["detail"] + " | cache fresh enough for daily bars")
+        canary.update(status="degraded", detail=canary["detail"]
+                      + f" | cache fresh enough for daily bars but NO live LTP ({gw['why']})"
+                      + " — cannot defend open positions")
     return canary
 
 

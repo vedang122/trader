@@ -37,3 +37,6 @@ ASKS:
 (c) preflight's feed detail string 'cache fresh enough for daily bars' is reassuring in a way the state does not earn - see the related open issue OPEN-20260805-1226.
 
 ## Engineer notes (append below)
+
+## Closed
+2026-08-05T21:01:43+05:30: fixed: growwapi out of requirements.txt (its clint->args sdists fail the whole install in-container) — core deps now install clean, SDK documented as 'pip install --no-deps growwapi' with its runtime deps pinned; engine.data.groww_status() + ops.check_feed now surface feed.live_ltp ok|dead|unprobed with a reason, and a stale-cache DEGRADED says 'NO live LTP - cannot defend open positions'. Ask (c) (misleading detail string) stays with OPEN-20260805-1226.
