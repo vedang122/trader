@@ -1,6 +1,6 @@
 {
   "regime": "neutral",
   "gross_multiplier": 0.7,
-  "as_of": "2026-08-04T08:27:06+05:30",
-  "note": "Event-override HOLD: RBI MPC decision lands Aug 5 10am (still pending as of pre-open) caps verdict at neutral regardless of score, per Brexit-lesson protocol. Feed is DEGRADED (yfinance 429/reset on all tickers, cache_stale snapshots) so this rests on cached daily bars + news/WebSearch, not live quotes. Weighted vote on best-available data (INR pullback +1, DXY soft +1, gold flat 0, global calm +1.5, crude -1 on Brent near 83-84 USD/bbl on US-Iran Strait-of-Hormuz uncertainty per news+WebSearch) computes approx +0.45 -- itself neutral-band even absent the override, so this is not purely event-driven caution. No basis to loosen or tighten beyond current 0.7x; book (1 pos, M&M) has ample headroom either way."
+  "as_of": "2026-08-05T08:25:44+05:30",
+  "note": "Event-override HOLD persists: RBI MPC repo decision due ~10:00 IST today, still unresolved (consensus unchanged at 5.25%/neutral stance per Reuters poll 68/72 + WebSearch; 4/72 see hawkish hike). Underlying weighted score ~+0.82 (global tape at record highs, INR stable ~95.33, DXY soft/flat ~99.9, gold quiet ~4091, crude mixed/fragile on Iran-deal hopes) would be risk-on but Brexit-lesson protocol caps at neutral pending binary resolution -- not a rubber stamp, the override is doing real work here since score alone clears risk-on. Feed DEGRADED (yfinance SSL resets on all tickers); every snapshot used is cache_stale not live. Re-score after 10:00 IST print using actual tape reaction (Nifty/Bank Nifty move, INR spot), not the announced number alone."
 }
