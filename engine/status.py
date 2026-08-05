@@ -11,17 +11,24 @@ from engine import common, data, portfolio as pf_mod, risk
 def run() -> dict:
     market = common.market_status()
     pf = pf_mod.load()
-    quotes = {}
+    quotes, stale_marks = {}, []
     for sym in pf["positions"]:
         try:
             quotes[sym] = data.last_price(sym)
-        except RuntimeError:
-            pass
+        except Exception:
+            cached = data._load_cache(sym)
+            if cached is not None and data._cache_age_bars(cached) <= data.CACHE_MAX_AGE_BARS:
+                quotes[sym] = float(cached["Close"].iloc[-1])
+                stale_marks.append(f"{sym}: NO LIVE QUOTE — marked at cached close "
+                                   f"{cached.index[-1].date()}; stop/target checks are STALE, exits blind")
+            else:
+                stale_marks.append(f"{sym}: NO QUOTE PATH AT ALL — marked at avg_price, "
+                                   "equity curve and guardian are blind on this position")
     mtm = pf_mod.mark_to_market(pf, quotes)
     lm, rg = risk.limits(), risk.regime()
     capital = lm["capital_base"]
     gross = sum(abs(p["qty"]) * p["ltp"] for p in mtm["positions"])
-    alerts = []
+    alerts = list(stale_marks)
     for p in mtm["positions"]:
         if p.get("stop") and p["ltp"] <= p["stop"]:
             alerts.append(f"{p['symbol']}: BELOW STOP {p['stop']} (ltp {p['ltp']}) — exit required")

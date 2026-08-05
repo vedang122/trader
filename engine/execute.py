@@ -15,7 +15,14 @@ def run(ticket_path: str, check_only: bool = False) -> dict:
                        if not ticket_path.startswith("/") else open(ticket_path).read())
     sym = order["symbol"].upper()
     pf = pf_mod.load()
-    quotes = {sym: data.last_price(sym)}
+    try:
+        quotes = {sym: data.last_price(sym)}
+    except Exception as e:
+        common.journal({"type": "order_rejected", "ticket": ticket_path, "order": order,
+                        "violations": [f"no live quote path for {sym} — cannot price a fill ({str(e)[:80]})"]})
+        return {"result": "REJECTED",
+                "violations": [f"no live quote path for {sym} — cannot price a fill; "
+                               "desk must stand down, not fly blind"]}
     for held in pf["positions"]:
         if held != sym:
             try:

@@ -39,26 +39,34 @@ def yf_symbol(symbol: str) -> str:
     return s + ".NS"
 
 
-def _http_session():
-    global _session
-    if _session is None:
-        try:
-            from curl_cffi import requests as curl_requests
-            _session = curl_requests.Session(impersonate="chrome")
-        except Exception:
-            _session = False
-    return _session or None
+def _session_candidates():
+    """Ordered quote-session strategies. Cloud finding (journal 2026-08-04): the
+    sandbox egress proxy resets curl_cffi's impersonated TLS, while a plain
+    requests.Session passes — so plain goes FIRST, impersonation is the retry."""
+    def plain():
+        import requests
+        s = requests.Session()
+        s.headers["User-Agent"] = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                                   "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126 Safari/537.36")
+        return s
+    def impersonated():
+        from curl_cffi import requests as curl_requests
+        return curl_requests.Session(impersonate="chrome")
+    return [plain, impersonated, lambda: None]
 
 
 def _yf_fetch(symbol: str, period: str, interval: str) -> pd.DataFrame:
     last_err = None
-    for delay in (0, 2, 5):
+    for delay, make_session in zip((0, 2, 5), _session_candidates()):
         if delay:
             time.sleep(delay)
         try:
             kwargs = dict(period=period, interval=interval, progress=False,
                           auto_adjust=True, multi_level_index=False)
-            sess = _http_session()
+            try:
+                sess = make_session()
+            except Exception:
+                sess = None
             try:
                 df = yf.download(yf_symbol(symbol), session=sess, **kwargs) if sess \
                     else yf.download(yf_symbol(symbol), **kwargs)

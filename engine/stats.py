@@ -25,8 +25,9 @@ def closed_trades() -> list[dict]:
         o, f = e.get("order", {}), e.get("fill", {})
         sym, side = f.get("symbol"), f.get("side")
         qty, px = f.get("qty", 0), f.get("price") or f.get("price_assumed", 0)
+        chg_ps = (f.get("charges") or 0) / qty if qty else 0  # charges per share
         if side == "BUY":
-            lots[sym].append({"qty": qty, "px": px, "stop": o.get("stop"),
+            lots[sym].append({"qty": qty, "px": px, "chg_ps": chg_ps, "stop": o.get("stop"),
                               "target": o.get("target"), "conviction": o.get("conviction"),
                               "tag": o.get("strategy_tag", "untagged"), "ts": e.get("ts")})
         elif side == "SELL":
@@ -34,11 +35,14 @@ def closed_trades() -> list[dict]:
             while remaining > 0 and lots[sym]:
                 lot = lots[sym][0]
                 take = min(remaining, lot["qty"])
-                pnl = (px - lot["px"]) * take
+                gross = (px - lot["px"]) * take
+                costs = (lot.get("chg_ps", 0) + chg_ps) * take
+                pnl = gross - costs  # NET of all charges — costs are the first adversary
                 risk = (lot["px"] - lot["stop"]) * take if lot.get("stop") else None
                 closed.append({
                     "symbol": sym, "qty": take, "entry": lot["px"], "exit": px,
-                    "pnl": round(pnl, 2),
+                    "pnl": round(pnl, 2), "gross_pnl": round(gross, 2),
+                    "charges": round(costs, 2),
                     "R": round(pnl / risk, 2) if risk else None,
                     "conviction": lot.get("conviction"), "tag": lot["tag"],
                     "opened": lot["ts"], "closed": e.get("ts"),
