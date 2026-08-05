@@ -1,15 +1,18 @@
 {
   "tone": "neutral",
   "per_symbol": {
+    "SBIN": "neutral",
+    "ICICIBANK": "neutral",
     "BHARTIARTL": "bullish",
     "SUNPHARMA": "neutral",
-    "ICICIBANK": "neutral",
-    "SBIN": "neutral"
+    "TATASTEEL": "neutral",
+    "INFY": "neutral"
   },
   "top_risks": [
-    "RBI MPC repo decision ~10:00 IST: consensus unchanged (68/72 economists per Reuters poll) but 4/72 see a hawkish hike; stance/guidance is the real swing factor for ICICIBANK, SBIN",
-    "Crude sentiment fragile: Brent ~$80 easing on Iran/Hormuz de-escalation hopes, reversal risk if talks falter"
+    "RBI stance/guidance incomplete: repo held 5.25%, neutral stance confirmed, but Malhotra 12:00 IST presser (CRR/liquidity/growth-inflation guidance) not yet out",
+    "CPI 4.38% > 4% target + hawkish-tilted hold (majority economists now pencil a hike by year-end) is a headwind for rate-sensitive banks",
+    "BHARTIARTL Q1 beat headlines claim 3-4% jump but live tape shows <1% move since print - stale/pre-market headline vs genuine muted reaction, recheck"
   ],
-  "basis": "Pre-open, event-dominated: MPC outcome due 10:00 IST overshadows a mildly positive macro tape (GIFT Nifty up, oil soft, rupee stable); Airtel Q1 beat is the one clean single-name positive, Sun Pharma Q1 mixed; price confirmation unreliable today (yfinance SSL errors) so this leans on headlines only.",
-  "as_of": "2026-08-05T08:18:47+05:30"
+  "basis": "MPC held repo at 5.25pct (consensus, tail hike did not materialise), neutral stance maintained, vote reported unanimous by two independent sources - confirmed. CRR/liquidity measures and full forward guidance NOT confirmed, pending 12:00 IST press conference. Bank Nifty/bank tape muted-mixed post-print (SBIN, ICICIBANK, HDFCBANK barely moved vs pre-print snapshot, yfinance delay caveat applies); no evidence of banks being bought or sold with conviction on the print itself. Airtel Q1 beat intact fundamentally but tape reaction far smaller than headlines claim - watch for unwind vs genuine fade.",
+  "as_of": "2026-08-05T10:09:08+05:30"
 }

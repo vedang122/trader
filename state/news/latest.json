@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-05T08:21:36+05:30",
+  "ts": "2026-08-05T10:11:03+05:30",
   "feeds_ok": [
     "et-markets(50)",
     "moneycontrol-markets(4)",
@@ -13,11 +13,77 @@
   ],
   "headlines": [
     {
-      "t": "Stocks in news: BSE, PB Fintech, Nykaa, Airtel, and LIC",
-      "date": "Wed, 05 Aug 2026 05:47",
+      "t": "Bharti Airtel shares jump 4% after Q1 results. Here\u2019s what Jefferies, CLSA, others are saying",
+      "date": "Wed, 05 Aug 2026 09:36",
+      "src": "et-markets",
+      "tags": [
+        "BHARTIARTL",
+        "MACRO"
+      ]
+    },
+    {
+      "t": "Sun Pharmaceutical Industries Share Price Live Updates: Announcement under Regulation 30 (LODR)-Credit Rating",
+      "date": "Wed, 05 Aug 2026 08:43",
+      "src": "et-markets",
+      "tags": [
+        "SUNPHARMA"
+      ]
+    },
+    {
+      "t": "RIL Share Price Live Updates: RIL's Technical Breakout",
+      "date": "Wed, 05 Aug 2026 08:30",
+      "src": "et-markets",
+      "tags": [
+        "RELIANCE"
+      ]
+    },
+    {
+      "t": "Bharti Airtel Share Price Live Updates: Bharti Airtel's Stock Behavior",
+      "date": "Wed, 05 Aug 2026 08:20",
       "src": "et-markets",
       "tags": [
         "BHARTIARTL"
+      ]
+    },
+    {
+      "t": "Tech Mahindra Share Price Live Updates: Tech Mahindra's Price Movement Today",
+      "date": "Wed, 05 Aug 2026 08:16",
+      "src": "et-markets",
+      "tags": [
+        "M&M"
+      ]
+    },
+    {
+      "t": "TCS Share Price Live Updates: TCS Current Market Status",
+      "date": "Wed, 05 Aug 2026 08:15",
+      "src": "et-markets",
+      "tags": [
+        "TCS"
+      ]
+    },
+    {
+      "t": "Maruti Suzuki Share Price Live Updates: Maruti Suzuki's Volume Performance",
+      "date": "Wed, 05 Aug 2026 08:10",
+      "src": "et-markets",
+      "tags": [
+        "MARUTI"
+      ]
+    },
+    {
+      "t": "HDFC Bank Share Price Live Updates: HDFC Bank's Trading Volume Analysis",
+      "date": "Wed, 05 Aug 2026 08:10",
+      "src": "et-markets",
+      "tags": [
+        "HDFCBANK"
+      ]
+    },
+    {
+      "t": "Sensex Today | Nifty 50 | Stock Market LIVE Updates: Sensex climbs over 350 pts, Nifty above 24,600; Airtel, IndiGo rise up to 3%",
+      "date": "Wed, 05 Aug 2026 07:33",
+      "src": "et-markets",
+      "tags": [
+        "BHARTIARTL",
+        "MACRO"
       ]
     },
     {
@@ -70,33 +136,24 @@
       ]
     },
     {
-      "t": "Bharti Airtel beats Q1 revenue estimates as premium users drive growth",
-      "date": "Tue, 04 Aug 2026 17:07",
-      "src": "livemint-markets",
-      "tags": [
-        "BHARTIARTL"
-      ]
-    },
-    {
-      "t": "Bharti Airtel Q1 results: Net profit jumps 37% to \u20b98,167 crore; revenue up 18% - Key highlights",
-      "date": "Tue, 04 Aug 2026 16:41",
-      "src": "livemint-markets",
-      "tags": [
-        "BHARTIARTL",
-        "MACRO"
-      ]
-    },
-    {
-      "t": "Oil Price Today (August 5): Crude climbs back to $80 despite hopes of a short-term war deal. What's next?",
-      "date": "Wed, 05 Aug 2026 07:44",
+      "t": "Why is market rising today? Sensex jumps over 400 pts, Nifty above 24,600. 8 factors behind D-St rebound",
+      "date": "Wed, 05 Aug 2026 09:33",
       "src": "et-markets",
       "tags": [
         "MACRO"
       ]
     },
     {
-      "t": "Sensex Today | Stock Market LIVE Updates: GIFT Nifty signals a positive start; Asian shares trade higher",
-      "date": "Wed, 05 Aug 2026 07:33",
+      "t": "5 Nifty stocks trading at significant discounts of up to 36% to historical averages. How many do you have?",
+      "date": "Wed, 05 Aug 2026 08:53",
+      "src": "et-markets",
+      "tags": [
+        "MACRO"
+      ]
+    },
+    {
+      "t": "Oil Price Today (August 5): Crude dips for 3rd session amid hopes of a short-term war deal. What's next?",
+      "date": "Wed, 05 Aug 2026 07:44",
       "src": "et-markets",
       "tags": [
         "MACRO"
@@ -105,118 +162,6 @@
     {
       "t": "Rupee remains stable at 95.37 ahead of RBI policy outcome",
       "date": "Wed, 05 Aug 2026 06:25",
-      "src": "et-markets",
-      "tags": [
-        "MACRO"
-      ]
-    },
-    {
-      "t": "D-Street poised for positive start as GIFT Nifty signals gains",
-      "date": "Wed, 05 Aug 2026 05:31",
-      "src": "et-markets",
-      "tags": [
-        "MACRO"
-      ]
-    },
-    {
-      "t": "US stocks: SpaceX quarterly revenue surges in debut results on strong growth in its Starlink business",
-      "date": "Wed, 05 Aug 2026 01:47",
-      "src": "et-markets",
-      "tags": [
-        "MACRO"
-      ]
-    },
-    {
-      "t": "US stocks: Dow, S&amp;P 500 close at record highs as AI earnings impress, oil prices tumble",
-      "date": "Wed, 05 Aug 2026 01:39",
-      "src": "et-markets",
-      "tags": [
-        "MACRO"
-      ]
-    },
-    {
-      "t": "Microfinance lending dips as uneven monsoon alters the landscape",
-      "date": "Wed, 05 Aug 2026 01:01",
-      "src": "et-markets",
-      "tags": [
-        "MACRO"
-      ]
-    },
-    {
-      "t": "US Treasury yields fall as oil retreats on Iran deal hopes, Fed hike bets ease",
-      "date": "Wed, 05 Aug 2026 00:41",
-      "src": "et-markets",
-      "tags": [
-        "MACRO"
-      ]
-    },
-    {
-      "t": "US Fed's Anna Paulson keeps 'open mind' on rate decisioin as inflation remains too high",
-      "date": "Tue, 04 Aug 2026 22:28",
-      "src": "et-markets",
-      "tags": [
-        "MACRO"
-      ]
-    },
-    {
-      "t": "Drugmaker Pfizer beats earnings estimates, targets $2.5 billion in additional cost cuts",
-      "date": "Tue, 04 Aug 2026 21:25",
-      "src": "et-markets",
-      "tags": [
-        "MACRO"
-      ]
-    },
-    {
-      "t": "Apollo Global debt deal fees and insurance earnings rise, asset sales drag",
-      "date": "Tue, 04 Aug 2026 21:21",
-      "src": "et-markets",
-      "tags": [
-        "MACRO"
-      ]
-    },
-    {
-      "t": "BSE Q1 Results: Profit soars 62% YoY to Rs 874 crore, revenue surges 63%",
-      "date": "Tue, 04 Aug 2026 19:21",
-      "src": "et-markets",
-      "tags": [
-        "MACRO"
-      ]
-    },
-    {
-      "t": "Sebi proposes depository receipts against REITs, InvITs units",
-      "date": "Tue, 04 Aug 2026 19:14",
-      "src": "et-markets",
-      "tags": [
-        "MACRO"
-      ]
-    },
-    {
-      "t": "Elon Musk likely to face tough questions during SpaceX's first earnings call after stock market listing",
-      "date": "Tue, 04 Aug 2026 19:12",
-      "src": "et-markets",
-      "tags": [
-        "MACRO"
-      ]
-    },
-    {
-      "t": "A crash coming? Ray Dalio warns AI rally looks like 1929 and 2000 bubbles",
-      "date": "Tue, 04 Aug 2026 19:10",
-      "src": "et-markets",
-      "tags": [
-        "MACRO"
-      ]
-    },
-    {
-      "t": "US stocks: S&amp;P 500, Dow hit record highs on strong AI-linked earnings, Mideast deal hopes",
-      "date": "Tue, 04 Aug 2026 19:05",
-      "src": "et-markets",
-      "tags": [
-        "MACRO"
-      ]
-    },
-    {
-      "t": "Godrej Properties Q1 Results: Profit falls 42% to Rs 349 crore, sales bookings rise 22%",
-      "date": "Tue, 04 Aug 2026 19:01",
       "src": "et-markets",
       "tags": [
         "MACRO"
@@ -234,6 +179,30 @@
       "t": "Sensex, Nifty extend gains to 3rd day, Q4 results to guide stock-specific action",
       "date": "Tue, 23 Apr 2024 09:45",
       "src": "moneycontrol-markets",
+      "tags": [
+        "MACRO"
+      ]
+    },
+    {
+      "t": "Rupee opens 46 paise higher against US dollar ahead of RBI Policy",
+      "date": "Wed, 05 Aug 2026 09:08",
+      "src": "livemint-markets",
+      "tags": [
+        "MACRO"
+      ]
+    },
+    {
+      "t": "Gold and silver prices today: Rates climb amid a decline in dollar, crude oil prices; investors focus on RBI MPC policy",
+      "date": "Wed, 05 Aug 2026 09:07",
+      "src": "livemint-markets",
+      "tags": [
+        "MACRO"
+      ]
+    },
+    {
+      "t": "Q1 results 2026: Power Grid to PB Fintech among companies to declare Q1 results today; full list here",
+      "date": "Wed, 05 Aug 2026 08:27",
+      "src": "livemint-markets",
       "tags": [
         "MACRO"
       ]
@@ -263,7 +232,7 @@
       ]
     },
     {
-      "t": "RBI MPC Meeting 2026 LIVE: Governor Sanjay Malhotra likely to keep repo rate unchanged in August monetary policy",
+      "t": "RBI MPC Meeting 2026 LIVE: Repo rate remains unchanged at 5.25% in August monetary policy",
       "date": "Wed, 05 Aug 2026 07:38",
       "src": "livemint-markets",
       "tags": [
@@ -313,22 +282,6 @@
     {
       "t": "Gold, silver prices today: Comex gold jumps $61, silver tops $60 on US-Iran de-escalation hopes",
       "date": "Tue, 04 Aug 2026 22:53",
-      "src": "livemint-markets",
-      "tags": [
-        "MACRO"
-      ]
-    },
-    {
-      "t": "SpaceX faces its first earnings test after a turbulent IPO debut; expert says, \u2018have very little confidence\u2019",
-      "date": "Tue, 04 Aug 2026 22:10",
-      "src": "livemint-markets",
-      "tags": [
-        "MACRO"
-      ]
-    },
-    {
-      "t": "Crude oil reverses gains, drops 5% on renewed Middle East peace hopes; Brent falls below $80",
-      "date": "Tue, 04 Aug 2026 21:27",
       "src": "livemint-markets",
       "tags": [
         "MACRO"
