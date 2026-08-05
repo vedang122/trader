@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-05T10:11:03+05:30",
+  "ts": "2026-08-05T10:32:44+05:30",
   "feeds_ok": [
     "et-markets(50)",
     "moneycontrol-markets(4)",
@@ -30,6 +30,30 @@
       ]
     },
     {
+      "t": "Tata Steel Share Price Live Updates: Tata Steel Stock Details",
+      "date": "Wed, 05 Aug 2026 08:35",
+      "src": "et-markets",
+      "tags": [
+        "TATASTEEL"
+      ]
+    },
+    {
+      "t": "ITC Share Price Live Updates: ITC Stock Details",
+      "date": "Wed, 05 Aug 2026 08:35",
+      "src": "et-markets",
+      "tags": [
+        "ITC"
+      ]
+    },
+    {
+      "t": "HUL Share Price Live Updates: HUL Stock Details",
+      "date": "Wed, 05 Aug 2026 08:31",
+      "src": "et-markets",
+      "tags": [
+        "HINDUNILVR"
+      ]
+    },
+    {
       "t": "RIL Share Price Live Updates: RIL's Technical Breakout",
       "date": "Wed, 05 Aug 2026 08:30",
       "src": "et-markets",
@@ -38,7 +62,23 @@
       ]
     },
     {
-      "t": "Bharti Airtel Share Price Live Updates: Bharti Airtel's Stock Behavior",
+      "t": "Infosys Share Price Live Updates: Infosys Stock Details",
+      "date": "Wed, 05 Aug 2026 08:27",
+      "src": "et-markets",
+      "tags": [
+        "INFY"
+      ]
+    },
+    {
+      "t": "SBI Share Price Live Updates: SBI's Price Movement Today",
+      "date": "Wed, 05 Aug 2026 08:25",
+      "src": "et-markets",
+      "tags": [
+        "SBIN"
+      ]
+    },
+    {
+      "t": "Bharti Airtel Share Price Live Updates: Bharti Airtel's Recent Price Action",
       "date": "Wed, 05 Aug 2026 08:20",
       "src": "et-markets",
       "tags": [
@@ -62,28 +102,19 @@
       ]
     },
     {
+      "t": "Titan Company Share Price Live Updates: Titan Company Stock Details",
+      "date": "Wed, 05 Aug 2026 08:11",
+      "src": "et-markets",
+      "tags": [
+        "TITAN"
+      ]
+    },
+    {
       "t": "Maruti Suzuki Share Price Live Updates: Maruti Suzuki's Volume Performance",
       "date": "Wed, 05 Aug 2026 08:10",
       "src": "et-markets",
       "tags": [
         "MARUTI"
-      ]
-    },
-    {
-      "t": "HDFC Bank Share Price Live Updates: HDFC Bank's Trading Volume Analysis",
-      "date": "Wed, 05 Aug 2026 08:10",
-      "src": "et-markets",
-      "tags": [
-        "HDFCBANK"
-      ]
-    },
-    {
-      "t": "Sensex Today | Nifty 50 | Stock Market LIVE Updates: Sensex climbs over 350 pts, Nifty above 24,600; Airtel, IndiGo rise up to 3%",
-      "date": "Wed, 05 Aug 2026 07:33",
-      "src": "et-markets",
-      "tags": [
-        "BHARTIARTL",
-        "MACRO"
       ]
     },
     {
@@ -136,6 +167,22 @@
       ]
     },
     {
+      "t": "Rupee sails past 95 to one-month high, premiums drop before RBI decision",
+      "date": "Wed, 05 Aug 2026 09:59",
+      "src": "et-markets",
+      "tags": [
+        "MACRO"
+      ]
+    },
+    {
+      "t": "$25 billion FII comeback? HSBC explains why foreign money may return to India",
+      "date": "Wed, 05 Aug 2026 09:55",
+      "src": "et-markets",
+      "tags": [
+        "MACRO"
+      ]
+    },
+    {
       "t": "Why is market rising today? Sensex jumps over 400 pts, Nifty above 24,600. 8 factors behind D-St rebound",
       "date": "Wed, 05 Aug 2026 09:33",
       "src": "et-markets",
@@ -146,22 +193,6 @@
     {
       "t": "5 Nifty stocks trading at significant discounts of up to 36% to historical averages. How many do you have?",
       "date": "Wed, 05 Aug 2026 08:53",
-      "src": "et-markets",
-      "tags": [
-        "MACRO"
-      ]
-    },
-    {
-      "t": "Oil Price Today (August 5): Crude dips for 3rd session amid hopes of a short-term war deal. What's next?",
-      "date": "Wed, 05 Aug 2026 07:44",
-      "src": "et-markets",
-      "tags": [
-        "MACRO"
-      ]
-    },
-    {
-      "t": "Rupee remains stable at 95.37 ahead of RBI policy outcome",
-      "date": "Wed, 05 Aug 2026 06:25",
       "src": "et-markets",
       "tags": [
         "MACRO"
@@ -179,6 +210,22 @@
       "t": "Sensex, Nifty extend gains to 3rd day, Q4 results to guide stock-specific action",
       "date": "Tue, 23 Apr 2024 09:45",
       "src": "moneycontrol-markets",
+      "tags": [
+        "MACRO"
+      ]
+    },
+    {
+      "t": "RBI MPC Meeting 2026: Central bank revises inflation downwards to 5% for FY27",
+      "date": "Wed, 05 Aug 2026 10:14",
+      "src": "livemint-markets",
+      "tags": [
+        "MACRO"
+      ]
+    },
+    {
+      "t": "RBI MPC meeting: Repo rate maintained at 5.25%; key highlights from August policy meeting",
+      "date": "Wed, 05 Aug 2026 10:08",
+      "src": "livemint-markets",
       "tags": [
         "MACRO"
       ]
@@ -232,7 +279,7 @@
       ]
     },
     {
-      "t": "RBI MPC Meeting 2026 LIVE: Repo rate remains unchanged at 5.25% in August monetary policy",
+      "t": "RBI MPC Meeting 2026 LIVE: Repo rate unchanged at 5.25% in August monetary policy, FY27 GDP growth seen at 6.7%",
       "date": "Wed, 05 Aug 2026 07:38",
       "src": "livemint-markets",
       "tags": [
@@ -274,14 +321,6 @@
     {
       "t": "CBOT grains, soybeans fall as oil drops on Iran hopes",
       "date": "Wed, 05 Aug 2026 00:25",
-      "src": "livemint-markets",
-      "tags": [
-        "MACRO"
-      ]
-    },
-    {
-      "t": "Gold, silver prices today: Comex gold jumps $61, silver tops $60 on US-Iran de-escalation hopes",
-      "date": "Tue, 04 Aug 2026 22:53",
       "src": "livemint-markets",
       "tags": [
         "MACRO"

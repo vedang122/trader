@@ -4,15 +4,14 @@
     "SBIN": "neutral",
     "ICICIBANK": "neutral",
     "BHARTIARTL": "bullish",
-    "SUNPHARMA": "neutral",
-    "TATASTEEL": "neutral",
-    "INFY": "neutral"
+    "SBIN": "neutral",
+    "ICICIBANK": "neutral"
   },
   "top_risks": [
-    "RBI stance/guidance incomplete: repo held 5.25%, neutral stance confirmed, but Malhotra 12:00 IST presser (CRR/liquidity/growth-inflation guidance) not yet out",
-    "CPI 4.38% > 4% target + hawkish-tilted hold (majority economists now pencil a hike by year-end) is a headwind for rate-sensitive banks",
-    "BHARTIARTL Q1 beat headlines claim 3-4% jump but live tape shows <1% move since print - stale/pre-market headline vs genuine muted reaction, recheck"
+    "West Asia conflict (RBI Governor flagged): disrupting trade routes/supply chains, weakening global growth & business sentiment - unresolved, not yet in tape",
+    "Headline inflation above target, RBI expects it to peak only in Q3 - pushes any rate-cut catalyst for banks further out despite neutral stance",
+    "Post-announcement tape reaction is UNVERIFIED this cycle: yfinance feed hard down, no post-10:00 IST market-reaction headline found"
   ],
-  "basis": "MPC held repo at 5.25pct (consensus, tail hike did not materialise), neutral stance maintained, vote reported unanimous by two independent sources - confirmed. CRR/liquidity measures and full forward guidance NOT confirmed, pending 12:00 IST press conference. Bank Nifty/bank tape muted-mixed post-print (SBIN, ICICIBANK, HDFCBANK barely moved vs pre-print snapshot, yfinance delay caveat applies); no evidence of banks being bought or sold with conviction on the print itself. Airtel Q1 beat intact fundamentally but tape reaction far smaller than headlines claim - watch for unwind vs genuine fade.",
-  "as_of": "2026-08-05T10:09:08+05:30"
+  "basis": "MPC matched consensus exactly (unanimous hold 5.25%, neutral stance) - the pre-open event risk is resolved with no hawkish surprise, so tone reverts to neutral rather than risk-off; but above-target inflation (peaking Q3) removes any near-term dovish catalyst for SBIN/ICICIBANK, and Governor explicitly flagged West Asia-driven global growth/trade risk. Airtel Q1 beat remains the one clean single-name positive. Tape reaction itself unverifiable this cycle (yfinance SSL down); WebSearch found only pre-decision index levels, no confirmed post-print move.",
+  "as_of": "2026-08-05T10:33:27+05:30"
 }
