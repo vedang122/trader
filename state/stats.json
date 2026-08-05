@@ -1,17 +1,17 @@
 {
-  "as_of": "2026-08-05T09:39:39+05:30",
+  "as_of": "2026-08-05T10:45:08+05:30",
   "closed_trades": 1,
-  "win_rate": 1.0,
-  "avg_win": 24.09,
-  "avg_loss": null,
-  "expectancy_inr": 24.09,
-  "expectancy_R": 0.24,
-  "total_pnl": 24.09,
+  "win_rate": 0.0,
+  "avg_win": null,
+  "avg_loss": -8.02,
+  "expectancy_inr": -8.02,
+  "expectancy_R": -0.08,
+  "total_pnl": -8.02,
   "by_strategy": {
     "earnings-breakout": {
       "n": 1,
-      "pnl": 24.09,
-      "wins": 1
+      "pnl": -8.02,
+      "wins": 0
     }
   },
   "calibration": {
@@ -21,7 +21,7 @@
     },
     "55-70": {
       "n": 1,
-      "hit_rate": 1.0
+      "hit_rate": 0.0
     },
     "gt70": {
       "n": 0,
@@ -34,8 +34,10 @@
       "qty": 1,
       "entry": 3395.3,
       "exit": 3419.39,
-      "pnl": 24.09,
-      "R": 0.24,
+      "pnl": -8.02,
+      "gross_pnl": 24.09,
+      "charges": 32.11,
+      "R": -0.08,
       "conviction": 65,
       "tag": "earnings-breakout",
       "opened": "2026-07-31T15:14:41+05:30",
@@ -48,8 +50,10 @@
       "qty": 1,
       "entry": 3395.3,
       "exit": 3419.39,
-      "pnl": 24.09,
-      "R": 0.24,
+      "pnl": -8.02,
+      "gross_pnl": 24.09,
+      "charges": 32.11,
+      "R": -0.08,
       "conviction": 65,
       "tag": "earnings-breakout",
       "opened": "2026-07-31T15:14:41+05:30",

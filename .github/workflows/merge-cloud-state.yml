@@ -1,8 +1,13 @@
-name: Merge cloud desk state into main
+name: Merge cloud desk pushes into main
 
-# The claude.ai cloud sandbox pushes each routine run's state commit to an
-# ephemeral claude/* branch. This folds those commits back into main so the
-# next run (which clones main) inherits the desk's full memory.
+# Cloud routine runs push to ephemeral claude/* branches. This workflow folds
+# them into main under a three-tier policy:
+#   1. state/-only diff              -> merge immediately (trading state).
+#   2. allowlisted engine/tests diff -> merge only if the test suite passes
+#      (the kautilya-engineer routine's fixes).
+#   3. anything touching protected   -> open a PR for HUMAN review; never
+#      paths (risk gate, amend, charges, execute, broker, portfolio, common,
+#      workflows, agent charters, risk_bounds) auto-merged.
 on:
   push:
     branches:
@@ -10,6 +15,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 concurrency:
   group: merge-cloud-state
@@ -24,14 +30,47 @@ jobs:
           ref: main
           fetch-depth: 0
 
-      - name: Merge the run branch into main
+      - name: Classify the diff
+        id: classify
+        run: |
+          FILES=$(git diff --name-only origin/main...origin/${GITHUB_REF_NAME})
+          echo "$FILES"
+          CLASS=state
+          ALLOW='^(state/|tests/|engine/(data|status|stats|ops|news|scan|regime|issues)\.py$|requirements\.txt$)'
+          for f in $FILES; do
+            case "$f" in
+              state/risk_bounds.yaml) CLASS=protected; break ;;
+            esac
+            if ! echo "$f" | grep -qE "$ALLOW"; then CLASS=protected; fi
+            if echo "$f" | grep -qvE '^state/'; then [ "$CLASS" = state ] && CLASS=engine; fi
+          done
+          echo "class=$CLASS" >> "$GITHUB_OUTPUT"
+
+      - name: Run tests (engine-class diffs)
+        if: steps.classify.outputs.class == 'engine'
+        id: tests
+        continue-on-error: true
+        run: |
+          git checkout origin/${GITHUB_REF_NAME} -- .
+          pip install -q -r requirements.txt pytest
+          python -m pytest tests/ -q
+          git checkout -- .
+
+      - name: Merge into main
+        if: steps.classify.outputs.class == 'state' || (steps.classify.outputs.class == 'engine' && steps.tests.outcome == 'success')
         run: |
           git config user.name "kautilya-state-bot"
           git config user.email "actions@github.com"
-          # union merge for *.jsonl comes from .gitattributes;
-          # -X theirs resolves whole-file JSON state to the newer run's version
           git merge "origin/${GITHUB_REF_NAME}" -X theirs --no-edit
           git push origin main
+          git push origin --delete "${GITHUB_REF_NAME}" || true
 
-      - name: Delete the ephemeral branch
-        run: git push origin --delete "${GITHUB_REF_NAME}" || true
+      - name: Open PR instead (protected paths or red tests)
+        if: steps.classify.outputs.class == 'protected' || (steps.classify.outputs.class == 'engine' && steps.tests.outcome != 'success')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          REASON="${{ steps.classify.outputs.class == 'protected' && 'touches protected paths (risk/amend/charges/execute/broker/portfolio/common/workflows/charters/bounds) — human review required' || 'test suite failed' }}"
+          gh pr create --base main --head "${GITHUB_REF_NAME}" \
+            --title "cloud change needs review: ${GITHUB_REF_NAME}" \
+            --body "Auto-merge declined: ${REASON}. Review and merge manually, or close." || true

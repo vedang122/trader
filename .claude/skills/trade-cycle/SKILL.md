@@ -25,6 +25,9 @@ if non-empty). Preflight verdicts bind you:
   cannot confirm.
 - Stray `claude/*` branches in the preflight = the state auto-merge workflow
   is broken; flag it to the user in your final message every cycle until clean.
+- Also check `python3 -m engine.issues list`: any OPEN **S1** (safety) issue →
+  no new entries until it is closed. S2/S3 don't block, but repeat them in
+  your final message so they stay visible.
 If broker mode is LIVE and this is the first cycle of the day:
 `python3 -m engine.broker sync` — reconcile local book vs Groww holdings and
 report any drift. On live auth failure, the desk stands down for the day. Branch:
@@ -98,9 +101,17 @@ thesis, entry/stop/target, requested qty (from `python3 -m engine.risk size
    ("this read is wrong if X happens by <date>"). The coach reads these at
    /debrief to score the desk's arguments, not just its P&L. Do not paste raw
    agent reports — compress; the cap is the point.
-3. Tell the user (this is your final message): book state, P&L, actions taken
+3. Engineering feedback — if THIS cycle surfaced an engine defect (a crash, a
+   number that contradicts another engine output, a fallback misbehaving, a
+   safety gap), file it NOW: `python3 -m engine.issues file --sev S1|S2|S3
+   --area <module> --title "..." --body "<evidence: exact commands + outputs>"`.
+   Severity S1 = safety (cannot exit, gate bypassed, state corruption) — also
+   stand down entries. You NEVER edit engine code yourself (a trader must not
+   rewrite the risk system); the kautilya-engineer routine picks issues up,
+   fixes on a branch, and CI gates the merge. Duplicates are auto-deduped.
+4. Tell the user (this is your final message): book state, P&L, actions taken
    with reasons, actions REJECTED with reasons, next thing you're watching.
-4. If running under /loop dynamic scheduling, choose the next wake: market open
+5. If running under /loop dynamic scheduling, choose the next wake: market open
    → 1800s; pre-open → time until 09:20 IST (cap 3600s); closed → 3600s.
 
 ## Non-negotiables (repeat offenders get the desk shut down)

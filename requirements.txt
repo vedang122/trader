@@ -6,3 +6,4 @@ requests
 curl_cffi
 growwapi
 pyotp
+pytest
