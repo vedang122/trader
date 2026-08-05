@@ -22,8 +22,9 @@ def setup_score(s: dict) -> float:
         score += 2          # room to run
     elif s["rsi14"] > 75 or s["rsi14"] < 25:
         score -= 1          # stretched
-    if s["vol_ratio_20d"] >= 1.3:
-        score += 1.5        # participation
+    if s["vol_ratio_20d"] is not None and s["vol_ratio_20d"] >= 1.3:
+        score += 1.5        # participation (None = unverifiable on a degraded
+                            # feed: no points, but no penalty either)
     if s["pos_52w_pct"] >= 80:
         score += 1          # strength near highs
     return round(score, 2)
@@ -37,6 +38,9 @@ def run(top: int = 5) -> dict:
         try:
             s = data.snapshot(sym)
             s["score"] = setup_score(s)
+            # degraded feeds serve cached bars without volume — say so on the
+            # candidate so volume-gated setups can be excluded downstream.
+            s["volume_unconfirmed"] = s["vol_ratio_20d"] is None
             rows.append(s)
         except Exception as e:
             errors.append(f"{sym}: {e}")

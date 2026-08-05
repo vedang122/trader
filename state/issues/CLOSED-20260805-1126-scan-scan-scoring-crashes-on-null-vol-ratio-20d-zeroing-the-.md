@@ -25,3 +25,6 @@ IMPACT: the cached-bar fallback is exactly the path meant to keep the desk seein
 SUGGESTED FIX (for the engineer, not applied here): treat None as 'volume unconfirmed' rather than fatal -- guard the comparison, award no volume points, and surface the unverifiable volume on the candidate so volume-gated setups can be excluded downstream instead of the whole scan dying. Sweep engine/ for other bare comparisons against nullable snapshot fields.
 
 ## Engineer notes (append below)
+
+## Closed
+2026-08-05T12:53:25+05:30: fixed: setup_score guards vol_ratio_20d=None (no participation points, no penalty) instead of raising; scan candidates now carry volume_unconfirmed so volume-gated setups can be excluded downstream. Swept engine/ for other nullable-snapshot comparisons: scan.py is the only data.snapshot consumer, sma200 was already guarded, pos_52w_pct is never null. tests/test_scan.py (5 tests).
