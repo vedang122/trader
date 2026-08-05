@@ -1,11 +1,15 @@
 """Market data via yfinance (NSE symbols get a .NS suffix) plus indicator math.
 
 Resilience layers (cloud IPs get 429-throttled by Yahoo):
-1. retry with backoff, browser-impersonated session when curl_cffi is present;
-2. on-disk daily-bar cache in state/cache/ohlcv/ (committed to git, so cloud
+1. the Yahoo chart endpoint over plain requests (standard TLS, proxy-aware) —
+   yfinance's own transport impersonates a browser's TLS fingerprint, which a
+   MITM egress proxy resets (curl error 35), so the plain client goes first;
+2. yfinance itself, for hosts where its cookie/crumb path is the one that works;
+3. on-disk daily-bar cache in state/cache/ohlcv/ (committed to git, so cloud
    runs inherit history and only need the incremental bar);
-3. Groww live LTP fallback (data-only; needs GROWW_API_KEY/SECRET in env) to
+4. Groww live LTP fallback (data-only; needs GROWW_API_KEY/SECRET in env) to
    patch a live price onto cached history when Yahoo is down.
+Layers 1 and 2 are both genuinely live Yahoo data and both tag source "yf".
 Every snapshot carries a "source" field so agents can see what they're
 standing on: "yf" | "cache+groww_ltp" | "cache_stale".
 """
@@ -55,8 +59,70 @@ def _session_candidates():
     return [plain, impersonated, lambda: None]
 
 
-def _yf_fetch(symbol: str, period: str, interval: str) -> pd.DataFrame:
+CHART_URL = "https://query{host}.finance.yahoo.com/v8/finance/chart/{sym}"
+# Deliberately generic. Measured 2026-08-05, same second, same container:
+# "Mozilla/5.0" -> 200; a full Chrome UA -> 429; the requests default UA -> 429.
+# Yahoo 429s a UA that claims a browser when the TLS fingerprint isn't that
+# browser's — and we cannot forge the fingerprint through the egress proxy.
+# Do not "improve" this into a realistic UA; that is what breaks the feed.
+CHART_UA = "Mozilla/5.0"
+
+
+def _chart_frame(payload: dict, interval: str = "1d") -> pd.DataFrame:
+    """Yahoo chart JSON -> the same OHLCV frame yfinance(auto_adjust=True) returns."""
+    chart = (payload or {}).get("chart") or {}
+    results = chart.get("result")
+    if not results:
+        err = (chart.get("error") or {}).get("description") or chart.get("error") or "no result"
+        raise RuntimeError(f"chart endpoint: {err}")
+    res = results[0]
+    ts, ind = res.get("timestamp") or [], res.get("indicators") or {}
+    quote = (ind.get("quote") or [{}])[0]
+    if not ts or not quote.get("close"):
+        raise RuntimeError("chart endpoint: empty series")
+
+    idx = pd.to_datetime(ts, unit="s", utc=True).tz_convert(res["meta"]["exchangeTimezoneName"])
+    df = pd.DataFrame({"Open": quote.get("open"), "High": quote.get("high"),
+                       "Low": quote.get("low"), "Close": quote.get("close"),
+                       "Volume": quote.get("volume")}, index=idx)
+    adj = (ind.get("adjclose") or [{}])[0].get("adjclose")
+    if adj is not None:
+        ratio = pd.Series(adj, index=idx) / df["Close"]
+        for col in ("Open", "High", "Low"):
+            df[col] = df[col] * ratio
+        df["Close"] = pd.Series(adj, index=idx)   # Volume is untouched, as yfinance does
+    if interval[-1] not in "mh":   # 1m/1h keep their tz; 1d/1wk/1mo are naive dates (yfinance)
+        df.index = df.index.normalize().tz_localize(None)
+    df.index.name = "Date"
+    return df.dropna(subset=["Close"])
+
+
+def _chart_fetch(symbol: str, period: str, interval: str) -> pd.DataFrame:
+    """Fetch daily bars straight from Yahoo over plain requests (standard TLS)."""
+    import requests
+    from urllib.parse import quote as urlquote
+
     last_err = None
+    for host in (1, 2):
+        try:
+            r = requests.get(CHART_URL.format(host=host, sym=urlquote(yf_symbol(symbol))),
+                             params={"range": period, "interval": interval,
+                                     "events": "div,split"},
+                             headers={"User-Agent": CHART_UA}, timeout=20)
+            if getattr(r, "status_code", 200) != 200:
+                last_err = RuntimeError(f"HTTP {r.status_code}")
+                continue
+            return _chart_frame(r.json(), interval)
+        except Exception as e:
+            last_err = e
+    raise RuntimeError(f"chart fetch failed for {symbol}: {last_err}")
+
+
+def _yf_fetch(symbol: str, period: str, interval: str) -> pd.DataFrame:
+    try:
+        return _chart_fetch(symbol, period, interval)
+    except Exception as e:
+        last_err = e
     for delay, make_session in zip((0, 2, 5), _session_candidates()):
         if delay:
             time.sleep(delay)

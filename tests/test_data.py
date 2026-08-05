@@ -1,6 +1,7 @@
 """Data fallback ladder: yf -> cache+groww LTP -> stale cache -> honest failure."""
 import pandas as pd
 import pytest
+import requests
 
 from engine import data
 
@@ -62,3 +63,114 @@ def test_last_price_raises_when_all_dead(desk, monkeypatch):
 def test_indices_never_hit_groww(desk):
     assert data.groww_ltp("NIFTY") is None
     assert data.groww_ltp("USDINR") is None
+
+
+# --- direct Yahoo chart transport (S1: curl_cffi impersonation reset by proxy) ---
+
+def _chart_payload(closes=(101.0, 102.0, 103.0), adj=None, tz="Asia/Kolkata"):
+    """Minimal replica of query1.finance.yahoo.com/v8/finance/chart/<sym>."""
+    n = len(closes)
+    ts = [1785901500 - (n - 1 - i) * 86400 for i in range(n)]   # last bar = 2026-08-05 IST
+    quote = {"open": [c - 1 for c in closes], "high": [c + 2 for c in closes],
+             "low": [c - 2 for c in closes], "close": list(closes),
+             "volume": [1000 * (i + 1) for i in range(n)]}
+    indicators = {"quote": [quote]}
+    if adj is not None:
+        indicators["adjclose"] = [{"adjclose": list(adj)}]
+    return {"chart": {"result": [{"meta": {"exchangeTimezoneName": tz,
+                                           "regularMarketPrice": closes[-1]},
+                                  "timestamp": ts, "indicators": indicators}],
+                      "error": None}}
+
+
+class _Resp:
+    def __init__(self, payload, status=200):
+        self._payload, self.status_code = payload, status
+
+    def json(self):
+        return self._payload
+
+
+def _serve_chart(monkeypatch, payload, status=200):
+    """Pin the plain-requests transport to a canned chart response."""
+    seen = {}
+
+    def fake_get(url, **kw):
+        seen["url"], seen["headers"] = url, kw.get("headers") or {}
+        return _Resp(payload, status)
+
+    monkeypatch.setattr(requests, "get", fake_get)
+    return seen
+
+
+def _kill_yfinance_transport(monkeypatch):
+    """yfinance's impersonated TLS is reset by the egress proxy (curl error 35)."""
+    import yfinance as yf
+
+    def reset(*a, **kw):
+        raise OSError("Failed to perform, curl: (35) Recv failure: Connection reset by peer")
+
+    monkeypatch.setattr(yf, "download", reset)
+
+
+def test_chart_frame_parses_ohlcv(desk):
+    df = data._chart_frame(_chart_payload())
+    assert list(df.columns) == ["Open", "High", "Low", "Close", "Volume"]
+    assert len(df) == 3
+    assert float(df["Close"].iloc[-1]) == 103.0
+    assert float(df["Open"].iloc[-1]) == 102.0
+    assert df.index.tz is None                     # daily bars are tz-naive, like yfinance
+    assert str(df.index[-1].date()) == "2026-08-05"
+
+
+def test_chart_frame_auto_adjusts_like_yfinance(desk):
+    """Close becomes adjclose; O/H/L scale by the same ratio; Volume is untouched."""
+    df = data._chart_frame(_chart_payload(closes=(100.0,), adj=(50.0,)))
+    assert float(df["Close"].iloc[-1]) == 50.0
+    assert float(df["Open"].iloc[-1]) == pytest.approx(49.5)   # 99 * 0.5
+    assert float(df["Volume"].iloc[-1]) == 1000
+
+
+def test_chart_frame_rejects_empty_result(desk):
+    with pytest.raises(RuntimeError):
+        data._chart_frame({"chart": {"result": None,
+                                     "error": {"code": "Not Found"}}})
+
+
+def test_live_when_yfinance_transport_is_reset(desk, monkeypatch):
+    """The S1 repro: yfinance's transport is dead, but the plain-requests chart
+    endpoint answers 200 — the desk must stay LIVE, not degrade to cache_stale."""
+    _write_cache("TESTCO")                     # fresh cache exists and is WRONG
+    _kill_yfinance_transport(monkeypatch)
+    monkeypatch.setattr(data, "groww_ltp", lambda s: None)
+    seen = _serve_chart(monkeypatch, _chart_payload(closes=(101.0, 102.0, 103.0)))
+
+    df = data.get_ohlcv("TESTCO", period="5d")
+    assert df.attrs["source"] == "yf"          # a real source tag — entries stay unblocked
+    assert float(df["Close"].iloc[-1]) == 103.0   # live, not the cache's 100.0
+    assert "TESTCO.NS" in seen["url"] and "User-Agent" in seen["headers"]
+
+
+def test_chart_ua_stays_generic():
+    """Yahoo 429s a UA that claims a browser our TLS fingerprint can't back up.
+    Measured: 'Mozilla/5.0' -> 200, full Chrome UA -> 429, requests default -> 429."""
+    assert data.CHART_UA == "Mozilla/5.0"
+    assert "Chrome" not in data.CHART_UA and "Safari" not in data.CHART_UA
+
+
+def test_last_price_uses_chart_before_degrading(desk, monkeypatch):
+    _kill_yfinance_transport(monkeypatch)
+    monkeypatch.setattr(data, "groww_ltp", lambda s: 99.5)
+    _serve_chart(monkeypatch, _chart_payload(closes=(103.0,)))
+    assert data.last_price("TESTCO") == 103.0  # Yahoo beats the broker LTP patch
+
+
+def test_chart_failure_still_degrades_to_cache(desk, monkeypatch):
+    """Both live paths dead ⇒ the old ladder still applies. No silent live claim."""
+    _write_cache("TESTCO")
+    _kill_yfinance_transport(monkeypatch)
+    monkeypatch.setattr(data, "groww_ltp", lambda s: None)
+    _serve_chart(monkeypatch, {"chart": {"result": None, "error": {"code": "429"}}}, status=429)
+
+    df = data.get_ohlcv("TESTCO", period="5d")
+    assert df.attrs["source"] == "cache_stale"
