@@ -2,14 +2,14 @@
   "tone": "neutral",
   "per_symbol": {
     "BHARTIARTL": "bullish",
-    "SUNPHARMA": "neutral",
-    "ICICIBANK": "neutral",
-    "SBIN": "neutral"
+    "SBIN": "neutral",
+    "ICICIBANK": "neutral"
   },
   "top_risks": [
-    "RBI MPC repo decision ~10:00 IST: consensus unchanged (68/72 economists per Reuters poll) but 4/72 see a hawkish hike; stance/guidance is the real swing factor for ICICIBANK, SBIN",
-    "Crude sentiment fragile: Brent ~$80 easing on Iran/Hormuz de-escalation hopes, reversal risk if talks falter"
+    "West Asia conflict (RBI Governor flagged): disrupting trade routes/supply chains, weakening global growth & business sentiment - unresolved, not yet in tape",
+    "Headline inflation above target, RBI expects it to peak only in Q3 - pushes any rate-cut catalyst for banks further out despite neutral stance",
+    "Post-announcement tape reaction is UNVERIFIED this cycle: yfinance feed hard down, no post-10:00 IST market-reaction headline found"
   ],
-  "basis": "Pre-open, event-dominated: MPC outcome due 10:00 IST overshadows a mildly positive macro tape (GIFT Nifty up, oil soft, rupee stable); Airtel Q1 beat is the one clean single-name positive, Sun Pharma Q1 mixed; price confirmation unreliable today (yfinance SSL errors) so this leans on headlines only.",
-  "as_of": "2026-08-05T08:18:47+05:30"
+  "basis": "MPC matched consensus exactly (unanimous hold 5.25%, neutral stance) - the pre-open event risk is resolved with no hawkish surprise, so tone reverts to neutral rather than risk-off; but above-target inflation (peaking Q3) removes any near-term dovish catalyst for SBIN/ICICIBANK, and Governor explicitly flagged West Asia-driven global growth/trade risk. Airtel Q1 beat remains the one clean single-name positive. Tape reaction itself unverifiable this cycle (yfinance SSL down); WebSearch found only pre-decision index levels, no confirmed post-print move.",
+  "as_of": "2026-08-05T10:33:27+05:30"
 }
