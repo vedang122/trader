@@ -5,13 +5,15 @@ Resilience layers (cloud IPs get 429-throttled by Yahoo):
    yfinance's own transport impersonates a browser's TLS fingerprint, which a
    MITM egress proxy resets (curl error 35), so the plain client goes first;
 2. yfinance itself, for hosts where its cookie/crumb path is the one that works;
-3. on-disk daily-bar cache in state/cache/ohlcv/ (committed to git, so cloud
+3. NSE's own bhavcopy archive — a SECOND daily-bar source, independent of Yahoo,
+   so a Yahoo 429 is no longer a total bar outage (tags source "nse_bhav");
+4. on-disk daily-bar cache in state/cache/ohlcv/ (committed to git, so cloud
    runs inherit history and only need the incremental bar);
-4. Groww live LTP fallback (data-only; needs GROWW_API_KEY/SECRET in env) to
+5. Groww live LTP fallback (data-only; needs GROWW_API_KEY/SECRET in env) to
    patch a live price onto cached history when Yahoo is down.
 Layers 1 and 2 are both genuinely live Yahoo data and both tag source "yf".
 Every snapshot carries a "source" field so agents can see what they're
-standing on: "yf" | "cache+groww_ltp" | "cache_stale".
+standing on: "yf" | "nse_bhav" | "cache+groww_ltp" | "cache_stale".
 """
 import os
 import pathlib
@@ -175,6 +177,79 @@ def _cache_age_bars(df: pd.DataFrame) -> int:
     return max(len(days) - 1, 0)
 
 
+BHAV_URL = ("https://nsearchives.nseindia.com/content/cm/"
+            "BhavCopy_NSE_CM_0_0_0_{d}_F_0000.csv.zip")
+BHAV_UA = "Mozilla/5.0"
+BHAV_LOOKBACK_DAYS = 12   # calendar days — must outrun CACHE_MAX_AGE_BARS + a holiday weekend
+_bhav_cache: dict[str, dict] = {}   # yyyymmdd -> {ticker: row}, per process
+
+
+def _bhav_day(day: pd.Timestamp) -> dict:
+    """One NSE bhavcopy date -> {ticker: OHLCV row}, cash equities only.
+
+    Returns {} — never raises — when NSE has no file for that date: weekends,
+    holidays, and today before the ~18:00 IST publication all look the same.
+    One zip carries the whole market, so a 15-symbol scan costs one fetch per
+    date, not per symbol; the process cache keeps it that way.
+    """
+    key = day.strftime("%Y%m%d")
+    if key in _bhav_cache:
+        return _bhav_cache[key]
+    rows: dict[str, dict] = {}
+    try:
+        import io
+        import zipfile
+
+        import requests
+        r = requests.get(BHAV_URL.format(d=key), headers={"User-Agent": BHAV_UA}, timeout=25)
+        if getattr(r, "status_code", 200) == 200:
+            with zipfile.ZipFile(io.BytesIO(r.content)) as z:
+                df = pd.read_csv(z.open(z.namelist()[0]))
+            eq = df[(df["FinInstrmTp"].astype(str).str.strip() == "STK")
+                    & (df["SctySrs"].astype(str).str.strip() == "EQ")]
+            for t, o, h, l, c, v in zip(eq["TckrSymb"], eq["OpnPric"], eq["HghPric"],
+                                        eq["LwPric"], eq["ClsPric"], eq["TtlTradgVol"]):
+                rows[str(t).strip().upper()] = {
+                    "Open": float(o), "High": float(h), "Low": float(l),
+                    "Close": float(c), "Volume": float(v)}
+    except Exception:
+        rows = {}
+    _bhav_cache[key] = rows
+    return rows
+
+
+def bhav_fetch(symbol: str, days: int = BHAV_LOOKBACK_DAYS) -> pd.DataFrame:
+    """Recent daily bars for one NSE equity from the exchange's own archive.
+
+    This is the desk's second bar source. Groww's fallback is an LTP — a price,
+    not a bar — so it can only ever defend a position, never open one; these are
+    real OHLCV bars with real full-day volume, settled by the exchange itself.
+
+    Prices are exchange-raw (unadjusted) while the yfinance history is
+    auto-adjusted, so these bars are only ever appended to close a freshness
+    gap in an existing series — never used to rebuild history across a
+    corporate action. Indices and FX are not in the CM segment; they raise.
+    """
+    s = symbol.upper()
+    s = s[:-3] if s.endswith(".NS") else s
+    if s in INDEX_MAP or s.startswith("^") or "=" in s:
+        raise RuntimeError(f"bhavcopy covers NSE cash equities only, not {symbol}")
+    today = pd.Timestamp.now(tz="Asia/Kolkata").normalize().tz_localize(None)
+    bars = {}
+    for back in range(days):
+        day = today - pd.Timedelta(days=back)
+        if day.weekday() >= 5:            # NSE is shut; no file exists to fetch
+            continue
+        row = _bhav_day(day).get(s)
+        if row:
+            bars[day] = row
+    if not bars:
+        raise RuntimeError(f"bhavcopy has no recent bars for {symbol}")
+    df = pd.DataFrame.from_dict(bars, orient="index").sort_index()
+    df.index.name = "Date"
+    return df
+
+
 def _groww_sdk():
     """The Groww SDK class, or None when the package isn't installed."""
     try:
@@ -246,6 +321,19 @@ def get_ohlcv(symbol: str, period: str = "1y", interval: str = "1d") -> pd.DataF
         return df
     except RuntimeError:
         cached = _load_cache(symbol)
+        # Yahoo is down. Before reaching for a patched or stale price, try the
+        # exchange's own archive: it closes the freshness gap with genuine bars.
+        # It appends to cached history rather than replacing it, so a symbol we
+        # have never cached still degrades the old way.
+        if cached is not None:
+            try:
+                merged = pd.concat([cached, bhav_fetch(symbol)])
+                merged = merged[~merged.index.duplicated(keep="last")].sort_index()
+                if _cache_age_bars(merged) <= CACHE_MAX_AGE_BARS:
+                    merged.attrs["source"] = "nse_bhav"
+                    return merged
+            except Exception:
+                pass
         if cached is None or _cache_age_bars(cached) > CACHE_MAX_AGE_BARS:
             raise
         ltp = groww_ltp(symbol)
@@ -306,11 +394,11 @@ def snapshot(symbol: str) -> dict:
     a = atr(df)
     high52, low52 = float(df["High"].max()), float(df["Low"].min())
     vol_ratio = None
-    if source == "yf":
+    if source in ("yf", "nse_bhav"):   # both carry true full-day volume
         vol_ratio = round(float(vol.iloc[-1] / max(vol.rolling(20).mean().iloc[-1], 1)), 2)
     return {
         "symbol": symbol.upper(),
-        "source": source,  # yf | cache+groww_ltp | cache_stale — agents must treat non-yf as degraded
+        "source": source,  # yf | nse_bhav | cache+groww_ltp | cache_stale — agents must treat non-live as degraded
         "last": round(last, 2),
         "change_pct": round((last / prev - 1) * 100, 2),
         "rsi14": round(float(rsi(c).iloc[-1]), 1),

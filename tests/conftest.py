@@ -30,6 +30,9 @@ def desk(tmp_path, monkeypatch):
     monkeypatch.setattr(common, "STATE", state)
     from engine import data
     monkeypatch.setattr(data, "CACHE_DIR", state / "cache" / "ohlcv")
+    # The NSE archive is a network source: offline by default so no test can
+    # reach the exchange by accident. Bhavcopy tests re-patch it explicitly.
+    monkeypatch.setattr(data, "_bhav_day", lambda day: {})
     return state
 
 

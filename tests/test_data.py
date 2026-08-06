@@ -174,3 +174,112 @@ def test_chart_failure_still_degrades_to_cache(desk, monkeypatch):
 
     df = data.get_ohlcv("TESTCO", period="5d")
     assert df.attrs["source"] == "cache_stale"
+
+
+# --- second daily-bar source: the exchange's own bhavcopy archive (S2 outage) ---
+# Repro: OPEN-20260805-1436 — Yahoo 429s this egress, and yfinance was the ONLY
+# source of daily bars, so every watchlist symbol served cache_stale and entries
+# were foreclosed for five consecutive cycles. Groww's LTP is a price, not a bar,
+# so it can never unlock an entry. NSE's own archive can.
+
+_real_bhav_day = data._bhav_day      # captured before conftest's offline stub
+
+
+def _bhav_csv(rows):
+    """Minimal replica of BhavCopy_NSE_CM_0_0_0_<date>_F_0000.csv."""
+    head = ("TradDt,FinInstrmTp,TckrSymb,SctySrs,OpnPric,HghPric,LwPric,ClsPric,"
+            "TtlTradgVol\n")
+    return head + "".join(
+        f"2026-08-05,{r.get('tp', 'STK')},{r['sym']},{r.get('srs', 'EQ')},"
+        f"{r['o']},{r['h']},{r['l']},{r['c']},{r['v']}\n" for r in rows)
+
+
+def _bhav_zip(rows):
+    import io
+    import zipfile
+    buf = io.BytesIO()
+    with zipfile.ZipFile(buf, "w") as z:
+        z.writestr("BhavCopy.csv", _bhav_csv(rows))
+    return buf.getvalue()
+
+
+class _BinResp:
+    def __init__(self, content, status=200):
+        self.content, self.status_code = content, status
+
+
+def _serve_bhav(monkeypatch, rows, status=200):
+    """Every archive date answers with the same canned zip."""
+    data._bhav_cache.clear()
+    seen = {"urls": []}
+
+    def fake_get(url, **kw):
+        seen["urls"].append(url)
+        seen["headers"] = kw.get("headers") or {}
+        return _BinResp(_bhav_zip(rows), status)
+
+    monkeypatch.setattr(requests, "get", fake_get)
+    monkeypatch.setattr(data, "_bhav_day", _real_bhav_day)   # undo conftest's offline stub
+    return seen
+
+
+def test_bhav_day_parses_exchange_archive(desk, monkeypatch):
+    """The archive is a zipped CSV; only cash-equity series are bars we can use."""
+    _serve_bhav(monkeypatch, [
+        {"sym": "TESTCO", "o": 100.0, "h": 104.0, "l": 99.0, "c": 103.0, "v": 5000},
+        {"sym": "SGBJUN28", "o": 1.0, "h": 1.0, "l": 1.0, "c": 1.0, "v": 1, "srs": "GB"},
+    ])
+    day = data._bhav_day(pd.Timestamp("2026-08-05"))
+    assert day["TESTCO"] == {"Open": 100.0, "High": 104.0, "Low": 99.0,
+                             "Close": 103.0, "Volume": 5000.0}
+    assert "SGBJUN28" not in day          # gold bonds are not equity bars
+
+
+def test_yahoo_dead_still_yields_live_bars_from_the_exchange(desk, monkeypatch):
+    """THE REPRO: Yahoo is 429 and Groww is absent. Before the fix this returned
+    cache_stale with no volume and the desk could not initiate. The exchange's
+    own archive is a genuine second bar source — bars, not just a last price."""
+    _write_cache("TESTCO", last_day_offset=4)      # history exists but is stale
+    _kill_yf(monkeypatch)
+    monkeypatch.setattr(data, "groww_ltp", lambda s: None)
+    _serve_bhav(monkeypatch, [{"sym": "TESTCO", "o": 100.0, "h": 104.0,
+                               "l": 99.0, "c": 103.0, "v": 5000}])
+
+    df = data.get_ohlcv("TESTCO")
+    assert df.attrs["source"] == "nse_bhav"        # not cache_stale, not a patch
+    assert float(df["Close"].iloc[-1]) == 103.0    # a real settled close
+    assert float(df["Volume"].iloc[-1]) == 5000.0  # a real full-day volume
+    assert len(df) > 50                            # cached history is preserved
+
+
+def test_bhav_bars_restore_volume_confirmation(desk, monkeypatch):
+    """Groww's LTP patch writes Volume=0, so vol_ratio is suppressed. Exchange
+    bars carry true volume, so the snapshot may confirm participation again."""
+    _write_cache("TESTCO", last_day_offset=4)
+    _kill_yf(monkeypatch)
+    monkeypatch.setattr(data, "groww_ltp", lambda s: None)
+    _serve_bhav(monkeypatch, [{"sym": "TESTCO", "o": 100.0, "h": 104.0,
+                               "l": 99.0, "c": 103.0, "v": 5000}])
+
+    snap = data.snapshot("TESTCO")
+    assert snap["source"] == "nse_bhav"
+    assert snap["vol_ratio_20d"] is not None
+
+
+def test_bhav_declines_non_equities(desk, monkeypatch):
+    """The CM bhavcopy has no indices or FX — it must say so, not invent a bar."""
+    for sym in ("NIFTY", "USDINR", "^NSEI"):
+        with pytest.raises(RuntimeError):
+            data.bhav_fetch(sym)
+
+
+def test_dead_exchange_archive_keeps_the_old_ladder(desk, monkeypatch):
+    """A second source must not become a second way to fail: archive down ⇒ the
+    cache/groww ladder still applies exactly as before."""
+    _write_cache("TESTCO")
+    _kill_yf(monkeypatch)
+    monkeypatch.setattr(data, "groww_ltp", lambda s: None)
+    _serve_bhav(monkeypatch, [], status=503)
+
+    df = data.get_ohlcv("TESTCO")
+    assert df.attrs["source"] == "cache_stale"
