@@ -15,13 +15,21 @@ from engine import data, ops
 REPO = pathlib.Path(__file__).resolve().parent.parent
 
 
-def _write_cache(sym="NIFTY"):
-    idx = pd.bdate_range(end=pd.Timestamp.now(tz="Asia/Kolkata").normalize().tz_localize(None),
-                         periods=60)
+def _write_cache(*syms, age_bars=0):
+    """Cache 60 daily bars per symbol; age_bars pushes the last bar into the past.
+
+    Defaults to the index AND a tradable name, because feed health is a claim
+    about what the desk can actually analyse, not about one index's cache file.
+    """
+    end = pd.Timestamp.now(tz="Asia/Kolkata").normalize().tz_localize(None)
+    if age_bars:
+        end -= pd.tseries.offsets.BDay(age_bars)
+    idx = pd.bdate_range(end=end, periods=60)
     df = pd.DataFrame({"Open": 100.0, "High": 101.0, "Low": 99.0,
                        "Close": 100.0, "Volume": 1000}, index=idx)
     data.CACHE_DIR.mkdir(parents=True, exist_ok=True)
-    df.to_csv(data._cache_path(sym))
+    for sym in (syms or ("NIFTY", "RELIANCE")):
+        df.to_csv(data._cache_path(sym))
 
 
 def _kill_yf(monkeypatch):
@@ -82,6 +90,45 @@ def test_preflight_feed_always_carries_live_ltp_key(desk, monkeypatch):
     out = ops.preflight()
     assert out["verdict"] == "DEGRADED"
     assert out["feed"]["live_ltp"] == "dead"
+
+
+def test_feed_health_is_probed_through_snapshot_not_an_index_cache_heuristic(desk, monkeypatch):
+    """Issue 20260805-1226: preflight reported feed "cache fresh enough for daily
+    bars" — a claim read off NIFTY's cache file — while `data.snapshot()` on the
+    names the desk actually trades returned cache_stale/raised. Two engine outputs
+    contradicting each other about whether usable data exists is worse than either
+    answer alone: the desk head trusts the optimistic one. Feed health must be
+    derived from what snapshot really serves for the watchlist.
+    """
+    (desk / "watchlist.yaml").write_text("symbols:\n  - {symbol: RELIANCE, sector: energy}\n")
+    _write_cache("NIFTY")                      # the index cache is fresh...
+    _write_cache("RELIANCE", age_bars=40)      # ...the tradable name is long stale
+    _kill_yf(monkeypatch)
+    monkeypatch.setattr(data, "groww_status",
+                        lambda *a: {"live_ltp": "dead", "why": "sdk_missing", "ltp": None})
+
+    feed = ops.check_feed()
+    probes = {p["symbol"]: p for p in feed["probes"]}
+    assert set(probes) == {"RELIANCE"}, "preflight must probe what the desk trades"
+    assert probes["RELIANCE"]["source"] is None, "snapshot cannot serve a 40-bar-stale cache"
+    assert feed["status"] == "dead", "no analysable name and no live LTP is a blackout"
+    assert "RELIANCE" in feed["detail"]
+    assert "fresh enough" not in feed["detail"]
+
+
+def test_probed_feed_reports_the_source_snapshot_actually_served(desk, monkeypatch):
+    """The other half: when the cache DOES serve the watchlist, say so by name and
+    source rather than asserting a generic freshness the analysts may not see."""
+    (desk / "watchlist.yaml").write_text("symbols:\n  - {symbol: RELIANCE, sector: energy}\n")
+    _write_cache()
+    _kill_yf(monkeypatch)
+    monkeypatch.setattr(data, "groww_status",
+                        lambda *a: {"live_ltp": "dead", "why": "no_creds", "ltp": None})
+
+    feed = ops.check_feed()
+    assert feed["status"] == "degraded"
+    assert feed["probes"] == [{"symbol": "RELIANCE", "source": "cache_stale", "error": None}]
+    assert "RELIANCE=cache_stale" in feed["detail"]
 
 
 def test_requirements_core_installs_without_growwapi():

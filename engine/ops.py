@@ -8,6 +8,9 @@ answers three questions no agent should be trusted to answer from vibes:
 3. FEED: is the price feed live, degraded (cache/Groww fallback), or dead?
    Degraded is not one state: feed.live_ltp says whether the Groww fallback
    actually answers, because "exits allowed on live LTP" is a lie without it.
+   feed.probes says what data.snapshot() really served for the names the desk
+   trades — feed health is never inferred from an index's cache age, because a
+   fresh NIFTY cache next to a stale watchlist reads as usable data and isn't.
 
 Verdict: GO | DEGRADED | STAND_DOWN. STAND_DOWN and stray-branch findings are
 auto-journaled as ops_alert so the weekly debrief audits infrastructure, not
@@ -21,6 +24,7 @@ import time
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 STRAY_BRANCH_AGE_S = 1800  # unmerged claude/* older than this = merge workflow broken
+FEED_PROBES = 2            # watchlist names snapshot-probed when yfinance is down
 
 
 def _git(*args, timeout=45) -> tuple[int, str]:
@@ -60,9 +64,28 @@ def check_continuity() -> dict:
         return {"last_journal_ts": None, "last_journal_type": None}
 
 
+def _probe_symbols() -> list[str]:
+    """The names preflight asks about: what the desk trades, not an index."""
+    from engine import common
+    wl = common.load_yaml(common.STATE / "watchlist.yaml", {}) or {}
+    raw = wl.get("symbols", []) if isinstance(wl, dict) else wl
+    syms = [s["symbol"] if isinstance(s, dict) else s for s in raw]
+    return syms[:FEED_PROBES] or ["RELIANCE"]
+
+
+def _probe(sym: str) -> dict:
+    """What data.snapshot() actually serves for sym right now — source or error."""
+    from engine import data
+    try:
+        return {"symbol": sym, "source": data.snapshot(sym)["source"], "error": None}
+    except Exception as e:
+        return {"symbol": sym, "source": None, "error": f"{type(e).__name__}: {e}"[:120]}
+
+
 def check_feed() -> dict:
     from engine import data
-    canary = {"status": "dead", "detail": None, "live_ltp": "unprobed", "live_ltp_why": None}
+    canary = {"status": "dead", "detail": None, "live_ltp": "unprobed",
+              "live_ltp_why": None, "probes": []}
     try:
         data._yf_fetch("NIFTY", "5d", "1d")
         canary.update(status="ok", detail="yfinance live")
@@ -74,11 +97,17 @@ def check_feed() -> dict:
     if gw["live_ltp"] == "ok":
         canary.update(status="degraded", detail=canary["detail"] + " | groww LTP live")
         return canary
-    cached = data._load_cache("NIFTY") if hasattr(data, "_load_cache") else None
-    if cached is not None and data._cache_age_bars(cached) <= data.CACHE_MAX_AGE_BARS:
+    # No live quote source. Whether daily-bar work is still possible is a claim
+    # about the watchlist, so ask snapshot rather than an index's cache mtime.
+    canary["probes"] = [_probe(s) for s in _probe_symbols()]
+    served = ", ".join(f"{p['symbol']}={p['source']}" for p in canary["probes"] if p["source"])
+    if served:
         canary.update(status="degraded", detail=canary["detail"]
-                      + f" | cache fresh enough for daily bars but NO live LTP ({gw['why']})"
-                      + " — cannot defend open positions")
+                      + f" | snapshot serves {served} — daily bars only, NO live LTP"
+                      + f" ({gw['why']}); cannot defend open positions")
+    else:
+        canary["detail"] += " | snapshot serves nothing: " + "; ".join(
+            f"{p['symbol']}: {p['error']}" for p in canary["probes"])
     return canary
 
 
