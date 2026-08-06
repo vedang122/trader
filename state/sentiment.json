@@ -1,17 +1,13 @@
 {
   "tone": "neutral",
   "per_symbol": {
-    "SBIN": "neutral",
-    "ICICIBANK": "neutral",
-    "BHARTIARTL": "bullish",
-    "SBIN": "neutral",
-    "ICICIBANK": "neutral"
+    "HDFCBANK": "bearish"
   },
   "top_risks": [
-    "West Asia conflict (RBI Governor flagged): disrupting trade routes/supply chains, weakening global growth & business sentiment - unresolved, not yet in tape",
-    "Headline inflation above target, RBI expects it to peak only in Q3 - pushes any rate-cut catalyst for banks further out despite neutral stance",
-    "Post-announcement tape reaction is UNVERIFIED this cycle: yfinance feed hard down, no post-10:00 IST market-reaction headline found"
+    "Iran-Oman Hormuz de-escalation is only \"hopes\" not a signed deal - crude/rupee tailwind could reverse fast",
+    "HDFCBANK: US ADR securities-lawsuit threat (3 law firms circling) + governance/FIR matter still unresolved despite CEO denial",
+    "Global risk-off tail (Burry AI-crash warning, SpaceX -13%) could spill into India if Wall St fades post-Iran-hopes rally"
   ],
-  "basis": "MPC matched consensus exactly (unanimous hold 5.25%, neutral stance) - the pre-open event risk is resolved with no hawkish surprise, so tone reverts to neutral rather than risk-off; but above-target inflation (peaking Q3) removes any near-term dovish catalyst for SBIN/ICICIBANK, and Governor explicitly flagged West Asia-driven global growth/trade risk. Airtel Q1 beat remains the one clean single-name positive. Tape reaction itself unverifiable this cycle (yfinance SSL down); WebSearch found only pre-decision index levels, no confirmed post-print move.",
-  "as_of": "2026-08-05T10:33:27+05:30"
+  "basis": "Favorable overnight macro (crude to $79 on Iran-Oman talks, rupee +26p to 95.11, dovish RBI hold/bonds rallying) offset by muted GIFT Nifty and Asian shares lower - cautious-open signals are the more immediate read for today so tone nets neutral, not bullish; only fresh single-name story is HDFCBANK CEO pushback on unresolved US ADR/governance allegations (bearish, confirms overhang not resolved); all other watchlist symbol hits in digest (ICICIBANK, HINDUNILVR, ITC/BHARTIARTL, RELIANCE) are stale Apr-2024 archival items, discarded; business-standard and gnews feeds down, newsapi 0 - reduced confidence.",
+  "as_of": "2026-08-06T08:19:31+05:30"
 }
