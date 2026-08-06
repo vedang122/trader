@@ -1,6 +1,8 @@
 """The only market door: crash-free under dead feeds, honest paper fills."""
 import json
 
+import pytest
+
 from engine import execute, data, common
 from tests.conftest import make_ticket
 
@@ -16,6 +18,31 @@ def test_dead_quote_path_rejects_not_crashes(desk, monkeypatch):
     assert any("no live quote path" in x for x in out["violations"])
     entries = [json.loads(l) for l in (desk / "journal.jsonl").read_text().splitlines()]
     assert entries[-1]["type"] == "order_rejected"
+
+
+@pytest.mark.xfail(strict=True, reason="OPEN-20260805-1105-broker: fix lives in the "
+                                       "protected engine/broker.py + engine/execute.py — "
+                                       "proposed patch is in the issue file, needs human review")
+def test_quote_dying_between_gate_and_fill_rejects_not_crashes(desk, monkeypatch):
+    """Regression: execute.py pre-checks the quote path, but PaperBroker.place()
+    re-fetches last_price unguarded. A source dying in that window crashes
+    mid-order instead of returning a clean failure — no journal, no verdict."""
+    calls = {"n": 0}
+
+    def flaky(sym):
+        calls["n"] += 1
+        if calls["n"] == 1:      # execute.py's pre-check sees a live quote...
+            return 100.0
+        raise RuntimeError("yfinance failed / groww absent")  # ...place() does not
+
+    monkeypatch.setattr(data, "last_price", flaky)
+    out = execute.run(str(make_ticket(desk)))
+    assert out["result"] != "EXECUTED", out
+    pf = json.loads((desk / "portfolio.json").read_text())
+    assert pf["positions"] == {}          # a crashed order must leave no ghost fill
+    assert pf["cash"] == 10000.0
+    entries = [json.loads(l) for l in (desk / "journal.jsonl").read_text().splitlines()]
+    assert entries[-1]["type"] in ("order_rejected", "order_failed")
 
 
 def test_paper_round_trip_with_charges(desk, monkeypatch):
