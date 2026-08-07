@@ -3,7 +3,10 @@
 `python3 -m engine.ops preflight` runs at Phase 0 of every trade cycle and
 answers three questions no agent should be trusted to answer from vibes:
 1. STATE: is this clone current with origin/main, and are there unmerged
-   claude/* run branches (= the auto-merge workflow failed)?
+   claude/* run branches? A stray branch is always reported, but it only bars
+   trading when its diff carries desk state (portfolio/limits/regime) — a
+   branch parked for a human, or stranded by a cancelled merge job, holds only
+   audit lines and code, and no in-desk action can ever clear it.
 2. CONTINUITY: when did the desk last journal anything?
 3. FEED: is the price feed live, degraded (cache/Groww fallback), or dead?
    Degraded is not one state: feed.live_ltp says whether the Groww fallback
@@ -25,6 +28,12 @@ import time
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 STRAY_BRANCH_AGE_S = 1800  # unmerged claude/* older than this = merge workflow broken
 FEED_PROBES = 2            # watchlist names snapshot-probed when yfinance is down
+# An unmerged branch bars trading only when it carries state the desk PRICES or
+# SIZES from. These paths are append-only audit or agent-facing artefacts: their
+# being unmerged leaves the book itself correct. Everything else under state/ is
+# blocking, and so is an unreadable diff — no data ≥ bad data.
+NOTICE_ONLY = ("state/journal.jsonl", "state/issues/", "state/scans/",
+               "state/news/", "state/debriefs/", "state/stats.json")
 
 
 def _git(*args, timeout=45) -> tuple[int, str]:
@@ -35,8 +44,28 @@ def _git(*args, timeout=45) -> tuple[int, str]:
         return 1, str(e)
 
 
+def _stray_detail(branch: str) -> dict:
+    """What an unmerged run branch actually carries — merge hygiene or desk state.
+
+    Issue 20260807-0825: every stray branch forced a STAND_DOWN, and nothing the
+    desk may do can merge or delete one. A branch parked for human review (or
+    stranded by a cancelled merge job) therefore foreclosed ALL entries forever.
+    The detection was right; the conflation was the defect.
+    """
+    code, out = _git("diff", "--name-only", f"origin/main...{branch}")
+    if code != 0:
+        return {"branch": branch, "paths": [], "blocking": True,
+                "why": "diff vs origin/main failed — contents unverifiable"}
+    paths = out.splitlines() if out else []
+    state_paths = [p for p in paths if p.startswith("state/") and not p.startswith(NOTICE_ONLY)]
+    return {"branch": branch, "paths": paths[:20], "blocking": bool(state_paths),
+            "why": (f"carries unmerged desk state: {state_paths}" if state_paths
+                    else "audit trail / code only — merge hygiene, not a trading hazard")}
+
+
 def check_state() -> dict:
-    out = {"fetch_ok": False, "behind_main": None, "ahead_main": None, "stray_branches": []}
+    out = {"fetch_ok": False, "behind_main": None, "ahead_main": None,
+           "stray_branches": [], "blocking_branches": [], "stray_detail": []}
     code, _ = _git("fetch", "origin", "--prune")
     out["fetch_ok"] = code == 0
     if out["fetch_ok"]:
@@ -52,6 +81,8 @@ def check_state() -> dict:
                 name, _, ts = line.rpartition(" ")
                 if ts.isdigit() and now - int(ts) > STRAY_BRANCH_AGE_S:
                     out["stray_branches"].append(name)
+            out["stray_detail"] = [_stray_detail(b) for b in out["stray_branches"]]
+            out["blocking_branches"] = [d["branch"] for d in out["stray_detail"] if d["blocking"]]
     return out
 
 
@@ -113,23 +144,26 @@ def check_feed() -> dict:
 
 def preflight() -> dict:
     state, cont, feed = check_state(), check_continuity(), check_feed()
-    reasons = []
+    reasons, notices = [], []
     if state["behind_main"]:
         reasons.append(f"clone is {state['behind_main']} commit(s) behind origin/main — pull before trading")
-    if state["stray_branches"]:
-        reasons.append(f"unmerged run branches (merge workflow broken?): {state['stray_branches']}")
+    for d in state.get("stray_detail") or []:
+        line = f"unmerged run branch {d['branch']}: {d['why']}"
+        (reasons if d["blocking"] else notices).append(line)
     if not state["fetch_ok"]:
         reasons.append("git fetch failed — state sync unverifiable")
     if feed["status"] == "dead":
         reasons.append("price feed dead (yfinance + groww + cache all unusable)")
     verdict = "STAND_DOWN" if reasons else ("DEGRADED" if feed["status"] == "degraded" else "GO")
-    result = {"verdict": verdict, "reasons": reasons, "state": state, "continuity": cont, "feed": feed}
+    result = {"verdict": verdict, "reasons": reasons, "notices": notices,
+              "state": state, "continuity": cont, "feed": feed}
     if verdict == "STAND_DOWN" or state["stray_branches"]:
         try:
             from engine.common import journal
             journal({"type": "ops_alert", "verdict": verdict, "reasons": reasons,
-                     "feed": feed["status"], "state": {k: state[k] for k in
-                     ("behind_main", "stray_branches", "fetch_ok")}})
+                     "notices": notices, "feed": feed["status"],
+                     "state": {k: state.get(k) for k in
+                     ("behind_main", "stray_branches", "blocking_branches", "fetch_ok")}})
         except Exception:
             pass
     return result

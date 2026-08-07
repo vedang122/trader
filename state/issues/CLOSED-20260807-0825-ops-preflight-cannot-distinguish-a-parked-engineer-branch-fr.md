@@ -110,3 +110,6 @@ because preflight's complaint is the unmerged branch, not the unfixed bug.
 Log content for job 92670237013 is no longer downloadable (HTTP 404, expired),
 so the precise cancellation reason could not be recovered; the conclusion field
 and timings above are from the Actions API and are exact.
+
+## Closed
+2026-08-07T08:50:49+05:30: fixed: preflight classifies each stray claude/* branch by its diff vs origin/main — only branches carrying desk state (portfolio/limits/regime, or an unreadable diff) STAND_DOWN; audit/code-only parks become a reported notice
