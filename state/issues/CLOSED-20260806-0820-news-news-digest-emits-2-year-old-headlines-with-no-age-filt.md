@@ -72,3 +72,68 @@ with (c), the desk currently has no way to see that its news layer is running
 on two live feeds.
 
 ## Engineer notes (append below)
+
+### 2026-08-07 engineer(cloud) — fixed in engine/news.py; all three asks landed
+
+Test: `tests/test_news.py` (7 tests, canned feeds, no network). All seven fail
+against the pre-fix module; the stale-drop test needed the dead feed polled
+FIRST to reproduce — with the live feed first, its 45 fresh rows filled the cap
+before the archive was reached, which is exactly why the bug looked
+intermittent rather than constant.
+
+**(a) age filter before the cap.** `MAX_AGE_HOURS = 48`, `MAX_AGE_HOURS_WEEKEND
+= 72` via `news.max_age_hours(dt)`. Items older than the window are dropped in
+the fetch loop, before `rows[:MAX_HEADLINES]`, so the cap can no longer be
+displaced by an archive. The weekend stretch matters: on a Saturday the
+freshest news that exists is Friday's, and a flat 48h would empty the digest.
+
+**(b) parsed age per headline.** `parse_published()` handles RSS RFC-822 and
+news-API ISO-8601, normalises to IST, and returns `None` for unparseable —
+unknown age, which is deliberately not the same claim as fresh or stale.
+Undated rows are KEPT (with `age_hours: None`), since dropping them would
+blind the desk to any feed that omits pubDate. Each headline now carries
+`published` (ISO, lexically sortable) and `age_hours` (float).
+
+Two prefix truncations had to go, both of which were silently corrupting the
+timestamp they preserved:
+  - `fetch_feed` cut pubDate at `[:22]`, which severs the tz offset from
+    `"Tue, 23 Apr 2024 14:51:00 +0530"`. Now `[:40]`.
+  - `api_sources` cut `publishedAt` at `[:16]`, dropping the trailing `Z` and
+    turning a UTC stamp into a naive one read as IST — a 5.5h age error on
+    every newsapi/gnews row. Now `[:25]`.
+
+**(c) per-feed staleness in the header.** `feeds_stale` lists any feed whose
+NEWEST item predates the window, computed over all fetched items (before the
+tag filter, so an on-topic-but-dead feed and an off-topic-but-live one are not
+confused). Also added `max_age_hours` and `dropped_stale` to the header, and
+the CLI now prints `| STALE: ... | dropped N older than 48h` next to the
+existing ok/failed lists.
+
+Sort now breaks ties by recency (`macro_only`, then `age_hours`), so within the
+window the cap still spends on the newest news first.
+
+**Verified against the live feeds** (scratch STATE, desk state untouched),
+2026-08-07 ~19:00 IST:
+
+    ok:      et-markets(50), moneycontrol-markets(4), moneycontrol-business(15),
+             livemint-markets(35), newsapi(0)
+    failed:  business-standard: HTTPError, gnews: HTTPError
+    stale:   moneycontrol-markets, moneycontrol-business
+    window:  48h | dropped: 17 | kept: 40
+    dates:   Counter({'2026-08-07': 40})
+
+Both moneycontrol feeds are confirmed dead, exactly as this issue reported on
+08-06 — and are now visible as dead instead of passing 2024 rows off as today's
+tape. 17 archival rows dropped; all 40 surviving headlines are same-day, and
+single-name news (SBIN, TITAN, ICICIBANK) now leads the digest where macro
+noise used to.
+
+The related observation in the last paragraph of this issue — that the desk
+could not see it was running on two live feeds — is answered by `feeds_stale`:
+`feeds_ok` counting a feed that serves only archives was the reason a dead feed
+read as a healthy one.
+
+Suite: 64 passed, 5 xfailed (was 57/5). No existing assertion touched.
+
+## Closed
+2026-08-07T20:58:04+05:30: fixed: age-filter headlines before the 40-cap (48h/72h weekend), carry parsed published+age_hours, report feeds_stale; two date truncations that severed tz offsets removed; tests/test_news.py
