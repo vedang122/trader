@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-07T10:18:54+05:30",
+  "ts": "2026-08-07T12:18:07+05:30",
   "feeds_ok": [
     "et-markets(50)",
     "moneycontrol-markets(4)",
@@ -13,6 +13,14 @@
   ],
   "headlines": [
     {
+      "t": "Jefferies' Chris Wood sells HDFC Bank, PB Fintech shares to buy 2 new stocks",
+      "date": "Fri, 07 Aug 2026 11:29",
+      "src": "et-markets",
+      "tags": [
+        "HDFCBANK"
+      ]
+    },
+    {
       "t": "SBI Q1 results preview: Will India's largest public bank report a decline in profit?",
       "date": "Fri, 07 Aug 2026 08:49",
       "src": "et-markets",
@@ -22,7 +30,7 @@
       ]
     },
     {
-      "t": "SBI Life Share Price Live Updates: SBI Life's stock price slips under the 20-day EMA",
+      "t": "SBI Life Share Price Live Updates: SBI Life's Market Update",
       "date": "Fri, 07 Aug 2026 08:41",
       "src": "et-markets",
       "tags": [
@@ -38,83 +46,11 @@
       ]
     },
     {
-      "t": "Maruti Suzuki Share Price Live Updates: Maruti Suzuki's Price Movement Today",
-      "date": "Fri, 07 Aug 2026 08:16",
+      "t": "Tech Mahindra Share Price Live Updates: Tech Mahindra's Price Movement Today",
+      "date": "Fri, 07 Aug 2026 08:17",
       "src": "et-markets",
       "tags": [
-        "MARUTI"
-      ]
-    },
-    {
-      "t": "HDFC Bank Share Price Live Updates: HDFC Bank's Current Valuation",
-      "date": "Fri, 07 Aug 2026 08:16",
-      "src": "et-markets",
-      "tags": [
-        "HDFCBANK"
-      ]
-    },
-    {
-      "t": "ICICI Bank Share Price Live Updates: ICICI Bank Market Performance",
-      "date": "Fri, 07 Aug 2026 08:16",
-      "src": "et-markets",
-      "tags": [
-        "ICICIBANK"
-      ]
-    },
-    {
-      "t": "ITC Share Price Live Updates: ITC's Market Update",
-      "date": "Fri, 07 Aug 2026 08:15",
-      "src": "et-markets",
-      "tags": [
-        "ITC"
-      ]
-    },
-    {
-      "t": "Infosys Share Price Live Updates: Infosys Stock Details",
-      "date": "Fri, 07 Aug 2026 08:11",
-      "src": "et-markets",
-      "tags": [
-        "INFY"
-      ]
-    },
-    {
-      "t": "Tata Steel Share Price Live Updates: Tata Steel's price slips under the 20-day EMA",
-      "date": "Fri, 07 Aug 2026 08:10",
-      "src": "et-markets",
-      "tags": [
-        "TATASTEEL"
-      ]
-    },
-    {
-      "t": "TCS Share Price Live Updates: TCS Rises Above 100-Day Exponential Moving Average",
-      "date": "Fri, 07 Aug 2026 08:10",
-      "src": "et-markets",
-      "tags": [
-        "TCS"
-      ]
-    },
-    {
-      "t": "Sun Pharma Share Price Live Updates: Sun Pharma Stock Details",
-      "date": "Fri, 07 Aug 2026 08:02",
-      "src": "et-markets",
-      "tags": [
-        "SUNPHARMA"
-      ]
-    },
-    {
-      "t": "Stocks to buy in 2026 for long term: Bharti Airtel, Clean Max among 5 stocks that could give 10-50% return",
-      "date": "Fri, 07 Aug 2026 08:02",
-      "src": "et-markets",
-      "tags": [
-        "BHARTIARTL"
-      ]
-    },
-    {
-      "t": "RIL Share Price Live Updates: RIL Stock Details",
-      "date": "Fri, 07 Aug 2026 08:00",
-      "src": "et-markets",
-      "tags": [
-        "RELIANCE"
+        "M&M"
       ]
     },
     {
@@ -185,6 +121,46 @@
       ]
     },
     {
+      "t": "Crompton Greaves shares crash 7% despite strong Q1 results",
+      "date": "Fri, 07 Aug 2026 11:52",
+      "src": "et-markets",
+      "tags": [
+        "MACRO"
+      ]
+    },
+    {
+      "t": "Global Market: Japan stocks fall over 1% as chip shares tumble, SoftBank declines despite earnings beat",
+      "date": "Fri, 07 Aug 2026 11:15",
+      "src": "et-markets",
+      "tags": [
+        "MACRO"
+      ]
+    },
+    {
+      "t": "Tata Investment, Tata Chemicals rally up to 7% after RBI classifies Tata Sons as upper-layer NBFC",
+      "date": "Fri, 07 Aug 2026 10:41",
+      "src": "et-markets",
+      "tags": [
+        "MACRO"
+      ]
+    },
+    {
+      "t": "Siemens Energy India shares jump 7% after strong Q1 results. Should you buy, sell or hold?",
+      "date": "Fri, 07 Aug 2026 10:12",
+      "src": "et-markets",
+      "tags": [
+        "MACRO"
+      ]
+    },
+    {
+      "t": "Bajaj Finance, Bajaj Finserv shares fall up to 5% on RBI's new proposal for NBFCs",
+      "date": "Fri, 07 Aug 2026 10:06",
+      "src": "et-markets",
+      "tags": [
+        "MACRO"
+      ]
+    },
+    {
       "t": "LIC gains 3% after Q1 earnings. Here's what Morgan Stanley and Motilal Oswal recommend",
       "date": "Fri, 07 Aug 2026 09:47",
       "src": "et-markets",
@@ -209,7 +185,7 @@
       ]
     },
     {
-      "t": "Swiggy\u2019s \u20b960,000 crore breakeven challenge: Can Instamart grow without restarting the cash war?",
+      "t": "Swiggy\u2019s Rs 60,000 crore breakeven challenge: Can Instamart grow without restarting the cash war?",
       "date": "Fri, 07 Aug 2026 08:32",
       "src": "et-markets",
       "tags": [
@@ -228,6 +204,22 @@
       "t": "Sensex, Nifty extend gains to 3rd day, Q4 results to guide stock-specific action",
       "date": "Tue, 23 Apr 2024 09:45",
       "src": "moneycontrol-markets",
+      "tags": [
+        "MACRO"
+      ]
+    },
+    {
+      "t": "Small-cap stock close to life-time high after Q1 results 2026, jumps 3% in opening bell",
+      "date": "Fri, 07 Aug 2026 11:20",
+      "src": "livemint-markets",
+      "tags": [
+        "MACRO"
+      ]
+    },
+    {
+      "t": "778% rally in five years! Multibagger pharma stock close to record high after Q1 results 2026",
+      "date": "Fri, 07 Aug 2026 11:17",
+      "src": "livemint-markets",
       "tags": [
         "MACRO"
       ]
