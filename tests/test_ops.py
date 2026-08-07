@@ -7,6 +7,7 @@ DEGRADED verdict with a dead fallback and one with a live one must not look
 identical to the desk head.
 """
 import pathlib
+import time
 
 import pandas as pd
 
@@ -143,3 +144,79 @@ def test_requirements_core_installs_without_growwapi():
     assert {"pyotp", "pynacl", "protobuf", "nkeys", "nats-py"} <= set(reqs), \
         "growwapi's runtime deps must still be installed for the --no-deps SDK to import"
     assert "--no-deps growwapi" in text, "the file must document how to get the SDK in"
+
+
+# --- stray run branches: merge hygiene vs a real state divergence -------------
+# Issue 20260807-0825: ANY unmerged claude/* branch older than 30min forced a
+# STAND_DOWN, and Phase 0 reads STAND_DOWN as "no new entries, period". A branch
+# parked for human review (or stranded by a cancelled merge job) carries only
+# audit lines and code — nothing the desk reads to price or size a trade — yet
+# no action available inside the desk can clear it. The desk was therefore
+# foreclosed from trading indefinitely by a repo-hygiene condition.
+
+def _fake_git(monkeypatch, diffs, *, diff_rc=0):
+    """Drive check_state off a scripted git: one stray branch per diffs key."""
+    old = int(time.time()) - 86400
+
+    def fake(*args, timeout=45):
+        if args[0] == "fetch":
+            return 0, ""
+        if args[0] == "rev-list":
+            return 0, "0 0"
+        if args[0] == "for-each-ref":
+            return 0, "\n".join(f"{b} {old}" for b in diffs)
+        if args[0] == "diff":
+            branch = args[-1].split("...")[-1]
+            return diff_rc, "\n".join(diffs.get(branch, []))
+        return 1, f"unexpected git {args}"
+
+    monkeypatch.setattr(ops, "_git", fake)
+
+
+def _stub_health(monkeypatch):
+    monkeypatch.setattr(ops, "check_feed", lambda: {
+        "status": "ok", "detail": "yfinance live", "live_ltp": "unprobed",
+        "live_ltp_why": None, "probes": []})
+    monkeypatch.setattr(ops, "check_continuity", lambda: {
+        "last_journal_ts": "2026-08-07T08:00:00+05:30", "last_journal_type": "cycle"})
+
+
+def test_parked_engineer_branch_is_a_notice_not_a_stand_down(desk, monkeypatch):
+    """Audit trail + code only: report it every cycle, but do not bar entries."""
+    branch = "origin/claude/engineer-stop-lowering-enforcement"
+    _fake_git(monkeypatch, {branch: ["state/issues/OPEN-20260805-1105-portfolio.md",
+                                     "state/journal.jsonl",
+                                     "tests/test_portfolio.py"]})
+    _stub_health(monkeypatch)
+
+    out = ops.preflight()
+    assert out["verdict"] == "GO", f"parked branch must not foreclose trading: {out['reasons']}"
+    assert out["reasons"] == []
+    assert branch in out["state"]["stray_branches"], "the branch is still reported"
+    assert out["state"]["blocking_branches"] == []
+    assert any(branch in n for n in out["notices"]), "hygiene finding must stay visible"
+
+
+def test_branch_carrying_desk_state_still_stands_the_desk_down(desk, monkeypatch):
+    """The other half: unmerged portfolio/limits mean this clone's book is wrong."""
+    branch = "origin/claude/cycle-20260807"
+    _fake_git(monkeypatch, {branch: ["state/journal.jsonl", "state/portfolio.json"]})
+    _stub_health(monkeypatch)
+
+    out = ops.preflight()
+    assert out["verdict"] == "STAND_DOWN"
+    assert out["state"]["blocking_branches"] == [branch]
+    assert any(branch in r for r in out["reasons"])
+    assert any("state/portfolio.json" in r for r in out["reasons"]), \
+        "say WHICH unmerged state bars the desk, not just the branch name"
+
+
+def test_unreadable_branch_diff_is_treated_as_blocking(desk, monkeypatch):
+    """No data >= bad data: if git cannot say what the branch carries, assume state."""
+    branch = "origin/claude/mystery"
+    _fake_git(monkeypatch, {branch: []}, diff_rc=1)
+    _stub_health(monkeypatch)
+
+    out = ops.preflight()
+    assert out["verdict"] == "STAND_DOWN"
+    assert out["state"]["blocking_branches"] == [branch]
