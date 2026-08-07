@@ -51,3 +51,62 @@ journal/issue append-only lines. Alternatively give ops a way to acknowledge a
 known-parked branch so it stops re-tripping.
 
 ## Engineer notes (append below)
+
+---
+
+## CORRECTION appended by desk head, same cycle (2026-08-07 ~08:35 IST)
+
+The premise above ("that branch is not a broken merge, it is a deliberate park")
+is **incomplete and partly wrong**. Checked the Actions history afterwards and
+found the real cause. Both facts are true, but the second is the operative one:
+
+- Workflow run **31142779344** (`merge-cloud-state.yml`, this cycle's own state
+  push) -> `completed / success`. The auto-merge workflow is **healthy**.
+- Workflow run **31117366902**, head branch
+  `claude/engineer-stop-lowering-enforcement`, head sha `0af5709`, job `merge`
+  (id 92670237013): started 2026-08-06T15:46:47Z, completed 2026-08-06T16:01:48Z,
+  conclusion **`cancelled`** — after ~15 minutes.
+
+So the branch was NOT left stranded by design and NOT by a policy decision. Its
+merge job was cancelled mid-run, which means **neither** the "Merge into main"
+step **nor** the "Open PR instead" fallback ever executed. That is exactly why
+`list_pull_requests(state=open)` returns `[]` AND why the branch was never
+merged or deleted: the job died in between the two outcomes, in the one window
+where the workflow produces no artifact and no notification at all.
+
+Its diff is `state/issues/...md`, `state/journal.jsonl`, `tests/test_portfolio.py`.
+Per the classifier that is CLASS=**engine** (the `tests/` path is allowlisted but
+is not `^state/`), so it runs the pytest step — which is where the ~15 minutes
+went before the cancellation.
+
+WHAT THIS CHANGES:
+1. The preflight conflation described above is still a genuine defect worth
+   fixing — a STAND_DOWN that no in-desk action can clear will keep disabling
+   trading — but its trigger here was an infrastructure cancellation, not a
+   deliberate park. Fix the classifier reasoning accordingly.
+2. There is a second, likely more urgent defect: **a cancelled merge job is a
+   silent hole.** The workflow has a merge path and a PR path, and assumes one
+   of them always runs. Cancellation (or a timeout) satisfies neither, and
+   nothing anywhere reports it. The desk then discovers the consequence a day
+   later, as an unexplained permanent STAND_DOWN. Consider an
+   `if: always()`/`if: cancelled()` step that opens the PR (or at minimum files
+   a desk issue) whenever the job ends without having merged, plus an explicit
+   `timeout-minutes` on the pytest step so a hang fails loudly instead of
+   hanging until something reaps it.
+3. Note also `concurrency: {group: merge-cloud-state, cancel-in-progress: false}`
+   serialises every cloud push through one group. A ~15-minute pytest step
+   inside that group is a long lock, and queued runs can be cancelled while
+   pending. Worth checking whether the test step is genuinely that slow or
+   whether it hangs.
+
+IMMEDIATE HUMAN ACTION that unblocks the trading desk (cheapest first): simply
+**re-run workflow run 31117366902**. The engineer reported its suite green
+locally ("49 passed, 1 xfailed"), so a completed run should either auto-merge
+the branch and delete it, or open the review PR — either outcome clears the
+stray branch and ends the desk's STAND_DOWN. If it is instead intended to stay
+parked pending human review, opening the PR for it also clears preflight,
+because preflight's complaint is the unmerged branch, not the unfixed bug.
+
+Log content for job 92670237013 is no longer downloadable (HTTP 404, expired),
+so the precise cancellation reason could not be recovered; the conclusion field
+and timings above are from the Actions API and are exact.
