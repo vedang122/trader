@@ -1,13 +1,13 @@
 {
-  "tone": "neutral",
+  "tone": "bearish",
   "per_symbol": {
-    "HDFCBANK": "bearish"
+    "SBIN": "neutral"
   },
   "top_risks": [
-    "Iran-Oman Hormuz de-escalation is only \"hopes\" not a signed deal - crude/rupee tailwind could reverse fast",
-    "HDFCBANK: US ADR securities-lawsuit threat (3 law firms circling) + governance/FIR matter still unresolved despite CEO denial",
-    "Global risk-off tail (Burry AI-crash warning, SpaceX -13%) could spill into India if Wall St fades post-Iran-hopes rally"
+    "Hormuz deadlock persists, crude >$83 & dollar firming into Iran talks/US jobs data, but digest has a contradictory same-day \"oil cools\" headline - crude direction unconfirmed",
+    "Global risk-off persists: US stocks slipped overnight (Mideast talks/earnings), GIFT Nifty & Asian shares signal weak/mixed open for NSE",
+    "HDFCBANK ADR securities-lawsuit status unresolved - no update in today digest, do not assume closed"
   ],
-  "basis": "Favorable overnight macro (crude to $79 on Iran-Oman talks, rupee +26p to 95.11, dovish RBI hold/bonds rallying) offset by muted GIFT Nifty and Asian shares lower - cautious-open signals are the more immediate read for today so tone nets neutral, not bullish; only fresh single-name story is HDFCBANK CEO pushback on unresolved US ADR/governance allegations (bearish, confirms overhang not resolved); all other watchlist symbol hits in digest (ICICIBANK, HINDUNILVR, ITC/BHARTIARTL, RELIANCE) are stale Apr-2024 archival items, discarded; business-standard and gnews feeds down, newsapi 0 - reduced confidence.",
-  "as_of": "2026-08-06T08:19:31+05:30"
+  "basis": "Weak-open cues (GIFT Nifty negative, US Dow/SP slip) + unresolved Hormuz deadlock outweigh dovish RBI; SBIN rally is pre-Q1-results positioning (RSI 68 overbought), not a fundamental signal; RELIANCE +3.52% on volume has no news explanation in digest; confidence reduced - business-standard & gnews feeds down, newsapi returned 0.",
+  "as_of": "2026-08-07T08:18:40+05:30"
 }

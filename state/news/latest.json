@@ -1,5 +1,5 @@
 {
-  "ts": "2026-08-06T14:18:34+05:30",
+  "ts": "2026-08-07T08:19:40+05:30",
   "feeds_ok": [
     "et-markets(50)",
     "moneycontrol-markets(4)",
@@ -13,18 +13,19 @@
   ],
   "headlines": [
     {
-      "t": "ITC Share Price Live Updates: ITC Stock Update",
-      "date": "Thu, 06 Aug 2026 09:15",
+      "t": "Stocks to buy in 2026 for long term: Bharti Airtel, Clean Max among 5 stocks that could give 10-50% return",
+      "date": "Fri, 07 Aug 2026 08:02",
       "src": "et-markets",
       "tags": [
-        "ITC"
+        "BHARTIARTL"
       ]
     },
     {
-      "t": "HSBC\u2019s top picks: Adani Ports, Titan Company among 10 stocks with upside potential of 37%. See full list",
-      "date": "Thu, 06 Aug 2026 09:00",
+      "t": "Stocks in news: LIC, Trent, AWL Agri Business, SBI, Titan",
+      "date": "Fri, 07 Aug 2026 06:05",
       "src": "et-markets",
       "tags": [
+        "SBIN",
         "TITAN"
       ]
     },
@@ -70,80 +71,210 @@
       ]
     },
     {
-      "t": "Bharti Airtel stock lacks near-term triggers and even raising stake in Africa biz won\u2019t help much",
-      "date": "Thu, 06 Aug 2026 09:52",
+      "t": "Q1 results 2026: SBI to Ola Electric among companies to declare Q1 results today; full list here",
+      "date": "Fri, 07 Aug 2026 07:51",
       "src": "livemint-markets",
       "tags": [
-        "BHARTIARTL"
+        "SBIN",
+        "MACRO"
       ]
     },
     {
-      "t": "Warren Buffett and Sam Altman have a common investing rule: Here is where they find biggest opportunities",
-      "date": "Thu, 06 Aug 2026 13:57",
+      "t": "Stocks to watch: SBI, Ola Electric, LIC among shares in focus today; check list here",
+      "date": "Fri, 07 Aug 2026 07:32",
+      "src": "livemint-markets",
+      "tags": [
+        "SBIN"
+      ]
+    },
+    {
+      "t": "Sebi pitches greater role for clearing corporations in settlements",
+      "date": "Thu, 06 Aug 2026 22:09",
+      "src": "livemint-markets",
+      "tags": [
+        "ITC",
+        "MACRO"
+      ]
+    },
+    {
+      "t": "Dollar drifts higher as traders eye Iran talks ahead of US jobs data",
+      "date": "Fri, 07 Aug 2026 07:56",
       "src": "et-markets",
       "tags": [
         "MACRO"
       ]
     },
     {
-      "t": "Can Tata Sons stay unlisted? Here's what RBI Governor Sanjay Malhotra said",
-      "date": "Thu, 06 Aug 2026 13:56",
+      "t": "Sensex Today | Stock Market LIVE Updates: GIFT Nifty signals a negative start; Asian shares trade mixed",
+      "date": "Fri, 07 Aug 2026 07:37",
       "src": "et-markets",
       "tags": [
         "MACRO"
       ]
     },
     {
-      "t": "Global Market: Japanese bond yields fall as lower oil prices ease inflation concerns",
-      "date": "Thu, 06 Aug 2026 13:53",
+      "t": "ETMarkets Smart Talk | AI infrastructure, not just AI software, will drive India's next wealth cycle: Amit Joshi",
+      "date": "Fri, 07 Aug 2026 07:36",
       "src": "et-markets",
       "tags": [
         "MACRO"
       ]
     },
     {
-      "t": "Trent Q1 Results: Profit rises 21% YoY to Rs 519 crore; revenue up 18%",
-      "date": "Thu, 06 Aug 2026 13:46",
+      "t": "Oil Price Today (August 7): Crude oil rises above $83 as Strait of Hormuz deadlock continues. Here\u2019s why",
+      "date": "Fri, 07 Aug 2026 07:34",
       "src": "et-markets",
       "tags": [
         "MACRO"
       ]
     },
     {
-      "t": "Why AMD's solid quarterly earnings failed to impress investors",
-      "date": "Thu, 06 Aug 2026 12:34",
+      "t": "Indian rupee weakens slightly against dollar amid importer demand, oil prices cool",
+      "date": "Fri, 07 Aug 2026 06:43",
       "src": "et-markets",
       "tags": [
         "MACRO"
       ]
     },
     {
-      "t": "US stocks may have more room to rally as earnings, AI spending support market",
-      "date": "Thu, 06 Aug 2026 10:53",
+      "t": "RBI relaxes device-loan recovery norms",
+      "date": "Fri, 07 Aug 2026 06:34",
       "src": "et-markets",
       "tags": [
         "MACRO"
       ]
     },
     {
-      "t": "PB Fintech shares gain 2% after Q1 results. Why Morgan Stanley, Nomura see up to 25% downside",
-      "date": "Thu, 06 Aug 2026 10:33",
+      "t": "FPIs, trading companies tap Sebi, centre for tax breather",
+      "date": "Fri, 07 Aug 2026 06:20",
       "src": "et-markets",
       "tags": [
         "MACRO"
       ]
     },
     {
-      "t": "Sensex rises 200 points, Nifty above 24,600 amid US-Iran peace hopes. What lies ahead?",
-      "date": "Thu, 06 Aug 2026 09:26",
+      "t": "Banks tone down rate-hike bets as RBI sounds dovish on prices",
+      "date": "Fri, 07 Aug 2026 06:05",
       "src": "et-markets",
       "tags": [
         "MACRO"
       ]
     },
     {
-      "t": "Lone warriors! How two mid-tier tech stocks rewarded investors in Rs 10 lakh crore IT crash this year",
-      "date": "Thu, 06 Aug 2026 08:53",
+      "t": "D-Street braces for weak opening on negative GIFT Nifty cues",
+      "date": "Fri, 07 Aug 2026 05:45",
+      "src": "et-markets",
+      "tags": [
+        "MACRO"
+      ]
+    },
+    {
+      "t": "Weekly Expiry: Sensex mirrors Nifty's swings, but with milder spurts",
+      "date": "Fri, 07 Aug 2026 05:31",
+      "src": "et-markets",
+      "tags": [
+        "MACRO"
+      ]
+    },
+    {
+      "t": "US stocks: Dow, S&amp;P slip as investors eye Mideast talks, earnings",
+      "date": "Fri, 07 Aug 2026 01:39",
+      "src": "et-markets",
+      "tags": [
+        "MACRO"
+      ]
+    },
+    {
+      "t": "RBI plans to bar NBFCs from offering revolving credit without approval",
+      "date": "Thu, 06 Aug 2026 21:32",
+      "src": "et-markets",
+      "tags": [
+        "MACRO"
+      ]
+    },
+    {
+      "t": "Fortis Healthcare Q1 Results: Profit rises 2.3% to Rs 273 crore",
+      "date": "Thu, 06 Aug 2026 21:23",
+      "src": "et-markets",
+      "tags": [
+        "MACRO"
+      ]
+    },
+    {
+      "t": "Sebi takes up 402 investigation cases in FY26; completes 338",
+      "date": "Thu, 06 Aug 2026 21:20",
+      "src": "et-markets",
+      "tags": [
+        "MACRO"
+      ]
+    },
+    {
+      "t": "Corporate bond mobilisation falls 8.4% in FY26, first decline in four years: Sebi",
+      "date": "Thu, 06 Aug 2026 20:58",
+      "src": "et-markets",
+      "tags": [
+        "MACRO"
+      ]
+    },
+    {
+      "t": "Traders blink! India's stock investors choose Warren Buffett-style ownership in volatile FY26",
+      "date": "Thu, 06 Aug 2026 20:42",
+      "src": "et-markets",
+      "tags": [
+        "MACRO"
+      ]
+    },
+    {
+      "t": "Tata Sons faces continued listing uncertainty after RBI classification",
+      "date": "Thu, 06 Aug 2026 20:05",
+      "src": "et-markets",
+      "tags": [
+        "MACRO"
+      ]
+    },
+    {
+      "t": "India tops world in IPO count, ranks third in fundraising in FY26: SEBI Annual Report",
+      "date": "Thu, 06 Aug 2026 20:01",
+      "src": "et-markets",
+      "tags": [
+        "MACRO"
+      ]
+    },
+    {
+      "t": "F&amp;O de-addiction? Options volumes crash over 50% in FY26 after Sebi's strict rules",
+      "date": "Thu, 06 Aug 2026 19:46",
+      "src": "et-markets",
+      "tags": [
+        "MACRO"
+      ]
+    },
+    {
+      "t": "Faster AIF schemes to corporate bonds tokenisation: What Sebi annual report tells about its next moves",
+      "date": "Thu, 06 Aug 2026 19:41",
+      "src": "et-markets",
+      "tags": [
+        "MACRO"
+      ]
+    },
+    {
+      "t": "Warner Bros' revenue disappoints on soft ad sales, weak box-office performance",
+      "date": "Thu, 06 Aug 2026 19:38",
+      "src": "et-markets",
+      "tags": [
+        "MACRO"
+      ]
+    },
+    {
+      "t": "Britannia Q1 Results: Profit rises 14% to Rs 593 crore on volumes, price rise",
+      "date": "Thu, 06 Aug 2026 19:18",
+      "src": "et-markets",
+      "tags": [
+        "MACRO"
+      ]
+    },
+    {
+      "t": "Brent crude tops $80 per barrel as Hormuz talks, tanker attacks keep supply risks high",
+      "date": "Thu, 06 Aug 2026 19:13",
       "src": "et-markets",
       "tags": [
         "MACRO"
@@ -166,88 +297,32 @@
       ]
     },
     {
-      "t": "Trent Q1 results 2026: Net profit rises 22% YoY to \u20b9518 crore, revenue up 18%",
-      "date": "Thu, 06 Aug 2026 13:56",
+      "t": "Stock market today: Gift Nifty hints a gap-down start; eight day trading stocks to buy on Friday, 7 August",
+      "date": "Fri, 07 Aug 2026 08:14",
       "src": "livemint-markets",
       "tags": [
         "MACRO"
       ]
     },
     {
-      "t": "Paytm shares rise despite Mauritius-based FII booking partial profit in fintech company",
-      "date": "Thu, 06 Aug 2026 13:08",
+      "t": "Buy or sell: Gift Nifty trades flat! Vaishali Parekh recommends three intraday stocks to buy today \u2014 7 August 2026",
+      "date": "Fri, 07 Aug 2026 07:38",
       "src": "livemint-markets",
       "tags": [
         "MACRO"
       ]
     },
     {
-      "t": "Samvardhana Motherson International Q1 results 2026: Net profit rises 102% to \u20b91,032 crore",
-      "date": "Thu, 06 Aug 2026 12:35",
+      "t": "Nifty 50, Sensex prediction today: Check how Indian stock market is expected to trade on 7 August",
+      "date": "Fri, 07 Aug 2026 07:35",
       "src": "livemint-markets",
       "tags": [
         "MACRO"
       ]
     },
     {
-      "t": "West Asia raw material shock hits India Inc harder than Russia-Ukraine war",
-      "date": "Thu, 06 Aug 2026 11:29",
-      "src": "livemint-markets",
-      "tags": [
-        "MACRO"
-      ]
-    },
-    {
-      "t": "Gold rate today at a seven-week high as easing US-Iran tension cools US Fed rate hike buzz",
-      "date": "Thu, 06 Aug 2026 09:28",
-      "src": "livemint-markets",
-      "tags": [
-        "MACRO"
-      ]
-    },
-    {
-      "t": "Rupee opens flat at 95.13 against US dollar",
-      "date": "Thu, 06 Aug 2026 09:11",
-      "src": "livemint-markets",
-      "tags": [
-        "MACRO"
-      ]
-    },
-    {
-      "t": "Q1 results 2026: LIC to Trent among companies to declare Q1 results today; full list here",
-      "date": "Thu, 06 Aug 2026 08:52",
-      "src": "livemint-markets",
-      "tags": [
-        "MACRO"
-      ]
-    },
-    {
-      "t": "Stock market today: Gift Nifty hints a flat start; eight day trading stocks to buy on Thursday, 6 August",
-      "date": "Thu, 06 Aug 2026 08:22",
-      "src": "livemint-markets",
-      "tags": [
-        "MACRO"
-      ]
-    },
-    {
-      "t": "Buy or sell: Gift Nifty signals muted start! Vaishali Parekh recommends three intraday stocks to buy today",
-      "date": "Thu, 06 Aug 2026 07:55",
-      "src": "livemint-markets",
-      "tags": [
-        "MACRO"
-      ]
-    },
-    {
-      "t": "Crude oil falls as Iran-Oman talks raise hopes of US-Iran peace deal; Brent slips to $79 per barrel",
-      "date": "Thu, 06 Aug 2026 07:33",
-      "src": "livemint-markets",
-      "tags": [
-        "MACRO"
-      ]
-    },
-    {
-      "t": "Nifty 50, Sensex prediction today: Check how Indian stock market is expected to trade on 6 August",
-      "date": "Thu, 06 Aug 2026 07:31",
+      "t": "Crude oil prices rise amid uncertainty over Strait of Hormuz reopening; Brent Crude at $83 per barrel",
+      "date": "Fri, 07 Aug 2026 07:07",
       "src": "livemint-markets",
       "tags": [
         "MACRO"
@@ -255,15 +330,7 @@
     },
     {
       "t": "From Gift Nifty to crude oil prices: 7 key things that changed for Indian stock market overnight",
-      "date": "Thu, 06 Aug 2026 07:09",
-      "src": "livemint-markets",
-      "tags": [
-        "MACRO"
-      ]
-    },
-    {
-      "t": "FIIs up stakes in these 3 ethanol stocks as India pushes E20 fuel goals",
-      "date": "Thu, 06 Aug 2026 07:01",
+      "date": "Fri, 07 Aug 2026 06:54",
       "src": "livemint-markets",
       "tags": [
         "MACRO"
