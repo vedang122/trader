@@ -106,3 +106,93 @@ suite passes 54 passed, 3 xfailed. It needs a human merge because this bug
 blocks the gate from doing it.
 
 ## Engineer notes (append below)
+
+### 2026-08-07 engineer(cloud) — reproduced against real git; patch below, still needs a human
+
+`.github/**` is protected, so no workflow file is touched by this commit. What
+landed is `tests/test_merge_gate.py`: three tests that prove the mechanism
+against real git, and two strict-xfail tripwires that read the live workflow.
+Applying the patch below turns those two green, which turns the suite RED
+(strict xfail) — that is deliberate. Delete the two `@pytest.mark.xfail`
+markers in the same change that applies the patch.
+
+**Reproduction (deterministic, no GitHub needed).** A miniature repo: main,
+a run branch forked from it, and one cycle push landing on main afterwards.
+
+| cleanup used | cycle push after fork? | staged after cleanup | `git merge -X theirs` |
+|---|---|---|---|
+| `git checkout -- .` (current) | yes | 2 files | **exit 2**, "would be overwritten by merge" |
+| `git checkout -- .` (current) | no  | 2 files | exit 0 — merges anyway |
+| `git reset -q --hard HEAD` | yes | none | exit 0 |
+
+Row 3 is the fix. Rows 1 and 2 together are the race: the same broken cleanup
+strands a branch or does not, decided only by whether a ~30-minute cycle push
+beat it to main. Nothing about the branch's own content decides it.
+
+**One correction to the one-liner suggested above.** Actions runs `run:` blocks
+under `bash --noprofile --norc -eo pipefail`. Appending `git reset -q --hard
+HEAD` as the last line means it never executes on a red suite — `set -e` exits
+at pytest. Verified: `false; rc=$?` exits 1 without reaching the next line,
+while `false || rc=$?` continues. So the reset has to be reached through `||`
+and the real exit code re-raised afterwards, or the gate leaves a polluted
+index behind on exactly the runs that already went wrong.
+
+**Fallback condition.** `steps.tests.outcome != 'success'` cannot express "the
+merge did not happen" — this stranding had *green* tests, which is why nothing
+opened. The merge step needs an `id` and `continue-on-error`, and the fallback
+needs to key off `steps.merge.outcome` under `always()`. That also subsumes
+OPEN-20260807-0853-ops's silent-cancellation path: a cancelled merge step is
+likewise `outcome != 'success'`.
+
+**Verified**: patched YAML still parses; both tripwire tests pass against it;
+a red suite still propagates exit 1 (so `tests.outcome == 'failure'` → merge
+skipped → PR opens) *and* leaves a clean index; the drifted merge then lands.
+
+```diff
+--- a/.github/workflows/merge-cloud-state.yml
++++ b/.github/workflows/merge-cloud-state.yml
+@@ -50,14 +50,19 @@
+         if: steps.classify.outputs.class == 'engine'
+         id: tests
+         continue-on-error: true
++        timeout-minutes: 10
+         run: |
+           git checkout origin/${GITHUB_REF_NAME} -- .
+           pip install -q -r requirements.txt pytest
+-          python -m pytest tests/ -q
+-          git checkout -- .
++          rc=0
++          python -m pytest tests/ -q || rc=$?
++          git reset -q --hard HEAD
++          exit $rc
+ 
+       - name: Merge into main
++        id: merge
+         if: steps.classify.outputs.class == 'state' || (steps.classify.outputs.class == 'engine' && steps.tests.outcome == 'success')
++        continue-on-error: true
+         run: |
+           git config user.name "kautilya-state-bot"
+           git config user.email "actions@github.com"
+@@ -65,12 +70,12 @@
+           git push origin main
+           git push origin --delete "${GITHUB_REF_NAME}" || true
+ 
+-      - name: Open PR instead (protected paths or red tests)
+-        if: steps.classify.outputs.class == 'protected' || (steps.classify.outputs.class == 'engine' && steps.tests.outcome != 'success')
++      - name: Open PR instead (protected paths, red tests, or a failed merge)
++        if: always() && steps.merge.outcome != 'success'
+         env:
+           GH_TOKEN: ${{ github.token }}
+         run: |
+-          REASON="${{ steps.classify.outputs.class == 'protected' && 'touches protected paths (risk/amend/charges/execute/broker/portfolio/common/workflows/charters/bounds) — human review required' || 'test suite failed' }}"
++          REASON="${{ steps.classify.outputs.class == 'protected' && 'touches protected paths (risk/amend/charges/execute/broker/portfolio/common/workflows/charters/bounds) — human review required' || steps.tests.outcome == 'failure' && 'test suite failed' || 'the merge step did not succeed' }}"
+           gh pr create --base main --head "${GITHUB_REF_NAME}" \
+             --title "cloud change needs review: ${GITHUB_REF_NAME}" \
+             --body "Auto-merge declined: ${REASON}. Review and merge manually, or close." || true
+```
+
+The new test is `tests/test_merge_gate.py` in this commit — it is not
+reproduced inline here to keep one copy authoritative.
+
+Issue left **OPEN**: the defect is still live in the workflow until a human
+applies the diff above.
