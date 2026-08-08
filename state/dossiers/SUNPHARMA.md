@@ -1,7 +1,7 @@
 ---
 symbol: SUNPHARMA
 sector: pharmaceuticals
-updated: 2026-07-27
+updated: 2026-08-08
 quality_grade: B
 grade_date: 2026-07-27
 valuation: expensive
@@ -28,7 +28,17 @@ company.
   USFDA OAI (Sept 2025) is the standing overhang to monitor.
 
 ## Levels that mattered
-(none yet — first grading, no desk trade history in this name)
+- 2026-07-31 | 2046.90 | New 52-week high intraday, rejected same session —
+  closed 1990.50, below its own open, a bearish engulfing of the 07-30 body
+  on 1.92x the 10-day avg volume, followed by two more above-average down
+  days. The desk's 2026-07-28 cost-viability veto (no legal qty existed) and
+  its 2026-07-29 refusal to chase the intraday pop were both vindicated by
+  price, not merely by process — the first confirmed case in this book.
+- Through 2026-08-06 close: still no reclaim of 2046.90 on volume (MACD
+  stayed bearish, price drifted below SMA20) — the desk's 08-04 falsifiable
+  call ("wrong if SUNPHARMA closes above 2046.90 on above-avg volume by
+  08-06") did NOT trigger. The R:R-gate-driven stand-down continues to be
+  the correct read, not excess caution.
 
 ## Red flags & watch items
 - Halol plant USFDA warning letter + Official Action Indicated, Sept 2025
@@ -38,7 +48,10 @@ company.
   flagged for monitoring, not treated as current-session veto evidence.
 - Revenue growth (11-12% CAGR) trailing the playbook's 15% preferred cutoff;
   TTM PAT growth decelerated to ~8% vs 17% 5yr CAGR.
+- 2026-08-07 | Quantizes to 1 share at current price — worst sizing
+  geometry on the watchlist; MACD bearish, below SMA20. No live setup.
 
 ## Desk record in this name
-No prior trades. First fundamental grading — 2026-07-27, ahead of a
-technical breakout candidacy at ~1959 (98% of 52wk range).
+No trades taken (candidate only). Two disciplined refusals — cost-viability
+veto 2026-07-28, no-chase 2026-07-29 — both later confirmed correct by the
+07-31 breakout failure on volume. See engine.stats for desk-wide numbers.

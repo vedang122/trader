@@ -1,7 +1,7 @@
 ---
 symbol: M&M
 sector: auto (SUV) + farm equipment (conglomerate parent)
-updated: 2026-07-30
+updated: 2026-08-08
 quality_grade: B
 grade_date: 2026-07-30
 valuation: fair
@@ -44,8 +44,10 @@ is SML's re-rating, not M&M's). No governance/pledging/cash-fabrication
 red flag found → no veto.
 
 ## Levels that mattered
-(none yet — first grading pass, ahead of SML-catalyst-driven swing
-candidacy, 2026-07-30)
+2026-07-31 | Entry 3395.3, stop 3295 (below 3295-3330 SMA200/supply
+ceiling), target 3560-3700. Stop was NEVER touched — closed 2026-08-04 by a
+discretionary risk-officer exit at 3419.39, not a stop-out. The 3295 level
+held the entire time it was live; the thesis was not falsified by price.
 
 ## Red flags & watch items
 2026-07-30 | Conglomerate structure: 15+ listed/unlisted subsidiaries/JVs
@@ -60,6 +62,15 @@ Jan 2027) — watch final terms.
 Maruti/Hyundai — a risk to growth narrative partly priced into the multiple.
 2026-07-30 | Consolidated D/E (1.49x) is optically high — entirely the
 Mahindra Finance NBFC book; do not mistake for parent-company leverage.
+2026-08-04 | Sizing process flag (not a company red flag): the entry ticket
+was later found engineered to land exactly at the then-1% risk cap before
+round-trip costs (journal 2026-08-04T09:31:52) — see desk.md lesson.
 
 ## Desk record in this name
-No prior trades. First fundamental grading pass, 2026-07-30.
+1 closed trade: BUY 1sh @3395.30 (2026-07-31, earnings-breakout,
+conviction 65) → discretionary SELL @3419.39 (2026-08-04, risk-officer exit
+ahead of RBI MPC gap risk, not a stop-out). Net P&L -₹8.02 after charges
+(gross +₹24.09, charges ₹32.11) — see engine.stats. Exit thesis and
+reasoning were sound (unhedgeable event-gap risk, book 100% concentrated);
+the loss is transaction-cost drag on an economically ~breakeven round trip,
+not a bad read.
