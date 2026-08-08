@@ -397,3 +397,65 @@ def test_carry_guard_never_strips_a_frame_to_nothing(desk, monkeypatch):
     snap = data.snapshot("TESTCO")          # must not raise
     assert snap["change_pct"] == 0.0
     assert snap["roll_suspected"] is False
+
+
+# --- the in-progress session bar ---------------------------------------------
+# Repro for OPEN-20260806-0922-scan. Intraday, the newest daily row is a running
+# total, not a session: dividing it by a 20-day FULL-day average understates
+# participation by roughly the fraction of the session still to come.
+
+
+def _at(monkeypatch, iso):
+    """Freeze the desk clock (data.py reads the session state through common)."""
+    from engine import common
+    monkeypatch.setattr(common, "now_ist",
+                        lambda: pd.Timestamp(iso, tz=common.IST).to_pydatetime())
+
+
+def _session_bars(last_day, last_vol):
+    """20 settled sessions of steady volume, then `last_day` carrying last_vol."""
+    days = pd.bdate_range(end=pd.Timestamp(last_day), periods=21)
+    vols = [1000] * 20 + [last_vol]
+    return _fetched([(d.strftime("%Y-%m-%d"), 100.0, 101.0, 99.0, 100.0, v)
+                     for d, v in zip(days, vols)])
+
+
+def test_partial_session_bar_withholds_vol_ratio(desk, monkeypatch):
+    """TATASTEEL 2026-08-06: vol_ratio_20d read 1.04 on the completed bar at
+    08:16 IST and 0.04 at 09:16 — one minute into the next session, on no market
+    event. The 0.04 is one minute of trading over a full-day average. A ratio
+    that moves 26x with the wall clock is unmeasured, not measured low, and the
+    contract for unmeasured volume is already `None`."""
+    monkeypatch.setattr(data, "_yf_fetch",
+                        lambda s, p, i: _session_bars("2026-08-06", 40))
+    _at(monkeypatch, "2026-08-06 09:16:00")     # Thursday, one minute after open
+
+    snap = data.snapshot("TATASTEEL")
+    assert snap["vol_partial_session"] is True
+    assert snap["vol_ratio_20d"] is None, "0.04 of a day is not 0.04 of the volume"
+
+
+def test_completed_session_bar_still_confirms_volume(desk, monkeypatch):
+    """The guard must cost nothing once the session is over: after 15:30 the same
+    bar is a true full-day total and participation is confirmable again.
+    Suppressing volume on completed bars would break every volume-gated setup."""
+    monkeypatch.setattr(data, "_yf_fetch",
+                        lambda s, p, i: _session_bars("2026-08-06", 1400))
+    _at(monkeypatch, "2026-08-06 16:00:00")     # same bar, session closed
+
+    snap = data.snapshot("TATASTEEL")
+    assert snap["vol_partial_session"] is False
+    assert snap["vol_ratio_20d"] == 1.37
+
+
+def test_yesterdays_bar_is_complete_even_mid_session(desk, monkeypatch):
+    """Only TODAY's bar is in progress. Pre-open, or on a feed that has not yet
+    printed today, the newest bar is a settled session — reading it as partial
+    would blind the desk to volume for the whole morning."""
+    monkeypatch.setattr(data, "_yf_fetch",
+                        lambda s, p, i: _session_bars("2026-08-05", 1400))
+    _at(monkeypatch, "2026-08-06 09:16:00")     # mid-session, but the bar is 08-05
+
+    snap = data.snapshot("TATASTEEL")
+    assert snap["vol_partial_session"] is False
+    assert snap["vol_ratio_20d"] == 1.37

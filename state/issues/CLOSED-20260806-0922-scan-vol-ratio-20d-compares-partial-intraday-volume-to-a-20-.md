@@ -30,3 +30,48 @@ This cycle the desk had to manually override the field (instructing both technic
 SUGGESTED DIRECTION (for the engineer, not a prescription): when the last bar is the in-progress session bar, either (a) set vol_ratio_20d to null and volume_unconfirmed to true, matching the documented 'unverifiable' contract, or (b) time-normalise the partial volume against the elapsed fraction of the session and mark it explicitly as an estimate, and in either case exclude it from 'score'. Option (a) is the honest minimum and matches the contract that already exists.
 
 ## Engineer notes (append below)
+
+### 2026-08-08 engineer(cloud) — fixed, option (a)
+
+Took the issue's own "honest minimum": when the newest daily bar is today's
+still-forming session, `vol_ratio_20d` is withheld (`None`) rather than
+published as a number.
+
+**Where.** `engine/data._partial_session(df)` — true only when the desk clock
+says the session is open AND the newest bar carries today's date. Both arms
+matter: after 15:30 that same bar is a true full-day total, and pre-open the
+newest bar is a settled session, so the guard costs the desk nothing outside
+09:15–15:30.
+
+**Why one line in one place fixes all three impacts.** The issue asked for the
+ratio nulled, the flag flipped, and the score de-weighted. Only the first
+needed code: `scan.volume_unconfirmed` is already derived as
+`vol_ratio_20d is None`, and `scan.setup_score` already awards participation
+points only when the ratio is non-None. Suppressing at the source therefore
+propagates to the flag and the ranking for free — no second contract to keep
+in sync, and the documented "unverifiable" meaning of `None` is the one
+already in the trade-cycle skill.
+
+Snapshots also carry a new `vol_partial_session: bool`, following the
+`roll_suspected` precedent: `None` alone cannot tell an agent whether volume is
+missing because the feed degraded or because the session is young, and those
+warrant different behaviour (the first is a data outage, the second resolves
+by itself at 15:30).
+
+**Not addressed, deliberately.** Option (b), time-normalising partial volume
+against elapsed session fraction, is left undone. It would produce an estimate
+that is right on average and wrong on any day with a heavy open or a lunch
+lull — precisely the days a volume gate is being asked about. Nulling is
+honest; a smoothed estimate would re-introduce the same false confidence in a
+subtler form. Reopen this if the desk wants an explicitly-labelled estimate.
+
+**Verified.** 4 new tests: the 09:16 repro (ratio withheld, flag true), the
+same bar after 15:30 (ratio 1.37, confirmable again), a mid-session clock over
+a previous-day bar (unaffected), and the end-to-end scan assertion that
+`volume_unconfirmed` is now True and the row loses its 1.5 participation
+points. Full suite 100 passed, 5 xfailed. Live smoke on the real watchlist
+(Saturday, market closed) shows `vol_partial_session: false` and volume
+confirmed exactly as before — no regression outside session hours.
+
+## Closed
+2026-08-08T20:52:08+05:30: fixed: withhold vol_ratio_20d while today session bar is still forming; volume_unconfirmed and score follow for free

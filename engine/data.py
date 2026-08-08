@@ -24,6 +24,8 @@ import time
 import pandas as pd
 import yfinance as yf
 
+from engine import common
+
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 CACHE_DIR = ROOT / "state" / "cache" / "ohlcv"
 CACHE_ROWS = 420          # ~20 months of daily bars
@@ -450,6 +452,26 @@ def _roll_suspected(symbol: str, df: pd.DataFrame) -> bool:
             and max(v / prev_vol, prev_vol / v) > ROLL_VOL_STEP)
 
 
+def _partial_session(df: pd.DataFrame) -> bool:
+    """Is the newest bar today's session, still in progress?
+
+    A daily bar fetched mid-session is a running total, not a session. Dividing
+    it by a 20-day FULL-day average understates participation by roughly the
+    fraction of the session still to come (observed 2026-08-06: TATASTEEL read
+    vol_ratio_20d 1.04 on the completed bar at 08:16 IST and 0.04 at 09:16, one
+    minute after the open, on no market event).
+
+    Only the volume is affected — a running high/low/close is the real level so
+    far, but a running volume compared against completed days is not comparable
+    to anything. So this suppresses vol_ratio_20d alone, which already has a
+    documented "unmeasurable" value (None) that the score and the
+    volume_unconfirmed flag both honour.
+    """
+    if df.empty or not common.market_status()["is_open"]:
+        return False       # after 15:30 the same bar is a true full-day total
+    return pd.Timestamp(df.index[-1]).normalize() == pd.Timestamp(common.now_ist().date())
+
+
 def snapshot(symbol: str) -> dict:
     """One-symbol technical snapshot: everything the desk needs to triage a chart."""
     df = get_ohlcv(symbol, period="1y", interval="1d")
@@ -464,8 +486,9 @@ def snapshot(symbol: str) -> dict:
     vol = df["Volume"]
     a = atr(df)
     high52, low52 = float(df["High"].max()), float(df["Low"].min())
+    partial = _partial_session(df)
     vol_ratio = None
-    if source in ("yf", "nse_bhav"):   # both carry true full-day volume
+    if source in ("yf", "nse_bhav") and not partial:   # both carry true full-day volume
         vol_ratio = round(float(vol.iloc[-1] / max(vol.rolling(20).mean().iloc[-1], 1)), 2)
     roll = _roll_suspected(symbol, df)
     return {
@@ -483,6 +506,9 @@ def snapshot(symbol: str) -> dict:
         "macd_cross": "bullish" if macd.iloc[-1] > macd_sig.iloc[-1] else "bearish",
         "atr14": round(float(a.iloc[-1]), 2),
         "vol_ratio_20d": vol_ratio,
+        # True ⇒ vol_ratio_20d withheld: today's bar is still forming, so its
+        # volume is a partial total and not comparable to a full-day average
+        "vol_partial_session": partial,
         "pos_52w_pct": round((last - low52) / max(high52 - low52, 1e-9) * 100, 1),
         "high_52w": round(high52, 2),
         "low_52w": round(low52, 2),

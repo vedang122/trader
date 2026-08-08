@@ -1,4 +1,6 @@
 """Scanner triage: a degraded feed must narrow the scan, never zero it."""
+import pandas as pd
+
 from engine import common, data, scan
 
 
@@ -61,3 +63,25 @@ def test_scan_still_reports_real_errors(desk, monkeypatch):
     out = scan.run(top=5)
     assert out["errors"] == ["AAA: yfinance failed for AAA: empty response"]
     assert [c["symbol"] for c in out["candidates"]] == ["BBB"]
+
+
+def test_partial_session_scan_flags_volume_unconfirmed(desk, monkeypatch):
+    """The filed defect end to end (OPEN-20260806-0922). At 09:16 IST the board
+    read vol_ratio_20d 0.01-0.13 with volume_unconfirmed=False on every symbol —
+    'participation is confirmed to be 1% of normal' — when the honest reading was
+    'not measurable yet'. Suppressing the ratio must flip the flag and cost the
+    row its participation points, or the ranking still moves with the clock."""
+    (desk / "watchlist.yaml").write_text("symbols:\n  - TATASTEEL\n")
+    idx = pd.bdate_range(end=pd.Timestamp("2026-08-06"), periods=21)
+    vols = [1000] * 20 + [40]                    # one minute of a session
+    frame = pd.DataFrame({"Open": 100.0, "High": 101.0, "Low": 99.0,
+                          "Close": 100.0, "Volume": vols}, index=idx)
+    monkeypatch.setattr(data, "_yf_fetch", lambda s, p, i: frame)
+    monkeypatch.setattr(common, "now_ist",
+                        lambda: pd.Timestamp("2026-08-06 09:16:00",
+                                             tz=common.IST).to_pydatetime())
+
+    row = scan.run(top=5)["all"][0]
+    assert row["vol_ratio_20d"] is None
+    assert row["volume_unconfirmed"] is True, "0.04 of a day is not a confirmed reading"
+    assert row["score"] == scan.setup_score({**row, "vol_ratio_20d": 2.0}) - 1.5
