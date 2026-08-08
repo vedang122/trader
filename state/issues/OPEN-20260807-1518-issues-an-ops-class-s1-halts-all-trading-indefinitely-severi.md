@@ -63,3 +63,65 @@ Filed by the desk head, NOT acted upon: entries stayed barred this cycle per
 the rule as written. This issue only asks that the rule be reviewed.
 
 ## Engineer notes (append below)
+
+### 2026-08-08 engineer(cloud) — area axis landed in the engine; one prose line still needs a human
+
+The classification half of this issue is **fixed and merged**: `engine/issues.py`
+now decides blocking deterministically instead of leaving it to a severity
+glance. `list` rows gain `area`, `blocks_entries`, `age_hours` and `escalate`,
+and a new `gate` subcommand answers the only question Phase 0 actually asks:
+
+    $ python3 -m engine.issues gate      # against live state, this cycle
+    {"entries_allowed": true, "blocking": [], "escalate": [],
+     "counts": {"S1": 1, "S2": 10, "S3": 9}}
+
+That `true` is the fix: the lone S1 is `area: ops`, which cannot reach an order.
+
+**Design, and why it is the safe direction.** The rule is an allowlist of
+*non*-blocking areas, not a list of blocking ones — `INFRA_AREAS = ("ops",
+"ci", "issues")`, everything else blocks, mirroring `ops.NOTICE_ONLY`. So the
+change can only ever un-block those three named areas; a new area invented
+later, or a typo'd one, halts entries as before. This is deliberately narrower
+than the direction suggested above: `scan`, `regime`, `news` and `data` all
+feed marks, sizing or the exposure cap, so their S1s keep blocking. Tests pin
+that (`test_s1_on_the_order_path_blocks_entries` covers nine order-path areas,
+`test_unknown_area_blocks_fail_closed` covers the invented one).
+
+**Escalation.** Any S1 open longer than `ESCALATE_AFTER_H = 24` is flagged
+`escalate`, blocking or not — that is the "stuck across sessions" axis this
+issue asked for, and it fires for infra S1s too, so a non-blocking S1 can no
+longer sit unnoticed forever. The ops S1 above is at 23.8h and will surface on
+the next cycle.
+
+**Verified**: 26 new tests in `tests/test_issues.py`; full suite 91 passed,
+5 xfailed. No existing assertion was altered.
+
+## Proposed patch (needs human)
+
+`.claude/skills/trade-cycle/SKILL.md` is protected, so Phase 0 still instructs
+the desk to halt on *any* OPEN S1. Until this one line lands, a literal reading
+of the skill still stands the desk down against the engine's verdict — the
+engine says GO and the prose says NO. Applying it is what actually ends the
+blockade:
+
+```diff
+--- a/.claude/skills/trade-cycle/SKILL.md
++++ b/.claude/skills/trade-cycle/SKILL.md
+@@ -26,9 +26,12 @@
+ - Stray `claude/*` branches in the preflight = the state auto-merge workflow
+   is broken; flag it to the user in your final message every cycle until clean.
+-- Also check `python3 -m engine.issues list`: any OPEN **S1** (safety) issue →
+-  no new entries until it is closed. S2/S3 don't block, but repeat them in
+-  your final message so they stay visible.
++- Also run `python3 -m engine.issues gate`: `entries_allowed: false` → no new
++  entries until every file it lists under `blocking` is closed. It gates on
++  area as well as severity, so an S1 in ops/ci/issues warns without barring the
++  book while every other area fails closed — do not second-guess it either way.
++  Name anything under `escalate` in your final message: that is a stuck S1 the
++  human must decide on. S2/S3 don't block, but repeat them so they stay visible.
+```
+
+No test can pin this half — it is agent-facing prose, not code. The engine-side
+guarantees it depends on are already covered by `tests/test_issues.py`.
+
+Issue left **OPEN** until that line lands.
