@@ -147,6 +147,37 @@ def _yf_fetch(symbol: str, period: str, interval: str) -> pd.DataFrame:
     raise RuntimeError(f"yfinance failed for {symbol}: {last_err or 'empty response'}")
 
 
+def _drop_carried_bars(df: pd.DataFrame) -> pd.DataFrame:
+    """Drop bars that repeat the prior bar's close AND its nonzero volume.
+
+    Yahoo's continuous-futures series can carry an expiring contract's numbers
+    forward onto the next date while giving that date its own open, producing a
+    bar that reconciles with neither neighbour. Two real sessions never agree on
+    both the close and a nonzero volume to the last float bit, so such a bar is a
+    carry: drop it and leave a gap rather than feed a fake move downstream.
+
+    Zero-volume series (FX, indices) are exempt — there an unchanged close is a
+    real quiet session, and dropping it would invent gaps in a clean feed.
+
+    Narrow on purpose. A bar that carries only its volume, under a genuine close,
+    is a different defect wanting a different remedy (blank the volume, keep the
+    price) — see state/issues OPEN-20260808-1653-data.
+    """
+    if len(df) < 2 or not {"Close", "Volume"} <= set(df.columns):
+        return df
+    carried = ((df["Close"] == df["Close"].shift())
+               & (df["Volume"] == df["Volume"].shift())
+               & (df["Volume"] > 0))
+    keep = ~carried
+    # A frame that is MOSTLY "carried" is not a frame with a few carried bars —
+    # it is one this heuristic does not understand. Distrust the guard, not the
+    # data: stripping a frame to nothing would turn the module's careful
+    # degradation into an IndexError two callers down.
+    if not carried.any() or carried.sum() > len(df) / 2 or int(keep.sum()) < 2:
+        return df
+    return df[keep]
+
+
 def _cache_path(symbol: str) -> pathlib.Path:
     return CACHE_DIR / (re.sub(r"[^A-Za-z0-9._&-]", "_", symbol.upper()) + ".csv")
 
@@ -315,7 +346,7 @@ def get_ohlcv(symbol: str, period: str = "1y", interval: str = "1d") -> pd.DataF
     if interval != "1d":
         return _yf_fetch(symbol, period, interval)
     try:
-        df = _yf_fetch(symbol, period, interval)
+        df = _drop_carried_bars(_yf_fetch(symbol, period, interval))
         _save_cache(symbol, df)
         df.attrs["source"] = "yf"
         return df
@@ -358,7 +389,7 @@ def get_ohlcv(symbol: str, period: str = "1y", interval: str = "1d") -> pd.DataF
 
 def last_price(symbol: str) -> float:
     try:
-        df = _yf_fetch(symbol, "5d", "1d")
+        df = _drop_carried_bars(_yf_fetch(symbol, "5d", "1d"))
         _save_cache(symbol, df) if "=" not in symbol and not symbol.startswith("^") else None
         return float(df["Close"].iloc[-1])
     except RuntimeError:
@@ -385,6 +416,40 @@ def atr(df: pd.DataFrame, n: int = 14) -> pd.Series:
     return tr.ewm(alpha=1 / n, adjust=False).mean()
 
 
+ROLL_GAP_PCT = 3.0      # an open this far off the prior close, ...
+ROLL_VOL_STEP = 5.0     # ... on a volume step this large, is a contract handover
+
+
+def _roll_suspected(symbol: str, df: pd.DataFrame) -> bool:
+    """Does the newest bar look like a futures roll rather than a price move?
+
+    A continuous-futures proxy splices contracts, so the new front month's first
+    bar opens at a different price level entirely and arrives carrying that
+    contract's much larger volume. The resulting "gap" is a contract change, not
+    a price move (observed on CRUDE 2026-08-06: open +3.92% off the prior close
+    on a 42.6x volume step). Crude and gold are 1.0 each of the macro-sentinel's
+    5.5 vote weight and the regime sets the gross exposure cap, so a fabricated
+    print here resizes the whole book.
+
+    Both arms must fire, so an ordinary overnight gap on ordinary volume still
+    reports normally. It errs toward withholding: on a hit the desk loses one
+    day's change_pct but still gets `last`, which beats voting a fabricated
+    percentage into a cap-setting score.
+
+    Pinned to "=F" symbols deliberately: a cash equity gapping hard on heavy
+    volume is an earnings reaction — the most informative print the desk gets —
+    and suppressing that would be the worse bug.
+    """
+    if not yf_symbol(symbol).endswith("=F") or len(df) < 2:
+        return False
+    o, prev_close = float(df["Open"].iloc[-1]), float(df["Close"].iloc[-2])
+    v, prev_vol = float(df["Volume"].iloc[-1]), float(df["Volume"].iloc[-2])
+    if prev_close <= 0 or v <= 0 or prev_vol <= 0:
+        return False
+    return (abs(o / prev_close - 1) * 100 > ROLL_GAP_PCT
+            and max(v / prev_vol, prev_vol / v) > ROLL_VOL_STEP)
+
+
 def snapshot(symbol: str) -> dict:
     """One-symbol technical snapshot: everything the desk needs to triage a chart."""
     df = get_ohlcv(symbol, period="1y", interval="1d")
@@ -402,11 +467,14 @@ def snapshot(symbol: str) -> dict:
     vol_ratio = None
     if source in ("yf", "nse_bhav"):   # both carry true full-day volume
         vol_ratio = round(float(vol.iloc[-1] / max(vol.rolling(20).mean().iloc[-1], 1)), 2)
+    roll = _roll_suspected(symbol, df)
     return {
         "symbol": symbol.upper(),
         "source": source,  # yf | nse_bhav | cache+groww_ltp | cache_stale — agents must treat non-live as degraded
         "last": round(last, 2),
-        "change_pct": round((last / prev - 1) * 100, 2),
+        "change_pct": None if roll else round((last / prev - 1) * 100, 2),
+        # True ⇒ change_pct withheld: the last bar is a contract handover, not a move
+        "roll_suspected": roll,
         "rsi14": round(float(rsi(c).iloc[-1]), 1),
         "sma20": round(float(sma20.iloc[-1]), 2),
         "sma50": round(float(sma50.iloc[-1]), 2),

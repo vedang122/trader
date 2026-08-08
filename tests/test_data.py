@@ -302,3 +302,98 @@ def test_dead_exchange_archive_keeps_the_old_ladder(desk, monkeypatch):
 
     df = data.get_ohlcv("TESTCO")
     assert df.attrs["source"] == "cache_stale"
+
+
+# --- futures-proxy hygiene: roll discontinuities and carried bars -------------
+# Repro for OPEN-20260806-0826-data. GOLD (GC=F) and CRUDE (CL=F) are 1.0 of the
+# macro-sentinel's 5.5 vote weight each, and the regime deterministically sets
+# the gross exposure cap — so a fabricated change_pct resizes the whole book.
+
+
+def _fetched(bars):
+    """A freshly-fetched daily frame: bars = [(day, o, h, l, c, v), ...]."""
+    idx = pd.DatetimeIndex([pd.Timestamp(b[0]) for b in bars])
+    return pd.DataFrame({"Open": [b[1] for b in bars], "High": [b[2] for b in bars],
+                         "Low": [b[3] for b in bars], "Close": [b[4] for b in bars],
+                         "Volume": [b[5] for b in bars]}, index=idx)
+
+
+def test_carried_bar_is_rejected_at_ingest(desk, monkeypatch):
+    """CRUDE 2026-08-04 repeated 08-03's close to the last float bit AND its exact
+    volume, while carrying its own open — an incoherent bar (O=75.77, C=80.10)
+    that reconciles with neither neighbour. Two real sessions never agree on both
+    close and a nonzero volume, so the bar is a carry and must not be stored."""
+    df = _fetched([("2026-08-03", 80.34, 80.50, 79.90, 80.0999984741211, 294823),
+                   ("2026-08-04", 75.77, 80.60, 75.60, 80.0999984741211, 294823),
+                   ("2026-08-05", 75.56, 75.90, 74.80, 75.14, 11257)])
+    monkeypatch.setattr(data, "_yf_fetch", lambda s, p, i: df)
+
+    out = data.get_ohlcv("CRUDE")
+    assert [str(d.date()) for d in out.index] == ["2026-08-03", "2026-08-05"], \
+        "the carried 08-04 bar must be dropped, leaving a gap"
+    assert data._load_cache("CRUDE") is None or \
+        "2026-08-04" not in [str(d.date()) for d in data._load_cache("CRUDE").index], \
+        "a carried bar must never reach the on-disk cache"
+
+
+def test_flat_zero_volume_session_survives_ingest(desk, monkeypatch):
+    """The carry guard keys on a repeated NONZERO volume. FX and index proxies
+    (USDINR=X, ^INDIAVIX) carry Volume=0 every bar, so a quiet unchanged close
+    there is a real session — dropping it would invent gaps in a clean feed."""
+    df = _fetched([("2026-08-03", 88.10, 88.30, 88.00, 88.20, 0),
+                   ("2026-08-04", 88.20, 88.25, 88.05, 88.20, 0),
+                   ("2026-08-05", 88.20, 88.40, 88.15, 88.35, 0)])
+    monkeypatch.setattr(data, "_yf_fetch", lambda s, p, i: df)
+
+    out = data.get_ohlcv("USDINR")
+    assert len(out) == 3, "a zero-volume flat session is real data, not a carry"
+
+
+def test_roll_gap_suppresses_change_pct_on_a_futures_proxy(desk, monkeypatch):
+    """GOLD 2026-08-05: open gapped +7.18% off the prior close while volume went
+    698 -> 33,963. That is an expiring contract handing over to the new front
+    month, not a gold move. The snapshot must say so rather than print the gap:
+    an honest `roll_suspected` beats a fake percentage in a weighted input."""
+    bars = [("2026-07-31", 4049.10, 4110.0, 4040.0, 4102.40, 1166),
+            ("2026-08-03", 4033.70, 4090.0, 4020.0, 4083.40, 698),
+            ("2026-08-04", 4095.40, 4100.0, 4040.0, 4050.50, 702),
+            ("2026-08-05", 4341.40, 4350.0, 4300.0, 4307.00, 33963)]
+    df = _fetched(bars)
+    monkeypatch.setattr(data, "_yf_fetch", lambda s, p, i: df)
+
+    snap = data.snapshot("GOLD")
+    assert snap["roll_suspected"] is True
+    assert snap["change_pct"] is None, "a contract change is not a price change"
+    assert snap["last"] == 4307.00, "the level itself is still the best level we have"
+
+
+def test_earnings_gap_on_an_equity_is_not_a_roll(desk, monkeypatch):
+    """The guard must stay pinned to continuous-futures proxies. A cash equity
+    gapping hard on 5x volume is an earnings reaction — the single most
+    informative print there is. Suppressing THAT would be the worse bug."""
+    bars = [("2026-07-31", 100.0, 101.0, 99.0, 100.0, 1000),
+            ("2026-08-03", 100.0, 101.0, 99.0, 100.5, 1100),
+            ("2026-08-04", 100.5, 101.5, 99.5, 101.0, 1050),
+            ("2026-08-05", 112.0, 118.0, 111.0, 116.0, 9000)]
+    df = _fetched(bars)
+    monkeypatch.setattr(data, "_yf_fetch", lambda s, p, i: df)
+
+    snap = data.snapshot("TESTCO")
+    assert snap["roll_suspected"] is False
+    assert snap["change_pct"] == 14.85, "a real equity gap must survive intact"
+
+
+def test_carry_guard_never_strips_a_frame_to_nothing(desk, monkeypatch):
+    """A frame that is MOSTLY carried is one the heuristic does not understand,
+    not proof the feed is fake. The guard must hand it back whole: stripping it
+    would turn this module's careful degradation into an IndexError two callers
+    down, which is a worse failure than the stale volume it was hunting."""
+    idx = pd.bdate_range(end=pd.Timestamp("2026-08-06"), periods=250)
+    flat = pd.DataFrame({"Open": 100.0, "High": 101.0, "Low": 99.0,
+                         "Close": 100.0, "Volume": 1000}, index=idx)
+    monkeypatch.setattr(data, "_yf_fetch", lambda s, p, i: flat)
+
+    assert len(data._drop_carried_bars(flat)) == 250
+    snap = data.snapshot("TESTCO")          # must not raise
+    assert snap["change_pct"] == 0.0
+    assert snap["roll_suspected"] is False
