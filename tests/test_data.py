@@ -31,6 +31,25 @@ def test_fresh_cache_plus_groww_ltp(desk, monkeypatch):
     assert float(df["Close"].iloc[-1]) == 105.0
 
 
+def test_ltp_patch_lands_on_the_newest_bar(desk, monkeypatch):
+    """A cache bar dated ahead of today must not strand the LTP behind it.
+
+    `cache+groww_ltp` is a promise that the last close IS the live price; a
+    patch filed before a newer cached bar quotes a stale close as a live one.
+    """
+    idx = pd.bdate_range(end=pd.Timestamp.now(tz="Asia/Kolkata").normalize().tz_localize(None)
+                         + pd.tseries.offsets.BDay(3), periods=60)
+    df = pd.DataFrame({"Open": 100.0, "High": 101.0, "Low": 99.0,
+                       "Close": 100.0, "Volume": 1000}, index=idx)
+    data.CACHE_DIR.mkdir(parents=True, exist_ok=True)
+    df.to_csv(data._cache_path("TESTCO"))
+    _kill_yf(monkeypatch)
+    monkeypatch.setattr(data, "groww_ltp", lambda s: 105.0)
+    out = data.get_ohlcv("TESTCO")
+    assert out.attrs["source"] == "cache+groww_ltp"
+    assert float(out["Close"].iloc[-1]) == 105.0
+
+
 def test_fresh_cache_no_groww_is_stale(desk, monkeypatch):
     _write_cache("TESTCO")
     _kill_yf(monkeypatch)

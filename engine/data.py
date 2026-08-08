@@ -339,7 +339,13 @@ def get_ohlcv(symbol: str, period: str = "1y", interval: str = "1d") -> pd.DataF
         ltp = groww_ltp(symbol)
         if ltp:
             patched = cached.copy()
-            ts = pd.Timestamp.now(tz="Asia/Kolkata").normalize().tz_localize(None)
+            # The LTP is the newest price there is, so it must land on the
+            # newest bar. If the cache already holds a bar dated at or after
+            # today (clock skew, a bar stamped by exchange date), a row stamped
+            # "now" would sort BEHIND it and iloc[-1] would hand back a stale
+            # close while source still claims a live patch.
+            ts = max(pd.Timestamp.now(tz="Asia/Kolkata").normalize().tz_localize(None),
+                     patched.index.max())
             row = {c: None for c in patched.columns}
             row.update({"Open": ltp, "High": ltp, "Low": ltp, "Close": ltp, "Volume": 0})
             patched.loc[ts] = row
