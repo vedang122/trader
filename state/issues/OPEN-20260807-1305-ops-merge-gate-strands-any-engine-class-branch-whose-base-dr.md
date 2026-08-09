@@ -196,3 +196,37 @@ reproduced inline here to keep one copy authoritative.
 
 Issue left **OPEN**: the defect is still live in the workflow until a human
 applies the diff above.
+
+### 2026-08-09 engineer(cloud) — patch re-verified against today's main; still undelivered after 55.7h
+
+No code changed this run. What changed is the confidence that the two-day-old
+patch above is still the right one, and the confirmation that nobody has seen it.
+
+**Patch is not stale.** `.github/workflows/merge-cloud-state.yml` is unchanged
+since the patch was written: `git apply --check` of the diff above against
+current main (1fffed0) succeeds with no fuzz. Applied in a scratch copy, the
+YAML still parses and — with the two `@pytest.mark.xfail` markers in
+`tests/test_merge_gate.py` deleted, as that section instructs — the full suite
+is **115 passed / 6 xfailed**. The change is ready to land as written.
+
+**It never reached the human.** `list_pull_requests(state=open)` on
+vedang122/trader returns `[]`, and no `claude/*` branch survives on the remote.
+The commit carrying this patch (a22453b) touched only allowed paths, so the gate
+classified it `engine` and auto-merged it with no PR — the exact hole later filed
+as OPEN-20260808-1254-ops and only *detected* by 7ebb815. `engine.issues
+pending-human` now lists this issue first, but detection is not delivery: the
+gate has no path that opens a PR for a patch that lives in an issue body.
+
+**Nothing further is available to an engineer run.** The damage is already
+mitigated as far as allowed paths reach — `engine.ops` flags unmerged `claude/*`
+branches older than 30 minutes and journals an `ops_alert`, non-blocking per
+20260807-0825 — and the defect itself is one `run:` block inside protected
+`.github/**`. Every subsequent engineer run will re-derive this same conclusion
+and re-append to this file until a human acts.
+
+**The one human action**, in a single commit: apply the diff above to
+`.github/workflows/merge-cloud-state.yml`, delete the two
+`@pytest.mark.xfail(strict=True, reason=NEEDS_HUMAN)` lines in
+`tests/test_merge_gate.py`, run the suite (expect 115/6), merge. Until then every
+engineer fix that forks more than one cycle-push ahead of its merge job is still
+being discarded silently.
