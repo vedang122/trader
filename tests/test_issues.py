@@ -124,6 +124,70 @@ def test_unparseable_filed_stamp_does_not_crash(desk):
     assert row["blocks_entries"] is True  # severity/area still gate it
 
 
+# --- the needs-human axis ----------------------------------------------------
+# A protected-path fix cannot be landed by the engineer, so it is written into
+# the issue as a patch and the issue stays OPEN. That commit touches only
+# allowed paths, so CI classifies it `engine`, merges it, and no PR is ever
+# opened — the patch reaches nobody. Detection has to key off the marker in the
+# issue body, not off the file list in the diff.
+
+def _append(desk, name, text):
+    (desk / "issues" / name).open("a").write(text)
+
+
+@pytest.mark.parametrize("heading", [
+    "## Proposed patch (needs human)",
+    "## Suggested direction (needs human -- .github/** is protected)",
+    "## proposed patch (Needs Human)",
+])
+def test_a_patch_marker_flags_the_issue_as_needing_a_human(desk, heading):
+    """Both headings the desk actually writes, and case does not decide it."""
+    name = _file("broker", sev="S2")
+    assert _row(name)["needs_human"] is False
+    _append(desk, name, f"\n{heading}\n```diff\n-old\n+new\n```\n")
+    assert _row(name)["needs_human"] is True
+    assert issues.gate()["needs_human"] == [name]
+
+
+def test_front_matter_key_also_flags_it(desk):
+    """An explicit `needs_human: true` stands even with no patch section."""
+    name = _file("portfolio", sev="S2")
+    p = desk / "issues" / name
+    p.write_text(p.read_text().replace("area: ", "needs_human: true\narea: ", 1))
+    assert _row(name)["needs_human"] is True
+
+
+def test_prose_about_a_human_is_not_a_marker(desk):
+    """'needs human review' in the body is narration, not a pending patch."""
+    name = _file("data", sev="S2")
+    _append(desk, name, "\nProtected path — needs human-reviewed fix.\n")
+    assert _row(name)["needs_human"] is False
+    assert issues.gate()["needs_human"] == []
+
+
+def test_closed_issues_are_not_pending(desk):
+    name = _file("broker", sev="S2")
+    _append(desk, name, "\n## Proposed patch (needs human)\n```diff\n+x\n```\n")
+    issues.close(name.replace("OPEN-", "").replace(".md", ""), "landed by hand")
+    assert issues.gate()["needs_human"] == []
+
+
+def test_pending_human_cli_reports_the_stranded_patches(desk):
+    """The routine reads this to know what to put in front of the human."""
+    name = _file("broker", sev="S2")
+    _append(desk, name, "\n## Proposed patch (needs human)\n```diff\n+x\n```\n")
+    rows = issues.pending_human()
+    assert [r["file"] for r in rows] == [name]
+    assert rows[0]["severity"] == "S2" and rows[0]["area"] == "broker"
+
+
+def test_pending_human_cli_runs_against_the_real_desk():
+    r = subprocess.run([sys.executable, "-m", "engine.issues", "pending-human"],
+                       cwd=REPO, capture_output=True, text=True, timeout=60)
+    assert r.returncode == 0, r.stderr
+    assert isinstance(json.loads(r.stdout), list)
+
+
 # --- shape + wiring ----------------------------------------------------------
 
 def test_list_reports_area_and_blockers_sort_first(desk):
@@ -144,7 +208,7 @@ def test_gate_counts_every_open_issue(desk):
 def test_gate_is_clean_when_nothing_is_open(desk):
     g = issues.gate()
     assert g == {"entries_allowed": True, "blocking": [], "escalate": [],
-                 "counts": {}}
+                 "needs_human": [], "counts": {}}
 
 
 def test_gate_cli_runs_against_the_real_desk(desk):

@@ -62,3 +62,49 @@ Filed by the engineer routine, 2026-08-08, while handling
 OPEN-20260807-1518-issues.
 
 ## Engineer notes (append below)
+
+### 2026-08-09 engineer(cloud) — option 3 landed; option 1 exercised once; issue stays OPEN
+
+**Landed (allowed paths only).** `engine/issues.py` now decides needs-human
+from the issue BODY instead of the diff's file list, which is the only place
+the signal survives:
+
+- `NEEDS_HUMAN_RE` matches a section *heading* ending `(needs human` — both
+  forms the desk actually writes (`## Proposed patch (needs human)` and
+  `## Suggested direction (needs human -- ...)`), case-insensitively.
+  Deliberately a heading, not prose: five OPEN issues say "needs human-reviewed
+  fix" inside an Observed paragraph while carrying no patch, and those must not
+  flag.
+- Front-matter `needs_human: true` is honoured as an explicit override.
+- `list_issues()` rows carry `needs_human`; `gate()` carries a `needs_human`
+  file list; new `python3 -m engine.issues pending-human` prints just the
+  stranded set.
+
+Against the real desk it finds all six, oldest first — the S1 merge gate, the
+broker last_price guard, stop-lowering enforcement, the yfinance single-source
+outage, the cancelled-merge stranding, and the ops-S1 severity axis.
+
+**Option 1 exercised for this run**, per the issue's own "cheapest first":
+this branch is being pushed with a draft PR opened by the engineer routine
+itself, listing those six. That is the first time any of them has been in
+front of the human — the S1 has now been waiting since 2026-08-07.
+
+**Why this issue stays OPEN.** Detection is now deterministic and tested, but
+detection is not delivery. The guarantee that a *future* run opens the PR
+lives in the kautilya-engineer cron prompt, which is not a repo file and not
+an allowed path — no commit here can encode it. The remaining change is one
+line in that prompt, for the human to make:
+
+> After committing, run `python3 -m engine.issues pending-human`; if it returns
+> anything, open (or update) a draft PR listing those issues, because the merge
+> gate will classify this commit `engine` and merge it with no PR.
+
+Option 2 (classifier greps the diff) would make it structural, but
+`.github/workflows/merge-cloud-state.yml` is protected and is already the
+subject of the S1 above — worth folding into that same human edit rather than
+filing a third workflow patch nobody can land.
+
+Tests: `tests/test_issues.py` +8 (both heading forms, case, front-matter
+override, prose-is-not-a-marker, closed issues drop out, API and CLI).
+Suite 111 passed / 5 xfailed, was 103 / 5. `test_gate_is_clean_when_nothing_is_open`
+was extended to the new key — still an exact-equality assertion, nothing relaxed.
