@@ -517,6 +517,22 @@ def snapshot(symbol: str) -> dict:
     }
 
 
+def ohlcv_text(symbol: str, period: str = "3mo") -> str:
+    """The CLI's OHLCV view: the whole requested window, with its extent stated.
+
+    Issue 20260806-1026: this branch printed `.tail(60)` regardless of period, so
+    a seat asking for 2y built support/resistance from ~3 months of candles and
+    had no way to see the cut — the series simply appeared to end. A window an
+    agent reasons over is never silently narrower than the one it asked for, and
+    when the feed genuinely holds less than the period covers the header says so
+    rather than leaving it to be inferred from a row that isn't there.
+    """
+    df = get_ohlcv(symbol, period=period)
+    span = f"{df.index[0].date()}..{df.index[-1].date()}" if len(df) else "empty"
+    return (f"# {symbol} period={period} rows={len(df)} span={span} "
+            f"source={df.attrs.get('source', 'unknown')}\n{df.to_string()}")
+
+
 if __name__ == "__main__":
     import json
     cmd = sys.argv[1] if len(sys.argv) > 1 else "snapshot"
@@ -526,7 +542,7 @@ if __name__ == "__main__":
     elif cmd == "snapshot":
         print(json.dumps(snapshot(sym), indent=2))
     elif cmd == "ohlcv":
-        print(get_ohlcv(sym, period=sys.argv[3] if len(sys.argv) > 3 else "3mo").tail(60).to_string())
+        print(ohlcv_text(sym, sys.argv[3] if len(sys.argv) > 3 else "3mo"))
     elif cmd == "growwcheck":
         status = {"creds_present": bool(os.environ.get("GROWW_API_KEY") and os.environ.get("GROWW_API_SECRET")),
                   "auth": None, "ltp_reliance": None}

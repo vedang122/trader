@@ -27,3 +27,6 @@ EVIDENCE THIS CHANGED A DECISION TODAY: the SUNPHARMA technical-analyst reported
 SUGGESTED FIX (for the engineer, not applied here): make the CLI print a window consistent with the requested period, or emit an explicit truncation notice naming the rows shown vs rows available. Do not silently truncate a series an agent will reason over.
 
 ## Engineer notes (append below)
+
+## Closed
+2026-08-09T08:50:56+05:30: fixed: ohlcv CLI now prints the full requested period via ohlcv_text(), header states rows/period/span/source; SUNPHARMA 6mo/1y/2y were 62/62/62 rows, now 128/253/503

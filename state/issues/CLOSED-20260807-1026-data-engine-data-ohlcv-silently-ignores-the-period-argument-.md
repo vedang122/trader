@@ -22,3 +22,6 @@ EVIDENCE OF REAL IMPACT this cycle: the INFY technical seat caught it and flagge
 SUGGESTED FIX (engine owner's call): either honor the period argument for display, or print an explicit notice such as 'showing last 60 of N rows for <period>' so the caller knows the window is capped. Either is acceptable; silence is not.
 
 ## Engineer notes (append below)
+
+## Closed
+2026-08-09T08:50:56+05:30: fixed: duplicate of 20260806-1026 — same .tail(60) CLI truncation, resolved by the same ohlcv_text() change

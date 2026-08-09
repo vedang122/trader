@@ -459,3 +459,46 @@ def test_yesterdays_bar_is_complete_even_mid_session(desk, monkeypatch):
     snap = data.snapshot("TATASTEEL")
     assert snap["vol_partial_session"] is False
     assert snap["vol_ratio_20d"] == 1.37
+
+
+# --- the ohlcv CLI view: the window an analyst asks for is the window it gets ---
+
+def _n_sessions(n, end="2026-08-07"):
+    """n settled daily bars ending at `end`, closes walking up so rows differ."""
+    days = pd.bdate_range(end=pd.Timestamp(end), periods=n)
+    return _fetched([(d.strftime("%Y-%m-%d"), 100.0 + i, 101.0 + i, 99.0 + i,
+                      100.0 + i, 1000) for i, d in enumerate(days)])
+
+
+def test_ohlcv_view_honours_the_requested_period(desk, monkeypatch):
+    """Issue 20260806-1026: the CLI printed `.tail(60)` whatever the period, so a
+    seat asking for 2y built support/resistance from ~3 months and could not see
+    the cut. The SUNPHARMA seat inferred 'no validated resistance exists above
+    price' from a window a quarter the size it believed it had."""
+    monkeypatch.setattr(data, "_yf_fetch", lambda s, p, i: _n_sessions(300))
+
+    text = data.ohlcv_text("SUNPHARMA", "2y")
+
+    assert len(text.splitlines()) == 302, "300 bars + header line + column line"
+    assert "2025-06-16" in text, "the oldest bar of the requested window is present"
+
+
+def test_ohlcv_view_states_its_own_size(desk, monkeypatch):
+    """A window an agent reasons over always names its own extent: whatever the
+    feed could serve, the caller can compare it against what it asked for."""
+    monkeypatch.setattr(data, "_yf_fetch", lambda s, p, i: _n_sessions(40))
+
+    head = data.ohlcv_text("SUNPHARMA", "2y").splitlines()[0]
+
+    assert "rows=40" in head and "period=2y" in head, head
+    assert "2026-08-07" in head, "the span is stated, so a short window is visible"
+
+
+def test_ohlcv_cli_never_truncates_behind_the_caller(desk):
+    """Tripwire on the CLI branch itself — the defect was one `.tail(60)` in
+    `__main__`, not in any function a unit test would otherwise reach."""
+    src = (data.ROOT / "engine" / "data.py").read_text()
+    branch = src.split('elif cmd == "ohlcv":')[1].split("elif cmd ==")[0]
+
+    assert "ohlcv_text" in branch, "the CLI prints the audited view"
+    assert ".tail(" not in branch, f"fixed-row truncation is back in the CLI: {branch}"
