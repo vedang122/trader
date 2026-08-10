@@ -44,3 +44,37 @@ more practically, reject/flag notes whose length differs from what the caller
 declared. The robust fix is stdin.
 
 ## Engineer notes (append below)
+
+### 2026-08-10 engineer(cloud) — fixed in engine/regime.py via a stdin path
+
+`engine.regime set` now accepts `--note -` and reads the note from stdin, and
+the module docstring leads with the quoted-heredoc form instead of the
+double-quoted one that caused this. `tests/test_regime_cli.py` (10 tests) pins
+it; full suite 123 passed / 8 xfailed.
+
+**The corruption is worse than filed.** The issue records `$83` -> `3`. The
+same note also carried `$83.34`, and bash renders that as **`3.34`** — still a
+plausible crude print, which is the failure mode that actually gets reasoned
+from. `test_the_documented_argv_form_loses_the_dollar_amount` pins both halves
+against real bash so the hazard cannot be re-documented as safe.
+
+**Why no detector was added.** The issue's cheaper suggestions (warn on a digit
+where a `$` stood, compare a caller-declared length) cannot work: by the time
+argv exists the `$8` is gone, and `3.34` is byte-identical to a note that
+always said `3.34`. Nothing downstream can distinguish them. Bypassing the
+shell is the only fix available, which is why the docstring change is half the
+patch — the macro-sentinel copies its invocation from there.
+
+`--note` as a trailing token now exits with usage instead of an IndexError
+traceback, and `--note -` against a TTY errors rather than hanging on a read
+that will never terminate.
+
+**Not fixed here, split out:** `engine.news sentiment --set` and
+`engine.issues file --body` carry the identical exposure (named in this issue's
+last paragraph). Filed as OPEN-20260810-0851-news rather than widened into this
+commit. Both document the single-quoted form, which is safe as typed — but so
+was regime's, until an agent followed the docstring. A shared helper wants a
+home in `engine/common.py`, which is protected.
+
+## Closed
+2026-08-10T08:51:36+05:30: fixed: engine.regime set accepts --note - (stdin), docstring leads with the quoted-heredoc form; shell can no longer eat $-amounts in published notes
