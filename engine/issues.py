@@ -9,6 +9,7 @@ Usage:
   python3 -m engine.issues file --sev S1 --area execute --title "..." --body "..."
   python3 -m engine.issues list
   python3 -m engine.issues pending-human
+  python3 -m engine.issues handoff
   python3 -m engine.issues close <issue-file-stem> --note "fixed in <sha>"
 
 Severity: S1 = safety (cannot exit / gate bypassed / state corruption) — the
@@ -150,6 +151,50 @@ def pending_human() -> list[dict]:
     return [r for r in list_issues() if r["needs_human"]]
 
 
+def _stranded_patches(text: str) -> list[str]:
+    """The needs-human sections of one issue, verbatim.
+
+    From each marker heading to the next heading of the same level or higher,
+    so a patch travels with its fences and its caveats — the human is being
+    asked to apply it, not to reconstruct it from a pointer.
+    """
+    out = []
+    for m in NEEDS_HUMAN_RE.finditer(text):
+        rest = text[m.start():]
+        level = len(rest) - len(rest.lstrip("#"))
+        # Search below the marker's own heading line, or it terminates itself.
+        body = rest.find("\n") + 1 or len(rest)
+        nxt = re.search(rf"^#{{1,{level}}} ", rest[body:], re.M)
+        out.append((rest[:body + nxt.start()] if nxt else rest).strip())
+    return out
+
+
+def handoff() -> str:
+    """Every stranded patch as ONE markdown artifact, for a durable channel.
+
+    Detection (`pending_human`) is not delivery, and the routine's own draft PR
+    cannot deliver: the merge gate's last act is `git push origin --delete
+    "$GITHUB_REF_NAME"`, and deleting a PR's head branch closes the PR. On the
+    real repo PR #11 opened 2026-08-09T11:22:50Z and closed 11:23:03Z — 13s —
+    killed by its own workflow run; #10 and #9 the same. So this renders an
+    artifact that carries no branch: post it as a GitHub Issue (branch deletion
+    cannot reach one) or send it in the routine's notification.
+    """
+    rows = pending_human()
+    if not rows:
+        return "No patches are waiting on a human.\n"
+    parts = [f"{len(rows)} patch(es) waiting on a human, oldest first. Each is "
+             "written and tested; each lives in a protected path the engineer "
+             "routine may not edit.\n"]
+    for r in sorted(rows, key=lambda x: -(x["age_hours"] or 0)):
+        age = "unknown age" if r["age_hours"] is None else f"open {r['age_hours']:.0f}h"
+        parts.append(f"\n---\n\n## {r['severity']} · {r['area']} · {age}\n"
+                     f"{r['title']}\n\n`state/issues/{r['file']}`\n")
+        parts.extend(f"\n{s}\n" for s in _stranded_patches(
+            (_dir() / r["file"]).read_text()))
+    return "".join(parts)
+
+
 def close(stem: str, note: str) -> dict:
     for p in _dir().glob(f"OPEN-*{stem}*.md"):
         closed = p.with_name(p.name.replace("OPEN-", "CLOSED-", 1))
@@ -163,7 +208,8 @@ def close(stem: str, note: str) -> dict:
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("cmd", choices=["file", "list", "close", "gate", "pending-human"])
+    ap.add_argument("cmd", choices=["file", "list", "close", "gate", "pending-human",
+                                    "handoff"])
     ap.add_argument("stem", nargs="?")
     ap.add_argument("--sev", default="S2", choices=["S1", "S2", "S3"])
     ap.add_argument("--area", default="engine")
@@ -181,5 +227,7 @@ if __name__ == "__main__":
         print(json.dumps(gate(), indent=2))
     elif a.cmd == "pending-human":
         print(json.dumps(pending_human(), indent=2))
+    elif a.cmd == "handoff":
+        print(handoff())
     else:
         print(json.dumps(close(a.stem or "", a.note), indent=2))

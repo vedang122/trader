@@ -108,3 +108,83 @@ Tests: `tests/test_issues.py` +8 (both heading forms, case, front-matter
 override, prose-is-not-a-marker, closed issues drop out, API and CLI).
 Suite 111 passed / 5 xfailed, was 103 / 5. `test_gate_is_clean_when_nothing_is_open`
 was extended to the new key — still an exact-equality assertion, nothing relaxed.
+
+### 2026-08-10 engineer(cloud) — root cause found: the PRs ARE opened, and the gate deletes them
+
+The 2026-08-09 note above closed with "option 1 exercised for this run: this
+branch is being pushed with a draft PR opened by the engineer routine itself."
+That PR is gone, and so are the two before it. **Option 1 is not a cheap fix —
+it is structurally impossible**, and this is why the queue has never moved.
+
+**Mechanism.** The merge step's last line is
+
+    git push origin --delete "${GITHUB_REF_NAME}"
+
+Deleting a PR's head branch closes the PR. The engineer's draft PR is opened
+from the same `claude/*` branch whose push triggered the workflow, so the run
+merges the branch, deletes it, and closes the routine's PR — seconds later,
+with no failure anywhere. Every step is "success".
+
+**Measured on this repo** (`list_pull_requests(state=all)` + the run list):
+
+| PR | branch | opened | closed | run for that branch |
+|---|---|---|---|---|
+| #11 | claude/engineer-risk-cli-unknown-subcommand | 11:22:50Z | **11:23:03Z** | 11:22:26Z → 11:23:05Z success |
+| #10 | claude/engineer-needs-human-delivery | 07:23:04Z | **07:23:18Z** | same shape |
+| #9 | claude/engineer-stop-lowering-enforcement | 07:36:09Z | 07:38:35Z | same shape |
+
+13 seconds for #11, 14 for #10. The close lands *inside* its own run's window.
+`list_branches` returns exactly one branch, `main` — nothing survives. This
+also explains the S1's 2026-08-09 observation ("open PRs returns [], no
+`claude/*` branch survives") without needing the never-opened hypothesis it
+assumed: the PRs existed, briefly.
+
+**Consequence for every prior engineer report.** Each run has truthfully ended
+"needs the human's PR review" and each PR was destroyed before anyone could
+see it. Eight patches are now stranded, the oldest 130h, including the S1 that
+broke the self-repair loop.
+
+## Landed this run (allowed path)
+
+`engine/issues.py` gains `handoff()` + `python3 -m engine.issues handoff`: it
+renders every pending-human issue into ONE markdown artifact carrying the
+actual diffs, not pointers — `_stranded_patches()` lifts each `(needs human`
+section verbatim, fences and caveats intact, from the marker heading to the
+next heading of the same level or higher. Against the live desk it emits 327
+lines covering all 8.
+
+The point is that the artifact **carries no branch**. A GitHub Issue cannot be
+closed by `git push --delete`, so that is where this run posts it. The engine
+half of delivery is now deterministic and tested; what remains is choosing a
+channel deletion cannot reach, which is a one-line instruction, not code.
+
+Tests: `tests/test_issues.py` +4 — the patch survives the render, non-stranded
+issues stay out, the empty case says so without emitting anything that looks
+applicable, and the CLI runs against the real desk. Suite 148 passed / 8
+xfailed, was 144 / 8. No existing assertion touched.
+
+## Proposed patch (needs human)
+
+The durable fix is one line in the protected workflow: stop deleting the branch
+when a PR is open on it. `--delete` is what closes the PR, and it is only there
+for branch hygiene, which `engine.ops` already audits.
+
+```diff
+--- a/.github/workflows/merge-cloud-state.yml
++++ b/.github/workflows/merge-cloud-state.yml
+@@
+           git merge "origin/${GITHUB_REF_NAME}" -X theirs --no-edit
+           git push origin main
+-          git push origin --delete "${GITHUB_REF_NAME}" || true
++          # Never delete a branch that has an open PR: deletion closes the PR,
++          # which is how the engineer routine's needs-human handoffs were lost
++          # (PR #11 open 13s). Hygiene without destroying the review channel.
++          if [ -z "$(gh pr list --head "${GITHUB_REF_NAME}" --state open --json number -q '.[]')" ]; then
++            git push origin --delete "${GITHUB_REF_NAME}" || true
++          fi
+```
+
+(needs `GH_TOKEN: ${{ github.token }}` on that step, as the PR step already has.)
+
+Fold this into the SAME human edit as the S1's merge-gate diff — both are in
+this one file, and neither can land without the other being re-verified.

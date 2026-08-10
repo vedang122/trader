@@ -219,3 +219,44 @@ def test_gate_cli_runs_against_the_real_desk(desk):
     g = json.loads(r.stdout)
     assert isinstance(g["entries_allowed"], bool)
     assert isinstance(g["blocking"], list)
+
+
+# --- delivery ----------------------------------------------------------------
+# Detection (above) is not delivery. The routine's own draft PR cannot carry a
+# stranded patch: the merge gate's last act is `git push origin --delete
+# "$GITHUB_REF_NAME"`, and deleting a PR's head branch closes the PR. Measured
+# on the real repo — PR #11 opened 2026-08-09T11:22:50Z, closed 11:23:03Z by
+# its own workflow run (#10 and #9 the same). So the digest has to exist as a
+# branch-independent artifact the routine can post somewhere deletion can't
+# reach; `handoff` renders exactly that, and nothing else in the engine does.
+
+def test_handoff_carries_each_stranded_patch_to_one_artifact(desk):
+    name = _file("broker", sev="S2", title="last_price unguarded")
+    _append(desk, name, "\n## Proposed patch (needs human)\n"
+                        "```diff\n-old_line\n+new_line\n```\n")
+    out = issues.handoff()
+    assert name in out                      # which issue file to open
+    assert "S2" in out and "broker" in out  # severity + area at a glance
+    assert "+new_line" in out               # the patch itself, not a pointer
+
+
+def test_handoff_omits_issues_that_are_not_waiting_on_anyone(desk):
+    _file("scan", sev="S3", title="a paper cut")
+    stranded = _file("risk", sev="S2", title="cli eats subcommands")
+    _append(desk, stranded, "\n## Proposed patch (needs human)\n```diff\n+fix\n```\n")
+    out = issues.handoff()
+    assert stranded in out
+    assert "a paper cut" not in out
+
+
+def test_handoff_says_so_when_nothing_is_stranded(desk):
+    out = issues.handoff()
+    assert "no patches" in out.lower()
+    assert "```" not in out  # nothing to apply, so nothing that looks applicable
+
+
+def test_handoff_cli_runs_against_the_real_desk():
+    r = subprocess.run([sys.executable, "-m", "engine.issues", "handoff"],
+                       cwd=REPO, capture_output=True, text=True, timeout=60)
+    assert r.returncode == 0, r.stderr
+    assert r.stdout.strip()
