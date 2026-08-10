@@ -3,7 +3,7 @@ import pandas as pd
 import pytest
 import requests
 
-from engine import data
+from engine import common, data
 
 
 def _write_cache(sym, last_day_offset=0, monkeypatch=None):
@@ -228,13 +228,24 @@ class _BinResp:
 
 
 def _serve_bhav(monkeypatch, rows, status=200):
-    """Every archive date answers with the same canned zip."""
+    """Every SETTLED archive date answers with the same canned zip.
+
+    Today's file is a 404, because the exchange publishes a session only after
+    it settles (~18:00 IST) — the same case _bhav_day documents as "today
+    before publication looks like a missing file". Serving it would date a
+    bhav bar to a session still in progress, which the real archive never
+    does, and would make anything downstream of _partial_session read
+    differently depending on the hour the suite happened to run.
+    """
     data._bhav_cache.clear()
     seen = {"urls": []}
+    today = pd.Timestamp.now(tz="Asia/Kolkata").strftime("%Y%m%d")
 
     def fake_get(url, **kw):
         seen["urls"].append(url)
         seen["headers"] = kw.get("headers") or {}
+        if today in url:
+            return _BinResp(b"", 404)
         return _BinResp(_bhav_zip(rows), status)
 
     monkeypatch.setattr(requests, "get", fake_get)
@@ -282,6 +293,28 @@ def test_bhav_bars_restore_volume_confirmation(desk, monkeypatch):
 
     snap = data.snapshot("TESTCO")
     assert snap["source"] == "nse_bhav"
+    assert snap["vol_ratio_20d"] is not None
+
+
+def test_bhav_vol_confirmation_survives_an_open_session(desk, monkeypatch):
+    """The same claim, with the clock pinned to a live session.
+
+    Repro for the wall-clock flake: the archive publishes a session only once it
+    has settled, so a bhav-sourced frame is never today's still-forming bar and
+    _partial_session must not withhold its volume. Left to the real clock this
+    passed after 15:30 and failed during the session.
+    """
+    monkeypatch.setattr(common, "market_status",
+                        lambda: {"ist": "pinned", "phase": "open", "is_open": True})
+    _write_cache("TESTCO", last_day_offset=4)
+    _kill_yf(monkeypatch)
+    monkeypatch.setattr(data, "groww_ltp", lambda s: None)
+    _serve_bhav(monkeypatch, [{"sym": "TESTCO", "o": 100.0, "h": 104.0,
+                               "l": 99.0, "c": 103.0, "v": 5000}])
+
+    snap = data.snapshot("TESTCO")
+    assert snap["source"] == "nse_bhav"
+    assert snap["vol_partial_session"] is False
     assert snap["vol_ratio_20d"] is not None
 
 
