@@ -31,6 +31,13 @@ CACHE_DIR = ROOT / "state" / "cache" / "ohlcv"
 CACHE_ROWS = 420          # ~20 months of daily bars
 CACHE_MAX_AGE_BARS = 5    # refuse cache whose last bar is older than this many trading days
 
+# Yahoo's chart endpoint answers HTTP 200 for a `range` outside this vocabulary,
+# serving one still-forming bar instead of an error (issue 20260810-1335). So a
+# typo — `45`, `--days 30`, `banana` — used to come back shaped exactly like a
+# successful fetch: same header, same columns, tagged source="yf". The desk
+# checks the word itself rather than trusting the feed to refuse it.
+VALID_PERIODS = ("1d", "5d", "1mo", "3mo", "6mo", "1y", "2y", "5y", "10y", "ytd", "max")
+
 INDEX_MAP = {"NIFTY": "^NSEI", "BANKNIFTY": "^NSEBANK", "INDIAVIX": "^INDIAVIX",
              "USDINR": "USDINR=X", "GOLD": "GC=F", "CRUDE": "CL=F", "DXY": "DX-Y.NYB"}
 
@@ -344,7 +351,20 @@ def groww_ltp(symbol: str) -> float | None:
         return None
 
 
+def _check_period(period: str) -> str:
+    """Refuse a period Yahoo will not honour, before any request leaves the desk.
+
+    Raises ValueError, deliberately not RuntimeError: the fallback ladder below
+    catches RuntimeError, and a typo must not degrade into cached bars. An
+    outage is answerable from cache; a nonsense question is not.
+    """
+    if period not in VALID_PERIODS:
+        raise ValueError(f"invalid period {period!r} — valid: {', '.join(VALID_PERIODS)}")
+    return period
+
+
 def get_ohlcv(symbol: str, period: str = "1y", interval: str = "1d") -> pd.DataFrame:
+    _check_period(period)
     if interval != "1d":
         return _yf_fetch(symbol, period, interval)
     try:
@@ -542,7 +562,10 @@ if __name__ == "__main__":
     elif cmd == "snapshot":
         print(json.dumps(snapshot(sym), indent=2))
     elif cmd == "ohlcv":
-        print(ohlcv_text(sym, sys.argv[3] if len(sys.argv) > 3 else "3mo"))
+        try:
+            print(ohlcv_text(sym, sys.argv[3] if len(sys.argv) > 3 else "3mo"))
+        except ValueError as e:
+            sys.exit(f"usage: python3 -m engine.data ohlcv <SYMBOL> [period] — {e}")
     elif cmd == "growwcheck":
         status = {"creds_present": bool(os.environ.get("GROWW_API_KEY") and os.environ.get("GROWW_API_SECRET")),
                   "auth": None, "ltp_reliance": None}

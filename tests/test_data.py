@@ -1,4 +1,7 @@
 """Data fallback ladder: yf -> cache+groww LTP -> stale cache -> honest failure."""
+import subprocess
+import sys
+
 import pandas as pd
 import pytest
 import requests
@@ -535,3 +538,82 @@ def test_ohlcv_cli_never_truncates_behind_the_caller(desk):
 
     assert "ohlcv_text" in branch, "the CLI prints the audited view"
     assert ".tail(" not in branch, f"fixed-row truncation is back in the CLI: {branch}"
+
+
+# --- the period vocabulary: a window Yahoo will not honour is an error, not a bar ---
+# Repro: OPEN-20260810-1335 — `ohlcv INFY 45` and `ohlcv INFY banana` both returned
+# a ONE-ROW frame of today's still-forming session, exit 0, tagged source=yf. The
+# chart endpoint answers 200 for a garbage `range`, so the failure arrives shaped
+# exactly like a success: same header, same columns, plausible numbers. An analyst
+# asking for 45 days to site support/resistance got one bar and no signal at all.
+
+def _spy_fetch(monkeypatch):
+    """Records whether the live fetch was reached. Validation must precede it."""
+    seen = {"called": False}
+
+    def fetch(symbol, period, interval):
+        seen["called"] = True
+        return _n_sessions(5)
+
+    monkeypatch.setattr(data, "_yf_fetch", fetch)
+    return seen
+
+
+@pytest.mark.parametrize("period", ["banana", "45", "--days 30", "3M", "", "1 mo"])
+def test_ohlcv_refuses_a_period_yahoo_will_not_honour(desk, monkeypatch, period):
+    """The whole hazard is that these come back looking fine. They must not come
+    back at all — and must be refused before any request leaves the desk."""
+    seen = _spy_fetch(monkeypatch)
+
+    with pytest.raises(ValueError):
+        data.get_ohlcv("INFY", period=period)
+
+    assert seen["called"] is False, f"{period!r} reached the network before validation"
+
+
+def test_the_refusal_names_the_vocabulary_it_wants(desk, monkeypatch):
+    """A bare day-count is the plausible typo (the desk head typed `45`). The
+    error has to be actionable, so it names what would have worked."""
+    _spy_fetch(monkeypatch)
+
+    with pytest.raises(ValueError) as e:
+        data.get_ohlcv("INFY", period="45")
+
+    msg = str(e.value)
+    assert "45" in msg, f"the rejected value is quoted back: {msg}"
+    assert "3mo" in msg and "2y" in msg, f"the valid vocabulary is listed: {msg}"
+
+
+@pytest.mark.parametrize("period", ["1d", "5d", "1mo", "3mo", "6mo",
+                                    "1y", "2y", "5y", "10y", "ytd", "max"])
+def test_every_valid_period_still_fetches(desk, monkeypatch, period):
+    """Regression guard on the fix: the vocabulary the desk actually uses
+    (`1y` in snapshot, `2y` in warm, `5d` in last_price, `6mo` in the
+    technical-analyst's charter) must survive validation untouched."""
+    seen = _spy_fetch(monkeypatch)
+
+    df = data.get_ohlcv("INFY", period=period)
+
+    assert seen["called"] is True and len(df) == 5
+
+
+def test_a_bad_period_does_not_degrade_into_the_cache_ladder(desk, monkeypatch):
+    """A typo is not an outage. The fallback ladder exists for a dead feed; if a
+    bad period slid down it, the desk would answer a nonsense question with real
+    cached bars and tag them `cache_stale` — a second silent success shape."""
+    _write_cache("TESTCO")
+    _kill_yf(monkeypatch)
+
+    with pytest.raises(ValueError):
+        data.get_ohlcv("TESTCO", period="banana")
+
+
+def test_ohlcv_cli_exits_nonzero_on_a_bad_period():
+    """The filed repro verbatim, through the real CLI. No network: the refusal
+    lands before the fetch, so this test is offline by construction."""
+    r = subprocess.run([sys.executable, "-m", "engine.data", "ohlcv", "INFY", "banana"],
+                       cwd=data.ROOT, capture_output=True, text=True)
+
+    assert r.returncode != 0, f"exit 0 on garbage period; stdout={r.stdout[:200]!r}"
+    assert "source=yf" not in r.stdout, "a success-shaped frame was printed anyway"
+    assert "banana" in r.stderr and "3mo" in r.stderr, r.stderr
