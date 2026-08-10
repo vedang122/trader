@@ -1,13 +1,14 @@
 {
-  "tone": "bearish",
+  "tone": "neutral",
   "per_symbol": {
-    "SBIN": "neutral"
+    "SBIN": "neutral",
+    "SUNPHARMA": "neutral"
   },
   "top_risks": [
-    "Hormuz deadlock persists, crude >$83 & dollar firming into Iran talks/US jobs data, but digest has a contradictory same-day \"oil cools\" headline - crude direction unconfirmed",
-    "Global risk-off persists: US stocks slipped overnight (Mideast talks/earnings), GIFT Nifty & Asian shares signal weak/mixed open for NSE",
-    "HDFCBANK ADR securities-lawsuit status unresolved - no update in today digest, do not assume closed"
+    "Hormuz deadlock persists (Iran-Oman deal still elusive) but digest crude prices contradict each other (USD85 vs USD94 same-day headlines) and diverge from our own WTI-proxy feed (~USD78.8, +0.8pct, MACD bearish, trend down) - escalation unconfirmed, not a fresh spike",
+    "GIFT Nifty signal itself contradictory across headlines (flat/muted open vs up) and digest quality degraded - business-standard & gnews feeds down, moneycontrol feeds flagged stale",
+    "US inflation (CPI) data due this week with DXY near a 2-month trough - a surprise could reprice dollar/INR fast; no confirmed US jobs-print reaction found in digest"
   ],
-  "basis": "Weak-open cues (GIFT Nifty negative, US Dow/SP slip) + unresolved Hormuz deadlock outweigh dovish RBI; SBIN rally is pre-Q1-results positioning (RSI 68 overbought), not a fundamental signal; RELIANCE +3.52% on volume has no news explanation in digest; confidence reduced - business-standard & gnews feeds down, newsapi returned 0.",
-  "as_of": "2026-08-07T08:18:40+05:30"
+  "basis": "Digest is thin and self-contradictory on crude price and GIFT Nifty direction with two feeds down; own crude/DXY data show Fridays Hormuz spike has NOT extended over the weekend (WTI proxy roughly flat, MACD bearish) - insufficient fresh evidence to hold bearish tone, no risk-on confirmation either, so neutral; SBIN mcap-gain story is stale and already priced (RSI 70.8, 2.66x volume, extended) and SUNPHARMA buy-reco is a single thin broker call contradicted by todays bearish MACD cross.",
+  "as_of": "2026-08-10T08:19:43+05:30"
 }
