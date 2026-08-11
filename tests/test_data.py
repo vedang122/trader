@@ -617,3 +617,27 @@ def test_ohlcv_cli_exits_nonzero_on_a_bad_period():
     assert r.returncode != 0, f"exit 0 on garbage period; stdout={r.stdout[:200]!r}"
     assert "source=yf" not in r.stdout, "a success-shaped frame was printed anyway"
     assert "banana" in r.stderr and "3mo" in r.stderr, r.stderr
+
+
+# --- bar freshness: a snapshot must date the bar it was computed from ---
+
+def test_snapshot_dates_its_newest_bar(desk, monkeypatch):
+    """Issue 20260811-0824-scan. Every field in a snapshot is derived from the
+    newest bar, but nothing said WHICH session that bar is, so a symbol whose
+    feed skipped a day was indistinguishable from one printing today's close.
+    The date is the primitive fact the staleness check is built on."""
+    monkeypatch.setattr(data, "_yf_fetch",
+                        lambda s, p, i: _session_bars("2026-08-07", 1400))
+    _at(monkeypatch, "2026-08-10 16:00:00")
+
+    assert data.snapshot("SUNPHARMA")["bar_date"] == "2026-08-07"
+
+
+def test_snapshot_bar_date_tracks_the_feed_not_the_clock(desk, monkeypatch):
+    """The date must come from the frame. Reading it off the wall clock would
+    re-create the exact blindness the flag exists to remove."""
+    monkeypatch.setattr(data, "_yf_fetch",
+                        lambda s, p, i: _session_bars("2026-08-10", 1400))
+    _at(monkeypatch, "2026-08-11 08:16:00")     # pre-open the next morning
+
+    assert data.snapshot("SUNPHARMA")["bar_date"] == "2026-08-10"

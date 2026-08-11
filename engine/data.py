@@ -514,6 +514,11 @@ def snapshot(symbol: str) -> dict:
     return {
         "symbol": symbol.upper(),
         "source": source,  # yf | nse_bhav | cache+groww_ltp | cache_stale — agents must treat non-live as degraded
+        # The session every field below is computed from. `source` says which
+        # feed answered, never how old its answer is (issue 20260811-0824-scan:
+        # SUNPHARMA served a 08-07 close tagged "yf" while its peers carried
+        # 08-10). Freshness is a separate fact and needs its own field.
+        "bar_date": str(df.index[-1].date()),
         "last": round(last, 2),
         "change_pct": None if roll else round((last / prev - 1) * 100, 2),
         # True ⇒ change_pct withheld: the last bar is a contract handover, not a move
