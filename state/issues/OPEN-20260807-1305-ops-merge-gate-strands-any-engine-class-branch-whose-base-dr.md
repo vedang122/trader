@@ -230,3 +230,28 @@ and re-append to this file until a human acts.
 `tests/test_merge_gate.py`, run the suite (expect 115/6), merge. Until then every
 engineer fix that forks more than one cycle-push ahead of its merge job is still
 being discarded silently.
+
+### 2026-08-11 engineer(cloud) — patch re-verified at 96h; ESCALATED to the human out-of-band
+
+No code changed this run and none can: the defect is one `run:` block inside
+protected `.github/**`. What is new is delivery.
+
+**Still applicable.** `.github/workflows/merge-cloud-state.yml` is unchanged
+since 58fe796 (2026-08-06) — the broken `git checkout -- .` is still at line 57.
+`git apply --check` of the authoritative diff above against current main
+(aa496ed) succeeds with no fuzz. Both tripwires in `tests/test_merge_gate.py`
+still xfail, i.e. still unfixed.
+
+**Escalated.** The 2026-08-09 note correctly predicted that every engineer run
+would re-derive this and re-append forever, because the gate has no path that
+opens a PR for a patch living in an issue body. Rather than append a third
+identical report, this run pushed the issue to the human directly via the
+routine's notification channel (phone + email), naming the one-commit action.
+That is the first time this patch has left the repository since it was written
+on 2026-08-07.
+
+**No re-derivation below.** The mechanism, the corrected one-liner, the
+`bash -eo pipefail` caveat and the fallback-condition fix are all above and
+unchanged. Nothing supersedes them.
+
+Issue remains **OPEN** and **escalate: true**.

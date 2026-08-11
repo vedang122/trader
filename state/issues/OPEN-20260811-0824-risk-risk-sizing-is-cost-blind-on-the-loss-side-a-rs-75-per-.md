@@ -76,3 +76,117 @@ caps" - that one is about position-size caps; this is about the loss side of
 the risk budget being cost-blind. They can be fixed independently.
 
 ## Engineer notes (append below)
+
+### 2026-08-11 engineer(cloud) — reproduced exactly; fix is in protected engine/risk.py
+
+Both evidence structures reproduce to the paisa against the live charge model,
+so nothing here rests on the filer's arithmetic:
+
+    entry 192.50 stop 187.40 -> qty 14, gross 71.40, round_trip 28.69, realised 100.09
+    entry 192.50 stop 186.75 -> qty 13, gross 74.75, round_trip 27.80, realised 102.55
+
+Budget is Rs 75 (capital_base 10000 x risk_per_trade_pct 0.75). Confirmed the
+asymmetry is real and not incidental: `validate()` imports `charges.round_trip`
+for the entry->target cost-drag gate at engine/risk.py:70-71, and the identical
+model is never applied to entry->stop. `suggest_qty` is a pure
+`budget // per_share` divide.
+
+**What landed this commit**: `tests/test_risk_sizing_costs.py` only. Three tests
+reproduce the gap and guard the two keys the risk-officer reads today
+(`suggested_qty`, `risk_amount`) so the fix cannot silently drop them; two are
+strict-xfail tripwires asserting the fixed behaviour. Applying the patch below
+turns those two green, which turns the suite RED (strict xfail) — that is
+deliberate. Delete both `@pytest.mark.xfail` markers in the same change that
+applies the patch.
+
+**Recommended fix is DISCLOSURE, not resizing** — this is the issue's own
+second option, and the reason matters. Sizing to `gross + charges <= budget`
+cuts every position by roughly a third:
+
+| structure | qty today | qty if cost-inclusive | realised loss at new qty |
+|---|---|---|---|
+| 192.50 / 187.40 | 14 | 9 | 70.93 |
+| 192.50 / 186.75 | 13 | 8 | 70.60 |
+| 100.00 / 98.00  | 37 | 23 | 72.94 |
+
+A ~35% cut in position size across the book is a constitutional change to how
+much the desk trades, not a defect repair, and it interacts with the cost-drag
+gate (smaller qty raises cost drag as a share of gain, so some trades that pass
+today would newly fail). That decision belongs to the human. The patch below
+therefore leaves enforcement semantics **exactly** as they are — no verdict
+changes for any order — and only makes the true number visible: `size` gains
+`risk_amount_after_costs` and `suggested_qty_after_costs`, and `validate()`
+gains one note, `"risk after costs N vs budget M"`, so the risk-officer sees it
+at approval time. `suggest_qty_after_costs` is supplied ready to use if the
+human later decides to enforce it.
+
+**Verified**: patch applies clean to current main (`git apply --check`); with
+both xfail markers deleted the full suite is **161 passed, 8 xfailed**. No
+existing assertion was altered, and no order's PASS/REJECT verdict changes —
+the only diff in gate output is one added note.
+
+Not addressed here (separate open issue, correctly filed as its own):
+`OPEN-20260811-1129-risk`, the risk_limits.yaml comment claiming Rs 100 against
+an enforced Rs 75. It is the same confusion but lives in `state/`, which an
+engineer run must not touch.
+
+## Proposed patch (needs human)
+
+```diff
+diff --git a/engine/risk.py b/engine/risk.py
+index c27324d..de2d544 100644
+--- a/engine/risk.py
++++ b/engine/risk.py
+@@ -23,6 +23,24 @@ def suggest_qty(capital: float, entry: float, stop: float, risk_pct: float) -> i
+     return int((capital * risk_pct / 100) // per_share)
+ 
+ 
++def realised_loss(entry: float, stop: float, qty: int) -> float:
++    """What a stop-out actually costs: the gross distance plus the round trip.
++    Sizing that ignores the second term understates the loss by ~40% at this
++    capital, where charges are a large fraction of the per-trade budget."""
++    from engine import charges as ch
++    return round(qty * abs(entry - stop) + ch.round_trip(entry, stop, qty), 2)
++
++
++def suggest_qty_after_costs(capital: float, entry: float, stop: float,
++                            risk_pct: float) -> int:
++    """Largest qty whose cost-inclusive loss still fits the per-trade budget."""
++    budget = capital * risk_pct / 100
++    q = suggest_qty(capital, entry, stop, risk_pct)
++    while q > 0 and realised_loss(entry, stop, q) > budget:
++        q -= 1
++    return q
++
++
+ def validate(order: dict, pf: dict, quotes: dict[str, float]) -> dict:
+     """Return {'verdict': 'PASS'|'REJECT', 'violations': [...], 'notes': [...]}"""
+     lm, rg = limits(), regime()
+@@ -61,6 +79,8 @@ def validate(order: dict, pf: dict, quotes: dict[str, float]) -> dict:
+                 if risk_amt > max_risk * 1.02:  # 2% rounding tolerance
+                     v.append(f"risk to stop {risk_amt:.0f} exceeds per-trade limit {max_risk:.0f} "
+                              f"(suggest qty <= {suggest_qty(capital, entry, stop, lm['risk_per_trade_pct'])})")
++                notes.append(f"risk after costs {realised_loss(entry, stop, qty):.0f} "
++                             f"vs budget {max_risk:.0f}")
+                 if target:
+                     rr = (target - entry) / (entry - stop)
+                     if rr < lm["min_risk_reward"]:
+@@ -99,8 +119,12 @@ if __name__ == "__main__":
+     if len(sys.argv) > 1 and sys.argv[1] == "size":
+         _, _, entry, stop = sys.argv
+         lm = limits()
+-        q = suggest_qty(lm["capital_base"], float(entry), float(stop), lm["risk_per_trade_pct"])
++        entry, stop = float(entry), float(stop)
++        q = suggest_qty(lm["capital_base"], entry, stop, lm["risk_per_trade_pct"])
+         print(json.dumps({"suggested_qty": q,
+-                          "risk_amount": round(q * abs(float(entry) - float(stop)), 2)}))
++                          "risk_amount": round(q * abs(entry - stop), 2),
++                          "risk_amount_after_costs": realised_loss(entry, stop, q),
++                          "suggested_qty_after_costs": suggest_qty_after_costs(
++                              lm["capital_base"], entry, stop, lm["risk_per_trade_pct"])}))
+     else:
+         print(json.dumps({"limits": limits(), "regime": regime()}, indent=2))
+```
+
+Issue left **OPEN**: the defect is live in `engine/risk.py` until a human
+applies the diff above and deletes the two xfail markers.
